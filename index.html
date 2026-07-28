@@ -1024,20 +1024,135 @@
             width: 100%;
         }
     
+        
+        /* ============================================================ */
+        /* CENTERED HEADER & NON-OVERLAPPING METADATA                   */
+        /* ============================================================ */
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 1.5rem 2rem;
+            line-height: 1.5;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .header-title h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.3rem;
+        }
+
+        .header-title p {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+            margin-top: 0.2rem;
+            margin-bottom: 0.75rem;
+            font-weight: 400;
+        }
+
+        .header-metadata {
+            position: static !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            background: rgba(22, 28, 45, 0.7);
+            padding: 0.4rem 1.1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(8px);
+            margin-top: 0.25rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 1rem 0 1.75rem 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .nav-tab-btn {
+            background: rgba(22, 28, 45, 0.6);
+            border: 1px solid var(--border-color);
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.85rem 1.6rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-radius: 10px 10px 0 0;
+            white-space: nowrap;
+        }
+
+        .nav-tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        .nav-tab-btn.active {
+            color: #ffffff;
+            border-color: #818cf8;
+            border-bottom-color: #818cf8;
+            background: linear-gradient(180deg, rgba(129, 140, 248, 0.28) 0%, rgba(129, 140, 248, 0.08) 100%);
+            box-shadow: 0 4px 14px rgba(129, 140, 248, 0.2);
+        }
+    
         </style>
 </head>
 <body>
-        <div class="header">
+            <div class="header">
         <div class="header-title">
             <h1>Tablero de Efectividad de Automatización</h1>
             <p>Monitoreo diario de tasas de automatización, tiempos de procesamiento y nivel de riesgo de retiros</p>
-        </div>
-        <div class="header-metadata">
-            <span>Última actualización: <b id="last-update-val" style="color:var(--text-primary); font-weight:600;">-</b></span>
-            <span style="margin: 0 0.4rem; opacity: 0.4;">|</span>
-            <span>Último retiro: <b id="last-withdrawal-val" style="color:var(--text-primary); font-weight:600;">-</b></span>
+            <div class="header-metadata">
+                <span>Última actualización: <b id="last-update-val" style="color:var(--text-primary); font-weight:600;">-</b></span>
+                <span style="margin: 0 0.5rem; opacity: 0.4;">|</span>
+                <span>Último retiro: <b id="last-withdrawal-val" style="color:var(--text-primary); font-weight:600;">-</b></span>
+            </div>
         </div>
     </div>
+
+</div>
 
     <!-- TABBED NAVIGATION BAR - CENTERED BELOW TITLE -->
     <div class="nav-tabs">
