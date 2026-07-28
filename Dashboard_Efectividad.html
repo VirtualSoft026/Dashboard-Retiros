@@ -1741,7 +1741,16 @@
                     <option value="all">Todas las marcas</option>
                 </select>
             </div>
-        </div>
+        
+            <div class="filter-group" style="flex:0 0 auto; margin-left:auto;">
+                <button id="btn-export-comparison" class="btn-export" onclick="exportComparisonToExcel()" style="background: linear-gradient(135deg, #10b981, #059669); margin-top: 1.25rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
+                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                    </svg>
+                    <span>Exportar Comparativo Excel</span>
+                </button>
+            </div></div>
 
         <!-- Global KPI Cards -->
         <div class="comparison-kpis" id="comp-kpi-cards">
@@ -1853,6 +1862,73 @@
     </div>
 
 <script>
+        // ============================================================
+        // EXPORT COMPARISON TO EXCEL / CSV
+        // ============================================================
+        function exportComparisonToExcel() {
+            const monthASelect = document.getElementById('comp-month-a');
+            const monthBSelect = document.getElementById('comp-month-b');
+            const monthAName = monthASelect ? monthASelect.options[monthASelect.selectedIndex].text : 'Mes_A';
+            const monthBName = monthBSelect ? monthBSelect.options[monthBSelect.selectedIndex].text : 'Mes_B';
+            const brandSelect = document.getElementById('comp-brand-select');
+            const brandName = brandSelect ? brandSelect.options[brandSelect.selectedIndex].text : 'Todas';
+
+            let csvContent = "\uFEFF"; // UTF-8 BOM for Excel
+            csvContent += `INFORME COMPARATIVO DE RETIROS - ${monthAName.toUpperCase()} VS ${monthBName.toUpperCase()}\n`;
+            csvContent += `Filtro Marca: ${brandName}\n`;
+            csvContent += `Fecha Generacion: ${new Date().toLocaleString('es-ES')}\n\n`;
+
+            // Global KPIs Summary
+            const volA = document.getElementById('comp-kpi-vol-a')?.innerText || '-';
+            const volB = document.getElementById('comp-kpi-vol-b')?.innerText || '-';
+            const volDiff = document.getElementById('comp-kpi-vol-diff')?.innerText || '-';
+
+            const pctA = document.getElementById('comp-kpi-pct-a')?.innerText || '-';
+            const pctB = document.getElementById('comp-kpi-pct-b')?.innerText || '-';
+            const pctDiff = document.getElementById('comp-kpi-pct-diff')?.innerText || '-';
+
+            const projA = document.getElementById('comp-kpi-proj-a')?.innerText || '-';
+            const projB = document.getElementById('comp-kpi-proj-b')?.innerText || '-';
+            const projDiff = document.getElementById('comp-kpi-proj-diff')?.innerText || '-';
+
+            csvContent += "RESUMEN DE VARIACION GLOBAL\n";
+            csvContent += `Indicador;${monthAName};${monthBName};Variacion\n`;
+            csvContent += `Total Retiros;${volA};${volB};${volDiff}\n`;
+            csvContent += `% Automatizacion Real;${pctA};${pctB};${pctDiff}\n`;
+            csvContent += `% Automatizacion Proyectada;${projA};${projB};${projDiff}\n\n`;
+
+            // Table Data
+            csvContent += `DETALLE POR MARCA\n`;
+            csvContent += `Marca;Retiros (${monthAName});Retiros (${monthBName});Var Volumen;% Auto (${monthAName});% Auto (${monthBName});Var Auto;% Proy (${monthAName});% Proy (${monthBName});Var Proy\n`;
+
+            const tbody = document.getElementById('comparison-tbody');
+            if (tbody) {
+                const rows = tbody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const cols = row.querySelectorAll('td');
+                    if (cols.length >= 10) {
+                        const rowData = Array.from(cols).map(c => `"${c.innerText.replace(/"/g, '""').trim()}"`);
+                        csvContent += rowData.join(';') + '\n';
+                    }
+                });
+            }
+
+            // Trigger download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const filename = `Comparativo_Retiros_${monthAName}_vs_${monthBName}.csv`;
+
+            if (navigator.msSaveBlob) {
+                navigator.msSaveBlob(blob, filename);
+            } else {
+                link.href = URL.createObjectURL(blob);
+                link.setAttribute('download', filename);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    
         // ============================================================
         // TAB SWITCHING LOGIC
         // ============================================================
