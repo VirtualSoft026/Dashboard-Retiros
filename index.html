@@ -901,20 +901,145 @@
             box-sizing: border-box;
         }
     
+        
+        /* ============================================================ */
+        /* CENTERED HEADER & NAV TABS STYLES                            */
+        /* ============================================================ */
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 1.5rem 2rem;
+            line-height: 1.5;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            width: 100%;
+        }
+
+        .header-title {
+            text-align: center;
+            width: 100%;
+        }
+
+        .header-title h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.3rem;
+        }
+
+        .header-title p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 0.2rem;
+            font-weight: 400;
+        }
+
+        .header-metadata {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            background: rgba(22, 28, 45, 0.6);
+            padding: 0.4rem 0.85rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 1024px) {
+            .header-metadata {
+                position: static;
+                margin-top: 0.75rem;
+            }
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 1.25rem 0 1.75rem 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .nav-tab-btn {
+            background: rgba(22, 28, 45, 0.6);
+            border: 1px solid var(--border-color);
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.85rem 1.6rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-radius: 10px 10px 0 0;
+            white-space: nowrap;
+        }
+
+        .nav-tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        .nav-tab-btn.active {
+            color: #ffffff;
+            border-color: #818cf8;
+            border-bottom-color: #818cf8;
+            background: linear-gradient(180deg, rgba(129, 140, 248, 0.28) 0%, rgba(129, 140, 248, 0.08) 100%);
+            box-shadow: 0 4px 14px rgba(129, 140, 248, 0.2);
+        }
+
+        .tab-pane {
+            display: none;
+            width: 100%;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeInTab 0.25s ease-in-out;
+            width: 100%;
+        }
+    
         </style>
 </head>
 <body>
-    <div class="header">
+        <div class="header">
         <div class="header-title">
             <h1>Tablero de Efectividad de Automatización</h1>
             <p>Monitoreo diario de tasas de automatización, tiempos de procesamiento y nivel de riesgo de retiros</p>
         </div>
-        <div class="header-metadata" style="text-align: right; font-size: 0.85rem; color: var(--text-secondary); background: rgba(255, 255, 255, 0.05); padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.25rem;">
-            <div><span style="color: var(--text-muted);">Última actualización:</span> <span id="last-update-val" style="color: var(--text-primary); font-weight: 500;">-</span></div>
+        <div class="header-metadata">
+            <span>Última actualización: <b id="last-update-val" style="color:var(--text-primary); font-weight:600;">-</b></span>
+            <span style="margin: 0 0.4rem; opacity: 0.4;">|</span>
+            <span>Último retiro: <b id="last-withdrawal-val" style="color:var(--text-primary); font-weight:600;">-</b></span>
+        </div>
+    </div>
 
-    <!-- ============================================================ -->
-    <!-- TABBED NAVIGATION BAR                                        -->
-    <!-- ============================================================ -->
+    <!-- TABBED NAVIGATION BAR - CENTERED BELOW TITLE -->
     <div class="nav-tabs">
         <button class="nav-tab-btn active" id="tab-btn-overview" onclick="switchTab('overview')">
             <span>📊</span> <span>Vista General</span>
