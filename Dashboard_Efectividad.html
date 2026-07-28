@@ -792,6 +792,115 @@
             to { opacity: 1; transform: translateY(0); }
         }
     
+        
+        /* ============================================================ */
+        /* FULL-WIDTH RESPONSIVE LAYOUT & CENTERED TABS                 */
+        /* ============================================================ */
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 1.5rem 2rem;
+            line-height: 1.5;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .header-title h1 {
+            font-size: 1.85rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .header-title p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.75rem;
+            margin: 1rem 0 1.5rem 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .nav-tab-btn {
+            background: rgba(22, 28, 45, 0.6);
+            border: 1px solid var(--border-color);
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            font-weight: 600;
+            padding: 0.8rem 1.4rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-radius: 10px 10px 0 0;
+            white-space: nowrap;
+        }
+
+        .nav-tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-tab-btn.active {
+            color: #ffffff;
+            border-color: #818cf8;
+            border-bottom-color: #818cf8;
+            background: linear-gradient(180deg, rgba(129, 140, 248, 0.25) 0%, rgba(129, 140, 248, 0.08) 100%);
+            box-shadow: 0 4px 12px rgba(129, 140, 248, 0.15);
+        }
+
+        .tab-pane {
+            display: none;
+            width: 100%;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeInTab 0.25s ease-in-out;
+            width: 100%;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            width: 100%;
+            margin-bottom: 1.25rem;
+        }
+
+        .table-card, .controls-card, .recs-card, .comparison-section {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    
         </style>
 </head>
 <body>
