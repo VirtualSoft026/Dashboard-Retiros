@@ -1205,16 +1205,19 @@
             </select>
         </div>
 
-        <div class="filter-group sim-group" style="border-left: 1px solid var(--border-color); padding-left: 1.5rem; display: flex; flex-direction: row; align-items: center; gap: 0.75rem; height: 32px; margin-top: 12px;">
-            <label class="switch">
-                <input type="checkbox" id="sim-toggle">
-                <span class="slider"></span>
-            </label>
-            <div style="display: flex; flex-direction: column; justify-content: center; cursor: pointer;" onclick="document.getElementById('sim-toggle').click()">
-                <label style="cursor: pointer; user-select: none; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.05em; line-height: 1.2;">Simulador de Optimización</label>
-                <span id="sim-badge" style="font-size: 0.68rem; color: var(--text-secondary); font-weight: 500; transition: color 0.3s;">Reglas de Negocio Estipuladas (Apagado)</span>
+                    <div class="filter-group sim-group" title="Activa este switch para simular la tasa de automatización proyectada al aprobar automáticamente retiros de bajo riesgo" style="border-left: 1px solid var(--border-color); padding: 0.45rem 0.9rem; display: flex; align-items: center; gap: 0.75rem; background: rgba(129, 140, 248, 0.06); border-radius: 10px; border: 1px dashed rgba(129, 140, 248, 0.35);">
+                <label class="switch">
+                    <input type="checkbox" id="sim-toggle" onchange="toggleSimulator()">
+                    <span class="slider round"></span>
+                </label>
+                <div style="display: flex; flex-direction: column; justify-content: center; cursor: pointer;" onclick="document.getElementById('sim-toggle').click()">
+                    <div style="display: flex; align-items: center; gap: 0.35rem;">
+                        <span style="font-size: 0.85rem;">🧪</span>
+                        <label style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: #818cf8; letter-spacing: 0.04em; cursor: pointer;">Simulador de Reglas</label>
+                    </div>
+                    <span id="sim-badge" style="font-size: 0.7rem; color: var(--text-secondary); font-weight: 500; transition: color 0.3s; margin-top: 0.1rem;">Ver impacto proyectado (Apagado)</span>
+                </div>
             </div>
-        </div>
 
         <div class="filter-group" style="margin-left: auto; margin-top: 12px;">
             <button id="btn-export-report" class="btn-export">
