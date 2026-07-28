@@ -821,7 +821,7 @@
         </button>
     </div>
 
-    <!-- TAB 1: VISTA GENERAL (KPIs + Gráficos + Filtros Generales) -->
+    <!-- TAB 1: VISTA GENERAL (KPIs + Gráficos Consolidados + Filtros Generales) -->
     <div id="tab-pane-overview" class="tab-pane active">
         <div class="controls-card">
         <div class="filter-group">
@@ -891,7 +891,6 @@
     
 
     <!-- TAB 1: VISTA GENERAL -->
-    
 
         <div class="kpi-grid">
         <div class="kpi-card kpi-total">
@@ -1119,13 +1118,17 @@
     
     </div>
 
-    <!-- TAB 2: DESGLOSE POR MARCA -->
+    
+    
+    </div>
+
+    
     
     </div>
 
     <!-- TAB 2: DESGLOSE POR MARCA (Tabla Completa de Métricas) -->
     <div id="tab-pane-table" class="tab-pane">
-        <div class="table-card">
+    <div class="table-card">
         <h3>Desglose Detallado de Métricas por Marca</h3>
         <table id="metrics-table">
             <thead>
@@ -1363,28 +1366,15 @@
                     <td><div>Prom: 15h 10m</div></td>
                     <td><div>Prom: 8h 50m</div></td>
                 </tr>
+            
             </tbody>
         </table>
     </div>
-
-    <!-- Recommendations Section -->
-    
-    </div> 
-
-    
     </div>
 
-    
-    
-    </div>
-
-    <!-- TAB 3: COMPARADOR DE MESES -->
-    
-    </div>
-
-    <!-- TAB 3: COMPARADOR DE MESES (Herramienta Interactiva Mes A vs Mes B) -->
+    <!-- TAB 3: COMPARADOR DE MESES (Herramienta Única Mes A vs Mes B) -->
     <div id="tab-pane-comparison" class="tab-pane">
-        <div class="section-title" style="margin-top:2rem;">⚖️ Comparación de Meses</div>
+    <div class="section-title" style="margin-top:0.5rem;">⚖️ Comparación de Meses</div>
     <div class="table-card comparison-section">
         <!-- Controls -->
         <div class="comparison-controls">
@@ -1489,15 +1479,7 @@
     </div>
     </div>
 
-    
-    
-    </div>
-
-    <!-- TAB 4: RECOMENDACIONES -->
-    
-    </div>
-
-    <!-- TAB 4: RECOMENDACIONES (Reglas y Recomendaciones Estratégicas) -->
+    <!-- TAB 4: RECOMENDACIONES (Hallazgos y Acciones Sugeridas) -->
     <div id="tab-pane-recs" class="tab-pane">
         <div class="recs-card">
         <h2>💡 Recomendaciones: ¿Cómo incrementar y auditar la automatización de retiros?</h2>
@@ -1519,11 +1501,6 @@
                 <p>Medir el volumen de retiros que expiran sin aprobación manual. Si es alto, indica cuellos de botella en la operación y sugiere automatizar transacciones de bajo monto.</p>
             </div>
         </div>
-    </div>
-
-    
-    </div>
-    </div>
     </div>
     </div>
 
@@ -467700,7 +467677,7 @@ const data = {
                 </div>
             
     <!-- ============================================================ -->
-    <!-- SECTION: Comparación de Meses                                -->
+    
     <!-- ============================================================ -->
     
     <!-- TAB 3: COMPARISON -->
@@ -468906,28 +468883,9 @@ const data = {
         // ======================================================</script>
 
     <!-- ============================================================ -->
-    <!-- SECTION: Comparación de Meses                                -->
+    
     <!-- ============================================================ -->
-    <div class="section-title" style="margin-top:2rem;">⚖️ Comparación de Meses</div>
-    <div class="table-card comparison-section">
-        <!-- Controls -->
-        <div class="comparison-controls">
-            <div class="filter-group" style="flex:0 0 auto;">
-                <label for="comp-month-a">Mes Base (A)</label>
-                <select id="comp-month-a" onchange="updateComparison()"></select>
-            </div>
-            <div class="comparison-vs-label">VS</div>
-            <div class="filter-group" style="flex:0 0 auto;">
-                <label for="comp-month-b">Mes a Comparar (B)</label>
-                <select id="comp-month-b" onchange="updateComparison()"></select>
-            </div>
-            <div class="filter-group" style="flex:0 0 auto;">
-                <label for="comp-brand-select">Marca</label>
-                <select id="comp-brand-select" onchange="updateComparison()">
-                    <option value="all">Todas las marcas</option>
-                </select>
-            </div>
-        </div>
+    
 
         <!-- Global KPI Cards -->
         <div class="comparison-kpis" id="comp-kpi-cards">
