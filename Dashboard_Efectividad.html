@@ -2517,12 +2517,22 @@ const BacktestUI = {
     runSimulation() {
         const scenario = BacktestStore.getActiveScenario();
         
-        // Fetch historical withdrawals dataset from global data object
+        // Fetch historical withdrawals dataset from global data object across all available months
         let rawWithdrawals = [];
-        if (typeof data !== 'undefined' && data.current_month && data.current_month.daily_data) {
-            rawWithdrawals = data.current_month.daily_data;
-        } else if (typeof data !== 'undefined' && data.current_month && data.current_month.brands_summary) {
-            rawWithdrawals = data.current_month.brands_summary;
+        if (typeof data !== 'undefined' && data) {
+            const monthKeys = Object.keys(data);
+            monthKeys.forEach(mKey => {
+                const mObj = data[mKey];
+                if (mObj) {
+                    if (Array.isArray(mObj.daily_data) && mObj.daily_data.length > 0) {
+                        rawWithdrawals = rawWithdrawals.concat(mObj.daily_data);
+                    } else if (Array.isArray(mObj.details) && mObj.details.length > 0) {
+                        rawWithdrawals = rawWithdrawals.concat(mObj.details);
+                    } else if (Array.isArray(mObj.brands_summary) && mObj.brands_summary.length > 0) {
+                        rawWithdrawals = rawWithdrawals.concat(mObj.brands_summary);
+                    }
+                }
+            });
         }
 
         // Run in-memory evaluation
