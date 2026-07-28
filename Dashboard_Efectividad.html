@@ -1287,11 +1287,11 @@
             background: rgba(11, 15, 25, 0.85) !important;
             backdrop-filter: blur(10px) !important;
             z-index: 99999 !important;
-            display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             padding: 1.5rem !important;
             box-sizing: border-box !important;
+            display: none;
         }
 
         .backtest-modal {
@@ -3038,7 +3038,7 @@ const BacktestUI = {
             </div>
         `;
 
-        document.getElementById('bt-modal-explain').style.display = 'flex';
+        document.getElementById('bt-modal-explain').style.setProperty('display', 'flex', 'important');
     },
 
     openEditRuleModal(ruleId) {
@@ -3081,7 +3081,7 @@ const BacktestUI = {
             document.getElementById('bt-rule-notes').value = '';
         }
 
-        document.getElementById('bt-modal-rule').style.display = 'flex';
+        document.getElementById('bt-modal-rule').style.setProperty('display', 'flex', 'important');
     },
 
     saveRuleFromModal() {
@@ -3116,7 +3116,7 @@ const BacktestUI = {
     },
 
     openNewScenarioModal() {
-        document.getElementById('bt-modal-scenario').style.display = 'flex';
+        document.getElementById('bt-modal-scenario').style.setProperty('display', 'flex', 'important');
     },
 
     createNewScenarioFromModal() {
@@ -3159,7 +3159,8 @@ const BacktestUI = {
     },
 
     closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
+        const el = document.getElementById(modalId);
+        if (el) el.style.setProperty('display', 'none', 'important');
     },
 
     exportResultsToExcel() {
@@ -3196,6 +3197,16 @@ const BacktestUI = {
 // Initialize Backtest Module when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     BacktestUI.init();
+    
+        // Close modals when clicking backdrop overlay
+        document.querySelectorAll('.backtest-modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    BacktestUI.closeModal(overlay.id);
+                }
+            });
+        });
+    
 });
 
 
