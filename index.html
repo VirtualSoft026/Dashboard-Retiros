@@ -468384,7 +468384,22 @@ const data = {
                                 pointStyle: 'circle',
                                 boxWidth: 7,
                                 padding: 10
+                            },
+                        datalabels: {
+                            display: true,
+                            align: 'top',
+                            anchor: 'end',
+                            offset: 3,
+                            color: '#38bdf8',
+                            font: {
+                                size: 9,
+                                weight: '600',
+                                family: 'Outfit'
+                            },
+                            formatter: function(value) {
+                                return (value !== null && value !== undefined && !isNaN(value)) ? value.toFixed(1) + '%' : '';
                             }
+                        }
                         },
                         tooltip: {
                             callbacks: {
