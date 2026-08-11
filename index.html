@@ -1399,6 +1399,9 @@
             <span>💡</span> <span>Recomendaciones</span>
         </button>
     
+        <button class="nav-tab-btn" id="tab-btn-pies" onclick="switchTab('pies')">
+            <span>🥧</span> <span>Gráficos de Torta</span>
+        </button>
         <button class="nav-tab-btn" id="tab-btn-backtest" onclick="switchTab('backtest')">
             <span>🧪</span> <span>Backtest de Automatización</span>
         </button>
@@ -1958,6 +1961,305 @@
     </div>
 
     <!-- TAB 3: COMPARADOR DE MESES (Herramienta Única Mes A vs Mes B) -->
+    
+    <!-- TAB 6: DISTRIBUCIÓN POR TORTAS (PIE CHARTS) -->
+    <div id="tab-pane-pies" class="tab-pane">
+        <div style="background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.4rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 style="color: #f8fafc; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>🥧</span> Gráficos de Torta por Marca (Automatización vs Aprobación Manual)
+                    </h2>
+                    <p style="color: #94a3b8; font-size: 0.88rem; margin: 0;">
+                        Visualización gráfica de la proporción (%) y volumen exacto de retiros aprobados automáticamente frente a revisión manual para el mes de Julio.
+                    </p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <label style="color: #cbd5e1; font-size: 0.85rem; font-weight: 600;">Filtrar Marca:</label>
+                    <select id="pie-brand-filter" onchange="filterPieCards()" style="background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.88rem; outline: none; cursor: pointer;">
+                        <option value="all">Ver Todas las Marcas</option>
+                        <option value="camanbetvenezuela">Camanbet Venezuela</option><option value="camanbetvenezuela2">Camanbet Venezuela 2</option><option value="doradobetbolivia">Doradobet Bolivia</option><option value="doradobetchile">Doradobet Chile</option><option value="doradobetcostarica">Doradobet Costa Rica</option><option value="doradobetecuador">Doradobet Ecuador</option><option value="doradobetelsalvador">Doradobet El Salvador</option><option value="doradobetguatemala">Doradobet Guatemala</option><option value="doradobethonduras">Doradobet Honduras</option><option value="doradobetper">Doradobet Perú</option><option value="ecuabetecuador">Ecuabet Ecuador</option><option value="ganaplayelsalvador">GanaPlay El Salvador</option><option value="ganaplayguatemala">GanaPlay Guatemala</option><option value="paniplayhonduras">Paniplay Honduras</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="pie-charts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+            
+    <div class="pie-card global-card" style="background: linear-gradient(145deg, #1e293b, #0f172a); border: 2px solid var(--accent-cyan); border-radius: 12px; padding: 1.2rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.4); grid-column: span 1;">
+        <h3 style="color: #38bdf8; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">🌐 TOTAL CONSOLIDADO GLOBAL</h3>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 0.8rem;">Distribución total de <b style="color:#f8fafc;">579,809</b> retiros en Julio</p>
+        <div style="position: relative; width: 230px; height: 230px; margin: 0 auto;">
+            <canvas id="pie-chart-global"></canvas>
+        </div>
+        <div style="display: flex; justify-content: space-around; width: 100%; margin-top: 0.9rem; padding-top: 0.7rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.88rem;">
+            <div>
+                <span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 4px;"></span>
+                <span style="color: #94a3b8;">Automático:</span> <b style="color: #2dd4bf;">305,366 (52.7%)</b>
+            </div>
+            <div>
+                <span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 4px;"></span>
+                <span style="color: #94a3b8;">Manual:</span> <b style="color: #f1f5f9;">274,443 (47.3%)</b>
+            </div>
+        </div>
+    </div>
+    
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Ecuabet Ecuador</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">320,263</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-ecuabetecuador"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">182,313 (56.9%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">137,950 (43.1%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Perú</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">87,792</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetper"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">59,169 (67.4%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">28,623 (32.6%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">GanaPlay El Salvador</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">57,743</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-ganaplayelsalvador"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">15,838 (27.4%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">41,905 (72.6%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Ecuador</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">29,436</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetecuador"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">10,538 (35.8%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">18,898 (64.2%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Costa Rica</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">27,349</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetcostarica"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">16,308 (59.6%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">11,041 (40.4%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Paniplay Honduras</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">15,929</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-paniplayhonduras"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">9,398 (59.0%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">6,531 (41.0%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Camanbet Venezuela</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">12,811</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-camanbetvenezuela"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">1,713 (13.4%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">11,098 (86.6%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet El Salvador</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">12,032</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetelsalvador"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">4,375 (36.4%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">7,657 (63.6%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">GanaPlay Guatemala</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">6,134</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-ganaplayguatemala"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">2,051 (33.4%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">4,083 (66.6%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Guatemala</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">4,191</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetguatemala"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">2,513 (60.0%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">1,678 (40.0%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Chile</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">2,327</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetchile"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">891 (38.3%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">1,436 (61.7%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Honduras</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">2,027</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobethonduras"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">55 (2.7%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">1,972 (97.3%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Bolivia</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">1,027</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetbolivia"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">2 (0.2%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">1,025 (99.8%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Camanbet Venezuela 2</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">748</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-camanbetvenezuela2"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">202 (27.0%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">546 (73.0%)</b>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+    
+
     <div id="tab-pane-comparison" class="tab-pane">
     <div class="section-title" style="margin-top:0.5rem;">⚖️ Comparación de Meses</div>
     <div class="table-card comparison-section">
@@ -2074,6 +2376,161 @@
     </div>
 
     <!-- TAB 4: RECOMENDACIONES (Hallazgos y Acciones Sugeridas) -->
+    
+    <div style="margin-top: 2rem; background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+        <h3 style="color: #38bdf8; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem;">
+            🔍 Diagnóstico Operativo de Variación Mes a Mes (Julio vs Junio)
+        </h3>
+        <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1.2rem;">
+            Análisis detallado de las causas de incremento o disminución en la tasa de automatización por marca frente al mes anterior.
+        </p>
+
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.88rem;">
+                <thead>
+                    <tr style="background: #0f172a; color: #94a3b8; border-bottom: 2px solid #334155;">
+                        <th style="padding: 10px; text-align: left;">Marca</th>
+                        <th style="padding: 10px;">Junio 2026</th>
+                        <th style="padding: 10px;">Julio 2026</th>
+                        <th style="padding: 10px;">Crec. Volumen</th>
+                        <th style="padding: 10px;">Var. Auto (%)</th>
+                        <th style="padding: 10px; text-align: left;">Causa de la Variación (Por qué Aumentó o Disminuyó)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Ecuabet Ecuador</td>
+            <td style="padding: 10px; color: #cbd5e1;">277,719 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 62.0%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">320,263 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 56.9%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+15.3%</td>
+            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-5.1% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Subida de volumen (+15.3%) y endurecimiento de reglas anti-fraude aplicado el 10-Jun 17:00 (restricción en límites de monto y verificación estricta de riesgo medio/alto), derivando mayor proporción a cola manual.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Perú</td>
+            <td style="padding: 10px; color: #cbd5e1;">88,899 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 71.8%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">87,792 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 67.4%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #94a3b8;">-1.2%</td>
+            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-4.4% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Mayor concentración de retiros superiores al umbral de 1,999 PEN (riesgo medio), requiriendo validación manual obligatoria por política anti-fraude.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">GanaPlay El Salvador</td>
+            <td style="padding: 10px; color: #cbd5e1;">50,844 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 27.2%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">57,743 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 27.4%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+13.6%</td>
+            <td style="padding: 10px;"><span style='color:#22c55e; font-weight:bold;'>+0.2% 📈</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Operación estable con ligero aumento (+0.2%) gracias al procesamiento continuo de solicitudes de bajo riesgo en USD.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Ecuador</td>
+            <td style="padding: 10px; color: #cbd5e1;">28,344 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 46.3%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">29,436 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 35.8%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+3.9%</td>
+            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-10.5% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Caída (-10.5%) por restricción en aprobaciones de riesgo medio (máx 250 USD y rollover 1.50), incrementando revisión manual.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Costa Rica</td>
+            <td style="padding: 10px; color: #cbd5e1;">28,752 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 57.8%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">27,349 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 59.6%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #94a3b8;">-4.9%</td>
+            <td style="padding: 10px;"><span style='color:#22c55e; font-weight:bold;'>+1.8% 📈</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Crecimiento de automatización (+1.8%) motivado por alta efectividad en retiros de bajo riesgo hasta 249,999 CRC con rollover 1.01.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Paniplay Honduras</td>
+            <td style="padding: 10px; color: #cbd5e1;">16,085 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 70.7%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">15,929 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 59.0%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #94a3b8;">-1.0%</td>
+            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-11.7% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Disminución (-11.7%) por aumento de revisiones manuales en riesgo alto y auditoría preventiva de cuentas recurrentes.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Camanbet Venezuela</td>
+            <td style="padding: 10px; color: #cbd5e1;">12,255 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 20.8%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">12,811 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 13.4%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+4.5%</td>
+            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-7.4% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Parámetro de Rejuego (Rollover = 3.00) muy elevado en VES, enviando el 86.6% de transacciones a aprobación manual.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet El Salvador</td>
+            <td style="padding: 10px; color: #cbd5e1;">11,901 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 35.7%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">12,032 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 36.4%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+1.1%</td>
+            <td style="padding: 10px;"><span style='color:#22c55e; font-weight:bold;'>+0.7% 📈</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Aumento constante (+0.7%) sustentado en retiros de bajo riesgo hasta 499 USD con validación de IP y cuenta bancaria.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">GanaPlay Guatemala</td>
+            <td style="padding: 10px; color: #cbd5e1;">5,107 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 37.1%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">6,134 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 33.4%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+20.1%</td>
+            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-3.7% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Incremento de volumen (+20.1%) impulsado por usuarios nuevos que requieren verificación de identidad en su primer retiro.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Guatemala</td>
+            <td style="padding: 10px; color: #cbd5e1;">4,039 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 58.3%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">4,191 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 60.0%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+3.8%</td>
+            <td style="padding: 10px;"><span style='color:#22c55e; font-weight:bold;'>+1.7% 📈</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Subida de automatización (+1.7%) alcanzando el 60% por óptima efectividad del parámetro de bajo riesgo hasta 5,000 GTQ.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Chile</td>
+            <td style="padding: 10px; color: #cbd5e1;">2,510 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 45.9%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">2,327 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 38.3%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #94a3b8;">-7.3%</td>
+            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-7.6% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Ausencia de reglas parametrizadas para riesgo Medio/Sin Nivel, obligando a procesar manualmente montos sobre 999,999 CLP.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Honduras</td>
+            <td style="padding: 10px; color: #cbd5e1;">1,030 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 11.3%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">2,027 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 2.7%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+96.8%</td>
+            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-8.6% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Crecimiento exponencial de volumen (+96.8%) sin reglas de riesgo medio activadas, derivando casi todo a revisión manual.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Bolivia</td>
+            <td style="padding: 10px; color: #cbd5e1;">1,130 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 23.6%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">1,027 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 0.2%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #94a3b8;">-9.1%</td>
+            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-23.4% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Reclasificación masiva de riesgo en la pasarela de pagos local enviando el 99.8% de operaciones a revisión manual.</td>
+        </tr>
+        
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Camanbet Venezuela 2</td>
+            <td style="padding: 10px; color: #cbd5e1;">681 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 44.2%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">748 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 27.0%</span></td>
+            <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+9.8%</td>
+            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-17.2% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Sensibilidad alta en filtros de prevención anti-fraude para VES enviando retiros medianos a revisión manual.</td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
     <div id="tab-pane-recs" class="tab-pane">
         <div class="recs-card">
         <h2>💡 Recomendaciones: ¿Cómo incrementar y auditar la automatización de retiros?</h2>
@@ -459183,6 +459640,305 @@ const data = {
     <!-- ============================================================ -->
     
     <!-- TAB 3: COMPARISON -->
+    
+    <!-- TAB 6: DISTRIBUCIÓN POR TORTAS (PIE CHARTS) -->
+    <div id="tab-pane-pies" class="tab-pane">
+        <div style="background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.4rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 style="color: #f8fafc; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>🥧</span> Gráficos de Torta por Marca (Automatización vs Aprobación Manual)
+                    </h2>
+                    <p style="color: #94a3b8; font-size: 0.88rem; margin: 0;">
+                        Visualización gráfica de la proporción (%) y volumen exacto de retiros aprobados automáticamente frente a revisión manual para el mes de Julio.
+                    </p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <label style="color: #cbd5e1; font-size: 0.85rem; font-weight: 600;">Filtrar Marca:</label>
+                    <select id="pie-brand-filter" onchange="filterPieCards()" style="background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.88rem; outline: none; cursor: pointer;">
+                        <option value="all">Ver Todas las Marcas</option>
+                        <option value="camanbetvenezuela">Camanbet Venezuela</option><option value="camanbetvenezuela2">Camanbet Venezuela 2</option><option value="doradobetbolivia">Doradobet Bolivia</option><option value="doradobetchile">Doradobet Chile</option><option value="doradobetcostarica">Doradobet Costa Rica</option><option value="doradobetecuador">Doradobet Ecuador</option><option value="doradobetelsalvador">Doradobet El Salvador</option><option value="doradobetguatemala">Doradobet Guatemala</option><option value="doradobethonduras">Doradobet Honduras</option><option value="doradobetper">Doradobet Perú</option><option value="ecuabetecuador">Ecuabet Ecuador</option><option value="ganaplayelsalvador">GanaPlay El Salvador</option><option value="ganaplayguatemala">GanaPlay Guatemala</option><option value="paniplayhonduras">Paniplay Honduras</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="pie-charts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+            
+    <div class="pie-card global-card" style="background: linear-gradient(145deg, #1e293b, #0f172a); border: 2px solid var(--accent-cyan); border-radius: 12px; padding: 1.2rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.4); grid-column: span 1;">
+        <h3 style="color: #38bdf8; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">🌐 TOTAL CONSOLIDADO GLOBAL</h3>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 0.8rem;">Distribución total de <b style="color:#f8fafc;">579,809</b> retiros en Julio</p>
+        <div style="position: relative; width: 230px; height: 230px; margin: 0 auto;">
+            <canvas id="pie-chart-global"></canvas>
+        </div>
+        <div style="display: flex; justify-content: space-around; width: 100%; margin-top: 0.9rem; padding-top: 0.7rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.88rem;">
+            <div>
+                <span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 4px;"></span>
+                <span style="color: #94a3b8;">Automático:</span> <b style="color: #2dd4bf;">305,366 (52.7%)</b>
+            </div>
+            <div>
+                <span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 4px;"></span>
+                <span style="color: #94a3b8;">Manual:</span> <b style="color: #f1f5f9;">274,443 (47.3%)</b>
+            </div>
+        </div>
+    </div>
+    
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Ecuabet Ecuador</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">320,263</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-ecuabetecuador"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">182,313 (56.9%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">137,950 (43.1%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Perú</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">87,792</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetper"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">59,169 (67.4%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">28,623 (32.6%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">GanaPlay El Salvador</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">57,743</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-ganaplayelsalvador"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">15,838 (27.4%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">41,905 (72.6%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Ecuador</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">29,436</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetecuador"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">10,538 (35.8%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">18,898 (64.2%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Costa Rica</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">27,349</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetcostarica"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">16,308 (59.6%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">11,041 (40.4%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Paniplay Honduras</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">15,929</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-paniplayhonduras"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">9,398 (59.0%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">6,531 (41.0%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Camanbet Venezuela</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">12,811</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-camanbetvenezuela"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">1,713 (13.4%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">11,098 (86.6%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet El Salvador</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">12,032</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetelsalvador"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">4,375 (36.4%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">7,657 (63.6%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">GanaPlay Guatemala</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">6,134</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-ganaplayguatemala"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">2,051 (33.4%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">4,083 (66.6%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Guatemala</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">4,191</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetguatemala"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">2,513 (60.0%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">1,678 (40.0%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Chile</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">2,327</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetchile"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">891 (38.3%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">1,436 (61.7%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Honduras</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">2,027</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobethonduras"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">55 (2.7%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">1,972 (97.3%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Doradobet Bolivia</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">1,027</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-doradobetbolivia"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">2 (0.2%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">1,025 (99.8%)</b>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-card" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+            <h3 style="color: #f8fafc; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px;">Camanbet Venezuela 2</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 0.8rem;">Total Retiros: <b style="color: #38bdf8;">748</b></p>
+            <div style="position: relative; width: 210px; height: 210px; margin: 0 auto;">
+                <canvas id="pie-chart-camanbetvenezuela2"></canvas>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.3rem; width: 100%; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #0f766e; margin-right: 5px;"></span>Automático:</span>
+                    <b style="color: #2dd4bf;">202 (27.0%)</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span><span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #64748b; margin-right: 5px;"></span>Aprobación Manual:</span>
+                    <b style="color: #cbd5e1;">546 (73.0%)</b>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+    
+
     <div id="tab-pane-comparison" class="tab-pane">
 </body>
             </html>`;
@@ -460407,6 +461163,127 @@ const data = {
         window.addEventListener('load', runDashboardInit);
         setTimeout(runDashboardInit, 500);
     
-        // ======================================================</script>
+        // ======================================================
+        // ============================================================
+        // PIE CHARTS RENDERING ENGINE ("TORTAS POR MARCA")
+        // ============================================================
+        const pieInstances = {};
+
+        function renderAllPieCharts() {
+            const brandsData = {"Camanbet Venezuela": {"total": 12811, "auto": 1713, "bajo_manual": 6651, "otros_manual": 4447, "manual_total": 11098, "pct_auto": 13.4, "pct_manual": 86.6}, "Camanbet Venezuela 2": {"total": 748, "auto": 202, "bajo_manual": 379, "otros_manual": 167, "manual_total": 546, "pct_auto": 27.0, "pct_manual": 73.0}, "Doradobet Bolivia": {"total": 1027, "auto": 2, "bajo_manual": 356, "otros_manual": 669, "manual_total": 1025, "pct_auto": 0.2, "pct_manual": 99.8}, "Doradobet Chile": {"total": 2327, "auto": 891, "bajo_manual": 327, "otros_manual": 1109, "manual_total": 1436, "pct_auto": 38.3, "pct_manual": 61.7}, "Doradobet Costa Rica": {"total": 27349, "auto": 16308, "bajo_manual": 1261, "otros_manual": 9780, "manual_total": 11041, "pct_auto": 59.6, "pct_manual": 40.4}, "Doradobet Ecuador": {"total": 29436, "auto": 10538, "bajo_manual": 7647, "otros_manual": 11251, "manual_total": 18898, "pct_auto": 35.8, "pct_manual": 64.2}, "Doradobet El Salvador": {"total": 12032, "auto": 4375, "bajo_manual": 2091, "otros_manual": 5566, "manual_total": 7657, "pct_auto": 36.4, "pct_manual": 63.6}, "Doradobet Guatemala": {"total": 4191, "auto": 2513, "bajo_manual": 342, "otros_manual": 1336, "manual_total": 1678, "pct_auto": 60.0, "pct_manual": 40.0}, "Doradobet Honduras": {"total": 2027, "auto": 55, "bajo_manual": 693, "otros_manual": 1279, "manual_total": 1972, "pct_auto": 2.7, "pct_manual": 97.3}, "Doradobet Perú": {"total": 87792, "auto": 59169, "bajo_manual": 5287, "otros_manual": 23336, "manual_total": 28623, "pct_auto": 67.4, "pct_manual": 32.6}, "Ecuabet Ecuador": {"total": 320263, "auto": 182313, "bajo_manual": 57545, "otros_manual": 80405, "manual_total": 137950, "pct_auto": 56.9, "pct_manual": 43.1}, "GanaPlay El Salvador": {"total": 57743, "auto": 15838, "bajo_manual": 19226, "otros_manual": 22679, "manual_total": 41905, "pct_auto": 27.4, "pct_manual": 72.6}, "GanaPlay Guatemala": {"total": 6134, "auto": 2051, "bajo_manual": 1640, "otros_manual": 2443, "manual_total": 4083, "pct_auto": 33.4, "pct_manual": 66.6}, "Paniplay Honduras": {"total": 15929, "auto": 9398, "bajo_manual": 2395, "otros_manual": 4136, "manual_total": 6531, "pct_auto": 59.0, "pct_manual": 41.0}};
+
+            let totGlobal = 0, autoGlobal = 0;
+            for (let b in brandsData) {
+                totGlobal += brandsData[b].total;
+                autoGlobal += brandsData[b].auto;
+            }
+            let manGlobal = totGlobal - autoGlobal;
+            let pctAutoGlobal = Math.round((autoGlobal / totGlobal) * 100);
+            let pctManGlobal = 100 - pctAutoGlobal;
+
+            createSinglePieChart('pie-chart-global', [autoGlobal, manGlobal], [pctAutoGlobal, pctManGlobal], ['#0f766e', '#64748b']);
+
+            for (let brand in brandsData) {
+                const bId = brand.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+                const canvasId = `pie-chart-${bId}`;
+                const s = brandsData[brand];
+                const autoCount = s.auto;
+                const manCount = s.manual_total;
+                const pctAuto = Math.round((autoCount / s.total) * 100);
+                const pctMan = 100 - pctAuto;
+
+                createSinglePieChart(canvasId, [autoCount, manCount], [pctAuto, pctMan], ['#0f766e', '#64748b']);
+            }
+        }
+
+        function createSinglePieChart(canvasId, counts, pcts, colors) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            
+            if (pieInstances[canvasId]) {
+                pieInstances[canvasId].destroy();
+            }
+
+            const ctx = canvas.getContext('2d');
+            pieInstances[canvasId] = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Automático', 'Aprobación Manual'],
+                    datasets: [{
+                        data: counts,
+                        backgroundColor: colors,
+                        borderColor: '#0f172a',
+                        borderWidth: 3,
+                        hoverOffset: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '55%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const idx = context.dataIndex;
+                                    const val = context.raw;
+                                    const pct = pcts[idx];
+                                    const label = context.label;
+                                    return ` ${label}: ${val.toLocaleString()} (${pct}%)`;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            color: '#ffffff',
+                            font: { weight: 'bold', size: 12, family: 'Inter, sans-serif' },
+                            formatter: function(value, context) {
+                                const idx = context.dataIndex;
+                                const pct = pcts[idx];
+                                return pct > 4 ? `${pct}%` : '';
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function filterPieCards() {
+            const val = document.getElementById('pie-brand-filter').value;
+            const grid = document.getElementById('pie-charts-grid');
+            if (!grid) return;
+            const cards = grid.querySelectorAll('.pie-card');
+            cards.forEach(card => {
+                if (val === 'all') {
+                    card.style.display = 'flex';
+                } else {
+                    if (card.classList.contains('global-card')) {
+                        card.style.display = 'none';
+                    } else {
+                        const canvas = card.querySelector('canvas');
+                        if (canvas && canvas.id === `pie-chart-${val}`) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                }
+            });
+        }
+
+        // Call renderAllPieCharts when switching tabs
+        const origSwitchTab = window.switchTab;
+        window.switchTab = function(tabId) {
+            if (typeof origSwitchTab === 'function') origSwitchTab(tabId);
+            if (tabId === 'pies') {
+                setTimeout(renderAllPieCharts, 100);
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(renderAllPieCharts, 500);
+        });
+        
+</script>
 </body>
 </html>
