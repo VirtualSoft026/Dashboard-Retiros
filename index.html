@@ -1416,7 +1416,7 @@
                 <option value="last-7">Últimos 7 días</option>
                 <option value="last-30">Últimos 30 días</option>
                 <option value="this-month">Mes actual</option>
-                <option value="last-month">Mes anterior</option>
+                <option value="last-month" selected>Mes anterior</option>
                 <option value="custom">Personalizado (Calendario)</option>
             </select>
         </div>
@@ -509475,9 +509475,9 @@ const data = {
             endInput.min = minDate;
             endInput.max = maxDate;
 
-            // Valores iniciales
-            startInput.value = minDate;
-            endInput.value = maxDate;
+            // Valores iniciales por defecto (Mes anterior - Julio 2026)
+            document.getElementById('date-preset').value = 'last-month';
+            handlePresetChange();
 
 
 
