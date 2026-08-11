@@ -1412,7 +1412,7 @@
         <div class="controls-card">
         <div class="filter-group">
             <label for="date-preset">Fecha</label>
-            <select id="date-preset" onchange="handlePresetChange()">
+            <select id="date-preset" onchange="syncDateFilters(this.value)">
                 <option value="all" selected>Rango completo (Todas las fechas)</option>
                 <option value="today">Hoy</option>
                 <option value="yesterday">Ayer</option>
@@ -1967,6 +1967,7 @@
     <!-- TAB 6: DISTRIBUCIÓN POR TORTAS (PIE CHARTS) -->
     <div id="tab-pane-pies" class="tab-pane">
         
+        
         <div style="background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 1.5rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.2rem;">
                 <div>
@@ -1974,12 +1975,27 @@
                         <span>🥧</span> Gráficos de Torta por Marca (Automatización vs Aprobación Manual)
                     </h2>
                     <p style="color: #94a3b8; font-size: 0.88rem; margin: 0;">
-                        Visualización gráfica de la proporción (%) y volumen exacto de retiros aprobados automáticamente frente a revisión manual para el mes de Julio.
+                        Visualización gráfica de la proporción (%) y volumen exacto de retiros aprobados automáticamente frente a revisión manual.
                     </p>
                 </div>
 
-                <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1.2rem;">
-                    <!-- SIMULADOR DE REGLAS TOGGLE CARD (EXACTO A VISTA GENERAL) -->
+                <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <!-- FILTRO DE FECHA (MISMO DE VISTA GENERAL) -->
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <label style="color: #cbd5e1; font-size: 0.85rem; font-weight: 600;">Fecha:</label>
+                        <select id="date-preset-pies" onchange="syncDateFilters(this.value)" style="background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.55rem 0.9rem; border-radius: 8px; font-size: 0.88rem; outline: none; cursor: pointer;">
+                            <option value="all">Rango completo (Todas las fechas)</option>
+                            <option value="today">Hoy</option>
+                            <option value="yesterday">Ayer</option>
+                            <option value="last-7">Últimos 7 días</option>
+                            <option value="last-30">Últimos 30 días</option>
+                            <option value="this-month">Mes actual</option>
+                            <option value="last-month" selected>Mes anterior (Julio)</option>
+                            <option value="custom">Personalizado (Calendario)</option>
+                        </select>
+                    </div>
+
+                    <!-- SIMULADOR DE REGLAS TOGGLE CARD -->
                     <div class="filter-group sim-group" title="Activa este switch para simular la tasa de automatización proyectada al aprobar automáticamente retiros de bajo riesgo" style="padding: 0.45rem 0.9rem; display: flex; align-items: center; gap: 0.75rem; background: rgba(129, 140, 248, 0.08); border-radius: 10px; border: 1px dashed rgba(129, 140, 248, 0.4);">
                         <label class="switch">
                             <input type="checkbox" id="sim-toggle-pies" onchange="syncSimulatorToggles(this.checked)">
@@ -1995,9 +2011,9 @@
                     </div>
 
                     <!-- BRAND SELECTOR DROPDOWN -->
-                    <div style="display: flex; align-items: center; gap: 0.6rem;">
-                        <label style="color: #cbd5e1; font-size: 0.85rem; font-weight: 600;">Filtrar Marca:</label>
-                        <select id="pie-brand-filter" onchange="filterPieCards()" style="background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.55rem 1rem; border-radius: 8px; font-size: 0.88rem; outline: none; cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <label style="color: #cbd5e1; font-size: 0.85rem; font-weight: 600;">Marca:</label>
+                        <select id="pie-brand-filter" onchange="filterPieCards()" style="background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.55rem 0.9rem; border-radius: 8px; font-size: 0.88rem; outline: none; cursor: pointer;">
                             <option value="all">Ver Todas las Marcas</option>
                             <option value="ecuabetecuador">Ecuabet Ecuador</option>
                             <option value="doradobetper">Doradobet Perú</option>
@@ -2017,6 +2033,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+    
         </div>
     
 
@@ -512295,6 +512313,15 @@ const data = {
     // Con soporte para Reglas Estipuladas (Botón Encendido: Riesgo Bajo = Automático)
     // ============================================================
     const pieInstances = {};
+
+    function syncDateFilters(val) {
+        const dMain = document.getElementById('date-preset');
+        const dPies = document.getElementById('date-preset-pies');
+        if (dMain && dMain.value !== val) dMain.value = val;
+        if (dPies && dPies.value !== val) dPies.value = val;
+        if (typeof handlePresetChange === 'function') handlePresetChange();
+        renderAllPieCharts();
+    }
 
     function renderAllPieCharts() {
         const brandsData = {"Camanbet Venezuela": {"total": 12811, "auto_real": 1713, "bajo_manual": 6651, "otros_manual": 4447, "manual_real_total": 11098, "pct_auto_real": 13.4, "pct_manual_real": 86.6, "auto_estipulado": 8364, "manual_restante": 4447, "pct_auto_estipulado": 65, "pct_manual_restante": 35}, "Camanbet Venezuela 2": {"total": 748, "auto_real": 202, "bajo_manual": 379, "otros_manual": 167, "manual_real_total": 546, "pct_auto_real": 27.0, "pct_manual_real": 73.0, "auto_estipulado": 581, "manual_restante": 167, "pct_auto_estipulado": 78, "pct_manual_restante": 22}, "Doradobet Bolivia": {"total": 1027, "auto_real": 2, "bajo_manual": 356, "otros_manual": 669, "manual_real_total": 1025, "pct_auto_real": 0.2, "pct_manual_real": 99.8, "auto_estipulado": 358, "manual_restante": 669, "pct_auto_estipulado": 35, "pct_manual_restante": 65}, "Doradobet Chile": {"total": 2327, "auto_real": 891, "bajo_manual": 327, "otros_manual": 1109, "manual_real_total": 1436, "pct_auto_real": 38.3, "pct_manual_real": 61.7, "auto_estipulado": 1218, "manual_restante": 1109, "pct_auto_estipulado": 52, "pct_manual_restante": 48}, "Doradobet Costa Rica": {"total": 27349, "auto_real": 16308, "bajo_manual": 1261, "otros_manual": 9780, "manual_real_total": 11041, "pct_auto_real": 59.6, "pct_manual_real": 40.4, "auto_estipulado": 17569, "manual_restante": 9780, "pct_auto_estipulado": 64, "pct_manual_restante": 36}, "Doradobet Ecuador": {"total": 29436, "auto_real": 10538, "bajo_manual": 7647, "otros_manual": 11251, "manual_real_total": 18898, "pct_auto_real": 35.8, "pct_manual_real": 64.2, "auto_estipulado": 18185, "manual_restante": 11251, "pct_auto_estipulado": 62, "pct_manual_restante": 38}, "Doradobet El Salvador": {"total": 12032, "auto_real": 4375, "bajo_manual": 2091, "otros_manual": 5566, "manual_real_total": 7657, "pct_auto_real": 36.4, "pct_manual_real": 63.6, "auto_estipulado": 6466, "manual_restante": 5566, "pct_auto_estipulado": 54, "pct_manual_restante": 46}, "Doradobet Guatemala": {"total": 4191, "auto_real": 2513, "bajo_manual": 342, "otros_manual": 1336, "manual_real_total": 1678, "pct_auto_real": 60.0, "pct_manual_real": 40.0, "auto_estipulado": 2855, "manual_restante": 1336, "pct_auto_estipulado": 68, "pct_manual_restante": 32}, "Doradobet Honduras": {"total": 2027, "auto_real": 55, "bajo_manual": 693, "otros_manual": 1279, "manual_real_total": 1972, "pct_auto_real": 2.7, "pct_manual_real": 97.3, "auto_estipulado": 748, "manual_restante": 1279, "pct_auto_estipulado": 37, "pct_manual_restante": 63}, "Doradobet Perú": {"total": 87792, "auto_real": 59169, "bajo_manual": 5287, "otros_manual": 23336, "manual_real_total": 28623, "pct_auto_real": 67.4, "pct_manual_real": 32.6, "auto_estipulado": 64456, "manual_restante": 23336, "pct_auto_estipulado": 73, "pct_manual_restante": 27}, "Ecuabet Ecuador": {"total": 320263, "auto_real": 182313, "bajo_manual": 57545, "otros_manual": 80405, "manual_real_total": 137950, "pct_auto_real": 56.9, "pct_manual_real": 43.1, "auto_estipulado": 239858, "manual_restante": 80405, "pct_auto_estipulado": 75, "pct_manual_restante": 25}, "GanaPlay El Salvador": {"total": 57743, "auto_real": 15838, "bajo_manual": 19226, "otros_manual": 22679, "manual_real_total": 41905, "pct_auto_real": 27.4, "pct_manual_real": 72.6, "auto_estipulado": 35064, "manual_restante": 22679, "pct_auto_estipulado": 61, "pct_manual_restante": 39}, "GanaPlay Guatemala": {"total": 6134, "auto_real": 2051, "bajo_manual": 1640, "otros_manual": 2443, "manual_real_total": 4083, "pct_auto_real": 33.4, "pct_manual_real": 66.6, "auto_estipulado": 3691, "manual_restante": 2443, "pct_auto_estipulado": 60, "pct_manual_restante": 40}, "Paniplay Honduras": {"total": 15929, "auto_real": 9398, "bajo_manual": 2395, "otros_manual": 4136, "manual_real_total": 6531, "pct_auto_real": 59.0, "pct_manual_real": 41.0, "auto_estipulado": 11793, "manual_restante": 4136, "pct_auto_estipulado": 74, "pct_manual_restante": 26}};
