@@ -1409,8 +1409,8 @@
         <div class="controls-card">
         <div class="filter-group">
             <label for="date-preset">Fecha</label>
-            <select id="date-preset">
-                <option value="all">Rango de fecha</option>
+            <select id="date-preset" onchange="handlePresetChange()">
+                <option value="all" selected>Rango completo (Todas las fechas)</option>
                 <option value="today">Hoy</option>
                 <option value="yesterday">Ayer</option>
                 <option value="last-7">Últimos 7 días</option>
@@ -1424,17 +1424,17 @@
         <div class="filter-group date-inputs" id="date-inputs-container" style="display: flex;">
             <div class="filter-group">
                 <label for="date-start">Desde</label>
-                <input type="date" id="date-start">
+                <input type="date" id="date-start" onchange="document.getElementById('date-preset').value='custom'; updateDashboard();">
             </div>
             <div class="filter-group">
                 <label for="date-end">Hasta</label>
-                <input type="date" id="date-end">
+                <input type="date" id="date-end" onchange="document.getElementById('date-preset').value='custom'; updateDashboard();">
             </div>
         </div>
 
         <div class="filter-group">
             <label for="brand-select">Marca</label>
-            <select id="brand-select">
+            <select id="brand-select" onchange="updateDashboard()">
                 <option value="all">Todas las marcas</option>
             </select>
         </div>
@@ -509445,75 +509445,102 @@ const data = {
 
         // Inicializar filtros
         function initFilters() {
-            // Extraer marcas únicas
-            const brands = new Set();
-            for (let m in data) {
-                data[m].brands_summary.forEach(b => brands.add(b.Marca));
-            }
-            
-            const brandSelect = document.getElementById('brand-select');
-            Array.from(brands).sort().forEach(brand => {
-                const opt = document.createElement('option');
-                opt.value = brand;
-                opt.textContent = brand;
-                brandSelect.appendChild(opt);
-            });
-
-            // Encontrar fechas min y max en el set de datos diarios
-            let allDates = [];
-            for (let m in data) {
-                data[m].daily_data.forEach(d => allDates.push(d.date_str || d.date));
-            }
-            allDates.sort();
-            const minDate = allDates[0] || '2026-04-01';
-            const maxDate = allDates[allDates.length - 1] || '2026-05-31';
-
-            const startInput = document.getElementById('date-start');
-            const endInput = document.getElementById('date-end');
-            startInput.min = minDate;
-            startInput.max = maxDate;
-            endInput.min = minDate;
-            endInput.max = maxDate;
-
-            // Valores iniciales
-            startInput.value = minDate;
-            endInput.value = maxDate;
-
-
-
-            // Configurar manejadores
-            document.getElementById('date-preset').addEventListener('change', handlePresetChange);
-            
-            document.getElementById('date-start').addEventListener('change', function() {
-                document.getElementById('date-preset').value = 'custom';
-                updateDashboard();
-            });
-            
-            document.getElementById('date-end').addEventListener('change', function() {
-                document.getElementById('date-preset').value = 'custom';
-                updateDashboard();
-            });
-            document.getElementById('brand-select').addEventListener('change', updateDashboard);
-            
-            // Event listener for simulator toggle
-            document.getElementById('sim-toggle').addEventListener('change', function() {
-                const badge = document.getElementById('sim-badge');
-                if (this.checked) {
-                    badge.textContent = "Reglas de Negocio Estipuladas (Activo)";
-                    badge.style.color = "var(--accent-green)";
-                } else {
-                    badge.textContent = "Reglas de Negocio Estipuladas (Apagado)";
-                    badge.style.color = "var(--text-secondary)";
+            try {
+                // Extraer marcas únicas
+                const brands = new Set();
+                for (let m in data) {
+                    if (data[m] && data[m].brands_summary && Array.isArray(data[m].brands_summary)) {
+                        data[m].brands_summary.forEach(b => {
+                            if (b && b.Marca) brands.add(b.Marca);
+                        });
+                    }
                 }
-                updateDashboard();
-            });
+                
+                const brandSelect = document.getElementById('brand-select');
+                if (brandSelect) {
+                    brandSelect.innerHTML = '<option value="all">Todas las marcas</option>';
+                    Array.from(brands).sort().forEach(brand => {
+                        const opt = document.createElement('option');
+                        opt.value = brand;
+                        opt.textContent = brand;
+                        brandSelect.appendChild(opt);
+                    });
+                }
 
-            document.getElementById('btn-export-report').addEventListener('click', exportReport);
-            document.getElementById('btn-export-word').addEventListener('click', exportWord);
+                // Encontrar fechas min y max en el set de datos diarios
+                let allDates = [];
+                for (let m in data) {
+                    if (data[m] && data[m].daily_data && Array.isArray(data[m].daily_data)) {
+                        data[m].daily_data.forEach(d => {
+                            const dt = d.date_str || d.date;
+                            if (dt) allDates.push(dt);
+                        });
+                    }
+                }
+                allDates.sort();
+                const minDate = allDates[0] || '2026-01-01';
+                const maxDate = allDates[allDates.length - 1] || '2026-12-31';
 
-            // Cargar por defecto "all"
-            handlePresetChange();
-            updateDashboard();
+                const startInput = document.getElementById('date-start');
+                const endInput = document.getElementById('date-end');
+                if (startInput) {
+                    startInput.min = minDate;
+                    startInput.max = maxDate;
+                }
+                if (endInput) {
+                    endInput.min = minDate;
+                    endInput.max = maxDate;
+                }
+
+                const presetSelect = document.getElementById('date-preset');
+                if (presetSelect && (!presetSelect.value || presetSelect.value === 'last-month')) {
+                    presetSelect.value = 'all';
+                }
+
+                if (presetSelect) presetSelect.addEventListener('change', handlePresetChange);
+                
+                if (startInput) {
+                    startInput.addEventListener('change', function() {
+                        if (presetSelect) presetSelect.value = 'custom';
+                        updateDashboard();
+                    });
+                }
+                
+                if (endInput) {
+                    endInput.addEventListener('change', function() {
+                        if (presetSelect) presetSelect.value = 'custom';
+                        updateDashboard();
+                    });
+                }
+                if (brandSelect) brandSelect.addEventListener('change', updateDashboard);
+                
+                const simToggle = document.getElementById('sim-toggle');
+                if (simToggle) {
+                    simToggle.addEventListener('change', function() {
+                        const badge = document.getElementById('sim-badge');
+                        if (badge) {
+                            if (this.checked) {
+                                badge.textContent = "Reglas de Negocio Estipuladas (Activo)";
+                                badge.style.color = "var(--accent-green)";
+                            } else {
+                                badge.textContent = "Reglas de Negocio Estipuladas (Apagado)";
+                                badge.style.color = "var(--text-secondary)";
+                            }
+                        }
+                        updateDashboard();
+                    });
+                }
+
+                const btnExportReport = document.getElementById('btn-export-report');
+                if (btnExportReport) btnExportReport.addEventListener('click', exportReport);
+                
+                const btnExportWord = document.getElementById('btn-export-word');
+                if (btnExportWord) btnExportWord.addEventListener('click', exportWord);
+
+                handlePresetChange();
+            } catch(e) {
+                console.error("Error en initFilters:", e);
+            }
         }
 
         function exportReport() {
@@ -509987,23 +510014,29 @@ const data = {
         }
 
         function handlePresetChange() {
-            const preset = document.getElementById('date-preset').value;
+            const presetEl = document.getElementById('date-preset');
+            const preset = presetEl ? presetEl.value : 'all';
             const container = document.getElementById('date-inputs-container');
             
             // Encontrar rango min/max
             let allDates = [];
             for (let m in data) {
-                data[m].daily_data.forEach(d => allDates.push(d.date_str || d.date));
+                if (data[m] && data[m].daily_data && Array.isArray(data[m].daily_data)) {
+                    data[m].daily_data.forEach(d => {
+                        const dt = d.date_str || d.date;
+                        if (dt) allDates.push(dt);
+                    });
+                }
             }
             allDates.sort();
-            const minDateStr = allDates[0] || '2026-04-01';
-            const maxDateStr = allDates[allDates.length - 1] || '2026-05-31';
+            const minDateStr = allDates[0] || '2026-01-01';
+            const maxDateStr = allDates[allDates.length - 1] || '2026-12-31';
             
             const maxDate = new Date(maxDateStr + 'T00:00:00');
             const startInput = document.getElementById('date-start');
             const endInput = document.getElementById('date-end');
 
-            container.style.display = 'flex';
+            if (container) container.style.display = 'flex';
             if (preset === 'custom') {
                 updateDashboard();
                 return;
@@ -510045,10 +510078,13 @@ const data = {
                 const lastDay = new Date(y, m, 0);
                 startStr = `${firstDay.getFullYear()}-${String(firstDay.getMonth() + 1).padStart(2, '0')}-${String(firstDay.getDate()).padStart(2, '0')}`;
                 endStr = `${lastDay.getFullYear()}-${String(lastDay.getMonth() + 1).padStart(2, '0')}-${String(lastDay.getDate()).padStart(2, '0')}`;
+            } else if (preset === 'all') {
+                startStr = minDateStr;
+                endStr = maxDateStr;
             }
 
-            startInput.value = startStr;
-            endInput.value = endStr;
+            if (startInput) startInput.value = startStr;
+            if (endInput) endInput.value = endStr;
             updateDashboard();
         }
 
@@ -510105,8 +510141,10 @@ const data = {
 
         // Motor Principal de Actualización del Tablero
         function updateDashboard() {
-            let startStr = document.getElementById('date-start') ? document.getElementById('date-start').value : '';
-            let endStr = document.getElementById('date-end') ? document.getElementById('date-end').value : '';
+            let startInput = document.getElementById('date-start');
+            let endInput = document.getElementById('date-end');
+            let startStr = startInput ? startInput.value : '';
+            let endStr = endInput ? endInput.value : '';
 
             // Robust fallback if inputs are empty
             if (!startStr || !endStr) {
@@ -510122,6 +510160,8 @@ const data = {
                 allDates.sort();
                 if (!startStr) startStr = allDates[0] || '2026-01-01';
                 if (!endStr) endStr = allDates[allDates.length - 1] || '2026-12-31';
+                if (startInput) startInput.value = startStr;
+                if (endInput) endInput.value = endStr;
             }
             const brand = document.getElementById('brand-select').value;
             const preset = document.getElementById('date-preset').value;
@@ -510356,6 +510396,9 @@ const data = {
             // Determinar qué meses están incluidos en el rango de fechas
             let activeMonths = [];
             const monthNames = {
+                "enero": { start: "2026-01-01", end: "2026-01-31" },
+                "febrero": { start: "2026-02-01", end: "2026-02-28" },
+                "marzo": { start: "2026-03-01", end: "2026-03-31" },
                 "abril": { start: "2026-04-01", end: "2026-04-30" },
                 "mayo": { start: "2026-05-01", end: "2026-05-31" },
                 "junio": { start: "2026-06-01", end: "2026-06-30" },
@@ -510717,9 +510760,11 @@ const data = {
             // 6. Filtrar y graficar bank_data
             let bankAgg = {};
             for (let m in data) {
-                const bankList = data[m].bank_data || [];
+                const bankList = (data[m] && data[m].bank_data) || [];
                 bankList.forEach(r => {
-                    if (brand === 'all' || r.Marca === brand) {
+                    const rowDate = r.date_str || r.date;
+                    if (!rowDate || (rowDate >= startStr && rowDate <= endStr)) {
+                        if (brand === 'all' || r.Marca === brand) {
                         const bank = r.Banco_Norm || r.Nombre_Banco || r.Banco || 'Otros';
                         if (!bankAgg[bank]) {
                             bankAgg[bank] = { auto_sum: 0, auto_count: 0, manual_sum: 0, manual_count: 0 };
@@ -510744,6 +510789,7 @@ const data = {
                             bankAgg[bank].manual_count += (r.count_ap * (count_manual / count)) || 0;
                         }
                     }
+                }
                 });
             }
 
@@ -510802,7 +510848,11 @@ const data = {
             });
 
             // 7. Actualizar tabla detallada de métricas
-            
+            try {
+                updateTable(startStr, endStr, brand);
+            } catch(e) {
+                console.error("Error actualizando tabla de métricas en updateDashboard:", e);
+            }
         }
 
         function updateTable(startStr, endStr, brand) {
@@ -511155,19 +511205,19 @@ const data = {
 
 
         // Cargar filtros al iniciar
-        window.addEventListener('load', () => {
-            try { initFilters(); } catch(e) { console.error(e); }
-            try { updateDashboard(); } catch(e) { console.error(e); }
-            try { initComparisonControls(); } catch(e) { console.error(e); }
-        });
-        document.addEventListener('DOMContentLoaded', () => {
-            try { initComparisonControls(); } catch(e) { console.error(e); }
-            try { updateDashboard(); } catch(e) { console.error(e); }
-        });
-        document.addEventListener('DOMContentLoaded', () => {
-            initComparisonControls();
-        });
-        setTimeout(initComparisonControls, 500);
+        function runDashboardInit() {
+            try { initFilters(); } catch(e) { console.error("Error initFilters:", e); }
+            try { updateDashboard(); } catch(e) { console.error("Error updateDashboard:", e); }
+            try { initComparisonControls(); } catch(e) { console.error("Error initComparisonControls:", e); }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runDashboardInit);
+        } else {
+            runDashboardInit();
+        }
+        window.addEventListener('load', runDashboardInit);
+        setTimeout(runDashboardInit, 500);
     
         // ======================================================</script>
 </body>
