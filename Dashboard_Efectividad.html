@@ -1444,7 +1444,7 @@
 
                     <div class="filter-group sim-group" title="Activa este switch para simular la tasa de automatización proyectada al aprobar automáticamente retiros de bajo riesgo" style="border-left: 1px solid var(--border-color); padding: 0.45rem 0.9rem; display: flex; align-items: center; gap: 0.75rem; background: rgba(129, 140, 248, 0.06); border-radius: 10px; border: 1px dashed rgba(129, 140, 248, 0.35);">
                 <label class="switch">
-                    <input type="checkbox" id="sim-toggle" onchange="toggleSimulator()">
+                    <input type="checkbox" id="sim-toggle" onchange="syncSimulatorToggles(this.checked)">
                     <span class="slider round"></span>
                 </label>
                 <div style="display: flex; flex-direction: column; justify-content: center; cursor: pointer;" onclick="document.getElementById('sim-toggle').click()">
@@ -1966,25 +1966,59 @@
     
     <!-- TAB 6: DISTRIBUCIÓN POR TORTAS (PIE CHARTS) -->
     <div id="tab-pane-pies" class="tab-pane">
-        <div style="background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1.4rem; margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        
+        <div style="background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.2rem;">
                 <div>
                     <h2 style="color: #f8fafc; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;">
                         <span>🥧</span> Gráficos de Torta por Marca (Automatización vs Aprobación Manual)
                     </h2>
-                    <p id="pie-mode-badge" style="font-size: 0.9rem; margin: 0;">
-                        <span style="color:#2dd4bf; font-weight:bold;">⚡ Reglas Estipuladas Activas (Riesgo Bajo Incluido en Automático) [BOTÓN ENCENDIDO]</span>
+                    <p style="color: #94a3b8; font-size: 0.88rem; margin: 0;">
+                        Visualización gráfica de la proporción (%) y volumen exacto de retiros aprobados automáticamente frente a revisión manual para el mes de Julio.
                     </p>
                 </div>
-                <div style="display: flex; align-items: center; gap: 0.8rem;">
-                    <label style="color: #cbd5e1; font-size: 0.85rem; font-weight: 600;">Filtrar Marca:</label>
-                    <select id="pie-brand-filter" onchange="filterPieCards()" style="background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.88rem; outline: none; cursor: pointer;">
-                        <option value="all">Ver Todas las Marcas</option>
-                        <option value="camanbetvenezuela">Camanbet Venezuela</option><option value="camanbetvenezuela2">Camanbet Venezuela 2</option><option value="doradobetbolivia">Doradobet Bolivia</option><option value="doradobetchile">Doradobet Chile</option><option value="doradobetcostarica">Doradobet Costa Rica</option><option value="doradobetecuador">Doradobet Ecuador</option><option value="doradobetelsalvador">Doradobet El Salvador</option><option value="doradobetguatemala">Doradobet Guatemala</option><option value="doradobethonduras">Doradobet Honduras</option><option value="doradobetper">Doradobet Perú</option><option value="ecuabetecuador">Ecuabet Ecuador</option><option value="ganaplayelsalvador">GanaPlay El Salvador</option><option value="ganaplayguatemala">GanaPlay Guatemala</option><option value="paniplayhonduras">Paniplay Honduras</option>
-                    </select>
+
+                <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1.2rem;">
+                    <!-- SIMULADOR DE REGLAS TOGGLE CARD (EXACTO A VISTA GENERAL) -->
+                    <div class="filter-group sim-group" title="Activa este switch para simular la tasa de automatización proyectada al aprobar automáticamente retiros de bajo riesgo" style="padding: 0.45rem 0.9rem; display: flex; align-items: center; gap: 0.75rem; background: rgba(129, 140, 248, 0.08); border-radius: 10px; border: 1px dashed rgba(129, 140, 248, 0.4);">
+                        <label class="switch">
+                            <input type="checkbox" id="sim-toggle-pies" onchange="syncSimulatorToggles(this.checked)">
+                            <span class="slider round"></span>
+                        </label>
+                        <div style="display: flex; flex-direction: column; justify-content: center; cursor: pointer;" onclick="document.getElementById('sim-toggle-pies').click()">
+                            <div style="display: flex; align-items: center; gap: 0.35rem;">
+                                <span style="font-size: 0.85rem;">🧪</span>
+                                <label style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: #818cf8; letter-spacing: 0.04em; cursor: pointer;">SIMULADOR DE REGLAS</label>
+                            </div>
+                            <span id="sim-badge-pies" style="font-size: 0.7rem; color: #94a3b8; font-weight: 500; transition: color 0.3s; margin-top: 0.1rem;">Ver impacto proyectado (Apagado)</span>
+                        </div>
+                    </div>
+
+                    <!-- BRAND SELECTOR DROPDOWN -->
+                    <div style="display: flex; align-items: center; gap: 0.6rem;">
+                        <label style="color: #cbd5e1; font-size: 0.85rem; font-weight: 600;">Filtrar Marca:</label>
+                        <select id="pie-brand-filter" onchange="filterPieCards()" style="background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.55rem 1rem; border-radius: 8px; font-size: 0.88rem; outline: none; cursor: pointer;">
+                            <option value="all">Ver Todas las Marcas</option>
+                            <option value="ecuabetecuador">Ecuabet Ecuador</option>
+                            <option value="doradobetper">Doradobet Perú</option>
+                            <option value="ganaplayelsalvador">GanaPlay El Salvador</option>
+                            <option value="doradobetecuador">Doradobet Ecuador</option>
+                            <option value="doradobetcostarica">Doradobet Costa Rica</option>
+                            <option value="paniplayhonduras">Paniplay Honduras</option>
+                            <option value="camanbetvenezuela">Camanbet Venezuela</option>
+                            <option value="doradobetelsalvador">Doradobet El Salvador</option>
+                            <option value="ganaplayguatemala">GanaPlay Guatemala</option>
+                            <option value="doradobetguatemala">Doradobet Guatemala</option>
+                            <option value="doradobetchile">Doradobet Chile</option>
+                            <option value="doradobethonduras">Doradobet Honduras</option>
+                            <option value="doradobetbolivia">Doradobet Bolivia</option>
+                            <option value="camanbetvenezuela2">Camanbet Venezuela 2</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
+    
 
         <div id="pie-charts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem;">
             
@@ -512267,7 +512301,7 @@ const data = {
 
         // Check if stipulated mode (Botón Encendido) is active
         const simToggle = document.getElementById('sim-toggle');
-        const isStipulated = simToggle ? simToggle.checked : true; // Default to stipulated (Botón Encendido)
+        const tPies = document.getElementById('sim-toggle-pies'); const isStipulated = tPies ? tPies.checked : (simToggle ? simToggle.checked : false); // Default to stipulated (Botón Encendido)
 
         // Update badge indicator text
         const modeBadge = document.getElementById('pie-mode-badge');
@@ -512418,6 +512452,37 @@ const data = {
     });
     
         
+
+    function syncSimulatorToggles(isChecked) {
+        const tMain = document.getElementById('sim-toggle');
+        const tPies = document.getElementById('sim-toggle-pies');
+        
+        if (tMain) tMain.checked = isChecked;
+        if (tPies) tPies.checked = isChecked;
+
+        const bMain = document.getElementById('sim-badge');
+        const bPies = document.getElementById('sim-badge-pies');
+
+        const badgeText = isChecked ? 'Ver impacto proyectado (Encendido)' : 'Ver impacto proyectado (Apagado)';
+        const badgeColor = isChecked ? '#38bdf8' : '#94a3b8';
+
+        if (bMain) {
+            bMain.textContent = badgeText;
+            bMain.style.color = badgeColor;
+        }
+        if (bPies) {
+            bPies.textContent = badgeText;
+            bPies.style.color = badgeColor;
+        }
+
+        if (typeof toggleSimulator === 'function') {
+            toggleSimulator();
+        }
+        if (typeof renderAllPieCharts === 'function') {
+            renderAllPieCharts();
+        }
+    }
+    
 </script>
 </body>
 </html>
