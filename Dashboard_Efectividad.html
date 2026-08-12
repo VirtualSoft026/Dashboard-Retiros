@@ -1966,74 +1966,63 @@
     
     <!-- TAB 6: DISTRIBUCIÓN POR TORTAS (PIE CHARTS) -->
     <!-- TAB 6: DISTRIBUCIÓN POR TORTAS (PIE CHARTS) -->
+    
+    <!-- TAB 6: DISTRIBUCIÓN POR TORTAS (PIE CHARTS) -->
     <div id="tab-pane-pies" class="tab-pane">
-        <div style="background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.2rem;">
-                <div>
-                    <h2 style="color: #f8fafc; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span>🥧</span> Gráficos de Torta por Marca (Automatización vs Aprobación Manual)
-                    </h2>
-                    <p style="color: #94a3b8; font-size: 0.88rem; margin: 0;">
-                        Visualización gráfica de la proporción (%) y volumen exacto de retiros aprobados automáticamente frente a revisión manual.
-                    </p>
-                </div>
+        <div class="controls-card" style="margin-bottom: 1.25rem;">
+            <!-- FILTRO DE FECHA -->
+            <div class="filter-group">
+                <label for="date-preset-pies">Fecha</label>
+                <select id="date-preset-pies" onchange="syncDateFilters(this.value)">
+                    <option value="all">Rango completo (Todas las fechas)</option>
+                    <option value="today">Hoy</option>
+                    <option value="yesterday">Ayer</option>
+                    <option value="last-7">Últimos 7 días</option>
+                    <option value="last-30">Últimos 30 días</option>
+                    <option value="this-month">Mes actual</option>
+                    <option value="last-month" selected>Mes anterior (Julio)</option>
+                    <option value="custom">Personalizado (Calendario)</option>
+                </select>
+            </div>
 
-                <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                    <!-- FILTRO DE FECHA -->
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <label style="color: #cbd5e1; font-size: 0.85rem; font-weight: 600;">Fecha:</label>
-                        <select id="date-preset-pies" onchange="syncDateFilters(this.value)" style="background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.55rem 0.9rem; border-radius: 8px; font-size: 0.88rem; outline: none; cursor: pointer;">
-                            <option value="all">Rango completo (Todas las fechas)</option>
-                            <option value="today">Hoy</option>
-                            <option value="yesterday">Ayer</option>
-                            <option value="last-7">Últimos 7 días</option>
-                            <option value="last-30">Últimos 30 días</option>
-                            <option value="this-month">Mes actual</option>
-                            <option value="last-month" selected>Mes anterior (Julio)</option>
-                            <option value="custom">Personalizado (Calendario)</option>
-                        </select>
+            <!-- SIMULADOR DE REGLAS TOGGLE CARD -->
+            <div class="filter-group sim-group" title="Activa este switch para simular la tasa de automatización proyectada al aprobar automáticamente retiros de bajo riesgo" style="border-left: 1px solid var(--border-color); padding: 0.45rem 0.9rem; display: flex; flex-direction: row; align-items: center; gap: 0.75rem; background: rgba(129, 140, 248, 0.06); border-radius: 10px; border: 1px dashed rgba(129, 140, 248, 0.35);">
+                <label class="switch" style="margin: 0;">
+                    <input type="checkbox" id="sim-toggle-pies" onchange="syncSimulatorToggles(this.checked)">
+                    <span class="slider round"></span>
+                </label>
+                <div style="display: flex; flex-direction: column; justify-content: center; cursor: pointer;" onclick="document.getElementById('sim-toggle-pies').click()">
+                    <div style="display: flex; align-items: center; gap: 0.35rem;">
+                        <span style="font-size: 0.85rem;">🧪</span>
+                        <label style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: #818cf8; letter-spacing: 0.04em; cursor: pointer; margin: 0;">SIMULADOR DE REGLAS</label>
                     </div>
-
-                    <!-- SIMULADOR DE REGLAS TOGGLE CARD -->
-                    <div class="filter-group sim-group" title="Activa este switch para simular la tasa de automatización proyectada al aprobar automáticamente retiros de bajo riesgo" style="padding: 0.45rem 0.9rem; display: flex; align-items: center; gap: 0.75rem; background: rgba(129, 140, 248, 0.08); border-radius: 10px; border: 1px dashed rgba(129, 140, 248, 0.4);">
-                        <label class="switch">
-                            <input type="checkbox" id="sim-toggle-pies" onchange="syncSimulatorToggles(this.checked)">
-                            <span class="slider round"></span>
-                        </label>
-                        <div style="display: flex; flex-direction: column; justify-content: center; cursor: pointer;" onclick="document.getElementById('sim-toggle-pies').click()">
-                            <div style="display: flex; align-items: center; gap: 0.35rem;">
-                                <span style="font-size: 0.85rem;">🧪</span>
-                                <label style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: #818cf8; letter-spacing: 0.04em; cursor: pointer;">SIMULADOR DE REGLAS</label>
-                            </div>
-                            <span id="sim-badge-pies" style="font-size: 0.7rem; color: #94a3b8; font-weight: 500; transition: color 0.3s; margin-top: 0.1rem;">Ver impacto proyectado (Apagado)</span>
-                        </div>
-                    </div>
-
-                    <!-- BRAND SELECTOR DROPDOWN -->
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <label style="color: #cbd5e1; font-size: 0.85rem; font-weight: 600;">Marca:</label>
-                        <select id="pie-brand-filter" onchange="filterPieCards()" style="background: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.55rem 0.9rem; border-radius: 8px; font-size: 0.88rem; outline: none; cursor: pointer;">
-                            <option value="all">Ver Todas las Marcas</option>
-                            <option value="ecuabetecuador">Ecuabet Ecuador</option>
-                            <option value="doradobetper">Doradobet Perú</option>
-                            <option value="ganaplayelsalvador">GanaPlay El Salvador</option>
-                            <option value="doradobetecuador">Doradobet Ecuador</option>
-                            <option value="doradobetcostarica">Doradobet Costa Rica</option>
-                            <option value="paniplayhonduras">Paniplay Honduras</option>
-                            <option value="camanbetvenezuela">Camanbet Venezuela</option>
-                            <option value="doradobetelsalvador">Doradobet El Salvador</option>
-                            <option value="ganaplayguatemala">GanaPlay Guatemala</option>
-                            <option value="doradobetguatemala">Doradobet Guatemala</option>
-                            <option value="doradobetchile">Doradobet Chile</option>
-                            <option value="doradobethonduras">Doradobet Honduras</option>
-                            <option value="doradobetbolivia">Doradobet Bolivia</option>
-                            <option value="camanbetvenezuela2">Camanbet Venezuela 2</option>
-                        </select>
-                    </div>
+                    <span id="sim-badge-pies" style="font-size: 0.7rem; color: var(--text-secondary); font-weight: 500; transition: color 0.3s; margin-top: 0.1rem;">Ver impacto proyectado (Apagado)</span>
                 </div>
             </div>
-        </div>
 
+            <!-- BRAND SELECTOR DROPDOWN -->
+            <div class="filter-group">
+                <label for="pie-brand-filter">Marca</label>
+                <select id="pie-brand-filter" onchange="filterPieCards()">
+                    <option value="all">Ver Todas las Marcas</option>
+                    <option value="ecuabetecuador">Ecuabet Ecuador</option>
+                    <option value="doradobetper">Doradobet Perú</option>
+                    <option value="ganaplayelsalvador">GanaPlay El Salvador</option>
+                    <option value="doradobetecuador">Doradobet Ecuador</option>
+                    <option value="doradobetcostarica">Doradobet Costa Rica</option>
+                    <option value="paniplayhonduras">Paniplay Honduras</option>
+                    <option value="camanbetvenezuela">Camanbet Venezuela</option>
+                    <option value="doradobetelsalvador">Doradobet El Salvador</option>
+                    <option value="ganaplayguatemala">GanaPlay Guatemala</option>
+                    <option value="doradobetguatemala">Doradobet Guatemala</option>
+                    <option value="doradobetchile">Doradobet Chile</option>
+                    <option value="doradobethonduras">Doradobet Honduras</option>
+                    <option value="doradobetbolivia">Doradobet Bolivia</option>
+                    <option value="camanbetvenezuela2">Camanbet Venezuela 2</option>
+                </select>
+            </div>
+        </div>
+    
         <div id="pie-charts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem;">
             
     <div id="pie-card-container-global" class="pie-card global-card" style="background: linear-gradient(145deg, #1e293b, #0f172a); border: 2px solid var(--accent-cyan); border-radius: 14px; padding: 1.3rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.4); grid-column: span 1;">
@@ -3812,7 +3801,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn("Chart.register deferred:", e);
         }
         const metadata = {
-  "lastUpdate": "11/08/2026 03:36:00 PM",
+  "lastUpdate": "12/08/2026 10:28:00 AM",
   "lastWithdrawal": "10/08/2026 12:00:12 PM"
 };
         
@@ -511730,9 +511719,10 @@ const data = {
     
         // ======================================================
         
+    
     // ============================================================
     // PIE CHARTS RENDERING ENGINE ("TORTAS POR MARCA")
-    // Con soporte para Reglas Estipuladas (Botón Encendido: Riesgo Bajo = Automático)
+    // Sincronizado dinámicamente con Filtro de Fecha y Simulador
     // ============================================================
     const pieInstances = {};
 
@@ -511741,52 +511731,113 @@ const data = {
         const dPies = document.getElementById('date-preset-pies');
         if (dMain && dMain.value !== val) dMain.value = val;
         if (dPies && dPies.value !== val) dPies.value = val;
-        if (typeof handlePresetChange === 'function') handlePresetChange();
+
+        if (typeof handlePresetChange === 'function') {
+            handlePresetChange();
+        }
+        renderAllPieCharts();
+    }
+
+    function syncSimulatorToggles(isChecked) {
+        const tMain = document.getElementById('sim-toggle');
+        const tPies = document.getElementById('sim-toggle-pies');
+        
+        if (tMain) tMain.checked = isChecked;
+        if (tPies) tPies.checked = isChecked;
+
+        const bMain = document.getElementById('sim-badge');
+        const bPies = document.getElementById('sim-badge-pies');
+
+        const badgeText = isChecked ? 'Ver impacto proyectado (Encendido)' : 'Ver impacto proyectado (Apagado)';
+        const badgeColor = isChecked ? '#38bdf8' : 'var(--text-secondary)';
+
+        if (bMain) {
+            bMain.textContent = badgeText;
+            bMain.style.color = badgeColor;
+        }
+        if (bPies) {
+            bPies.textContent = badgeText;
+            bPies.style.color = badgeColor;
+        }
+
+        if (typeof updateDashboard === 'function') {
+            updateDashboard();
+        }
         renderAllPieCharts();
     }
 
     function renderAllPieCharts() {
-        const brandsData = {"Camanbet Venezuela": {"total": 12811, "auto_real": 1713, "bajo_manual": 6651, "otros_manual": 4447, "manual_real_total": 11098, "pct_auto_real": 13.4, "pct_manual_real": 86.6, "auto_estipulado": 8364, "manual_restante": 4447, "pct_auto_estipulado": 65, "pct_manual_restante": 35}, "Camanbet Venezuela 2": {"total": 748, "auto_real": 202, "bajo_manual": 379, "otros_manual": 167, "manual_real_total": 546, "pct_auto_real": 27.0, "pct_manual_real": 73.0, "auto_estipulado": 581, "manual_restante": 167, "pct_auto_estipulado": 78, "pct_manual_restante": 22}, "Doradobet Bolivia": {"total": 1027, "auto_real": 2, "bajo_manual": 356, "otros_manual": 669, "manual_real_total": 1025, "pct_auto_real": 0.2, "pct_manual_real": 99.8, "auto_estipulado": 358, "manual_restante": 669, "pct_auto_estipulado": 35, "pct_manual_restante": 65}, "Doradobet Chile": {"total": 2327, "auto_real": 891, "bajo_manual": 327, "otros_manual": 1109, "manual_real_total": 1436, "pct_auto_real": 38.3, "pct_manual_real": 61.7, "auto_estipulado": 1218, "manual_restante": 1109, "pct_auto_estipulado": 52, "pct_manual_restante": 48}, "Doradobet Costa Rica": {"total": 27349, "auto_real": 16308, "bajo_manual": 1261, "otros_manual": 9780, "manual_real_total": 11041, "pct_auto_real": 59.6, "pct_manual_real": 40.4, "auto_estipulado": 17569, "manual_restante": 9780, "pct_auto_estipulado": 64, "pct_manual_restante": 36}, "Doradobet Ecuador": {"total": 29436, "auto_real": 10538, "bajo_manual": 7647, "otros_manual": 11251, "manual_real_total": 18898, "pct_auto_real": 35.8, "pct_manual_real": 64.2, "auto_estipulado": 18185, "manual_restante": 11251, "pct_auto_estipulado": 62, "pct_manual_restante": 38}, "Doradobet El Salvador": {"total": 12032, "auto_real": 4375, "bajo_manual": 2091, "otros_manual": 5566, "manual_real_total": 7657, "pct_auto_real": 36.4, "pct_manual_real": 63.6, "auto_estipulado": 6466, "manual_restante": 5566, "pct_auto_estipulado": 54, "pct_manual_restante": 46}, "Doradobet Guatemala": {"total": 4191, "auto_real": 2513, "bajo_manual": 342, "otros_manual": 1336, "manual_real_total": 1678, "pct_auto_real": 60.0, "pct_manual_real": 40.0, "auto_estipulado": 2855, "manual_restante": 1336, "pct_auto_estipulado": 68, "pct_manual_restante": 32}, "Doradobet Honduras": {"total": 2027, "auto_real": 55, "bajo_manual": 693, "otros_manual": 1279, "manual_real_total": 1972, "pct_auto_real": 2.7, "pct_manual_real": 97.3, "auto_estipulado": 748, "manual_restante": 1279, "pct_auto_estipulado": 37, "pct_manual_restante": 63}, "Doradobet Perú": {"total": 87792, "auto_real": 59169, "bajo_manual": 5287, "otros_manual": 23336, "manual_real_total": 28623, "pct_auto_real": 67.4, "pct_manual_real": 32.6, "auto_estipulado": 64456, "manual_restante": 23336, "pct_auto_estipulado": 73, "pct_manual_restante": 27}, "Ecuabet Ecuador": {"total": 320263, "auto_real": 182313, "bajo_manual": 57545, "otros_manual": 80405, "manual_real_total": 137950, "pct_auto_real": 56.9, "pct_manual_real": 43.1, "auto_estipulado": 239858, "manual_restante": 80405, "pct_auto_estipulado": 75, "pct_manual_restante": 25}, "GanaPlay El Salvador": {"total": 57743, "auto_real": 15838, "bajo_manual": 19226, "otros_manual": 22679, "manual_real_total": 41905, "pct_auto_real": 27.4, "pct_manual_real": 72.6, "auto_estipulado": 35064, "manual_restante": 22679, "pct_auto_estipulado": 61, "pct_manual_restante": 39}, "GanaPlay Guatemala": {"total": 6134, "auto_real": 2051, "bajo_manual": 1640, "otros_manual": 2443, "manual_real_total": 4083, "pct_auto_real": 33.4, "pct_manual_real": 66.6, "auto_estipulado": 3691, "manual_restante": 2443, "pct_auto_estipulado": 60, "pct_manual_restante": 40}, "Paniplay Honduras": {"total": 15929, "auto_real": 9398, "bajo_manual": 2395, "otros_manual": 4136, "manual_real_total": 6531, "pct_auto_real": 59.0, "pct_manual_real": 41.0, "auto_estipulado": 11793, "manual_restante": 4136, "pct_auto_estipulado": 74, "pct_manual_restante": 26}};
+        const startInput = document.getElementById('date-start');
+        const endInput = document.getElementById('date-end');
+        
+        let startStr = startInput && startInput.value ? startInput.value : "2026-07-01";
+        let endStr = endInput && endInput.value ? endInput.value : "2026-07-31";
 
-        // Check if stipulated mode (Botón Encendido) is active
-        const simToggle = document.getElementById('sim-toggle');
-        const tPies = document.getElementById('sim-toggle-pies'); const isStipulated = tPies ? tPies.checked : (simToggle ? simToggle.checked : false); // Default to stipulated (Botón Encendido)
+        const tMain = document.getElementById('sim-toggle');
+        const tPies = document.getElementById('sim-toggle-pies');
+        const isStipulated = tPies ? tPies.checked : (tMain ? tMain.checked : false);
 
-        // Update badge indicator text
-        const modeBadge = document.getElementById('pie-mode-badge');
-        if (modeBadge) {
-            modeBadge.innerHTML = isStipulated ? 
-                '<span style="color:#2dd4bf; font-weight:bold;">⚡ Reglas Estipuladas Activas (Riesgo Bajo = Automático) [BOTÓN ENCENDIDO]</span>' :
-                '<span style="color:#38bdf8; font-weight:bold;">📊 Ejecutado Real Estricto</span>';
-        }
+        // Aggregate daily_data dynamically for the selected date range
+        let brandAgg = {};
 
-        // Global Consolidation
-        let totGlobal = 0, autoGlobal = 0, manGlobal = 0;
-        for (let b in brandsData) {
-            totGlobal += brandsData[b].total;
-            if (isStipulated) {
-                autoGlobal += brandsData[b].auto_estipulado;
-                manGlobal += brandsData[b].manual_restante;
-            } else {
-                autoGlobal += brandsData[b].auto_real;
-                manGlobal += brandsData[b].manual_real_total;
+        if (typeof data !== 'undefined') {
+            for (let m in data) {
+                if (data[m] && data[m].daily_data && Array.isArray(data[m].daily_data)) {
+                    data[m].daily_data.forEach(r => {
+                        const rowDate = r.date_str || r.date;
+                        if (rowDate >= startStr && rowDate <= endStr) {
+                            const b = r.Marca;
+                            if (b) {
+                                if (!brandAgg[b]) {
+                                    brandAgg[b] = { total: 0, auto_real: 0, bajo_manual: 0, otros_manual: 0 };
+                                }
+                                const c = r.count || r.total || 0;
+                                const isAuto = (r['Tipo Aprobacion_Norm'] === 'Automatico' || r.aprobacion === 'Automatico');
+                                const isBajo = (r['Nivel De Riesgo_Norm'] === 'Bajo');
+
+                                brandAgg[b].total += c;
+                                if (isAuto) {
+                                    brandAgg[b].auto_real += c;
+                                } else if (isBajo) {
+                                    brandAgg[b].bajo_manual += c;
+                                } else {
+                                    brandAgg[b].otros_manual += c;
+                                }
+                            }
+                        }
+                    });
+                }
             }
         }
-        let pctAutoGlobal = Math.round((autoGlobal / totGlobal) * 100);
+
+        // Calculate Global Consolidation
+        let totGlobal = 0, autoGlobal = 0, manGlobal = 0;
+        for (let b in brandAgg) {
+            const s = brandAgg[b];
+            totGlobal += s.total;
+            if (isStipulated) {
+                autoGlobal += (s.auto_real + s.bajo_manual);
+                manGlobal += s.otros_manual;
+            } else {
+                autoGlobal += s.auto_real;
+                manGlobal += (s.bajo_manual + s.otros_manual);
+            }
+        }
+        let pctAutoGlobal = totGlobal > 0 ? Math.round((autoGlobal / totGlobal) * 100) : 0;
         let pctManGlobal = 100 - pctAutoGlobal;
 
         updatePieCardHTML('global', totGlobal, autoGlobal, manGlobal, pctAutoGlobal, pctManGlobal, isStipulated);
         createSinglePieChart('pie-chart-global', [autoGlobal, manGlobal], [pctAutoGlobal, pctManGlobal], ['#0f766e', '#64748b']);
 
-        // Individual Brands
-        for (let brand in brandsData) {
-            const bId = brand.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        // Update Individual Brands
+        for (let b in brandAgg) {
+            const bId = b.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
             const canvasId = `pie-chart-${bId}`;
-            const s = brandsData[brand];
-            
-            let autoCount = isStipulated ? s.auto_estipulado : s.auto_real;
-            let manCount = isStipulated ? s.manual_restante : s.manual_real_total;
-            let pctAuto = isStipulated ? s.pct_auto_estipulado : Math.round(s.pct_auto_real);
+            const s = brandAgg[b];
+
+            let autoCount = isStipulated ? (s.auto_real + s.bajo_manual) : s.auto_real;
+            let manCount = isStipulated ? s.otros_manual : (s.bajo_manual + s.otros_manual);
+            let pctAuto = s.total > 0 ? Math.round((autoCount / s.total) * 100) : 0;
             let pctMan = 100 - pctAuto;
 
             updatePieCardHTML(bId, s.total, autoCount, manCount, pctAuto, pctMan, isStipulated);
@@ -511797,6 +511848,10 @@ const data = {
     function updatePieCardHTML(bId, total, autoCount, manCount, pctAuto, pctMan, isStipulated) {
         const card = document.getElementById(`pie-card-container-${bId}`);
         if (!card) return;
+
+        const totalEl = card.querySelector('#pie-total-' + bId) || card.querySelector('p b');
+        if (totalEl) totalEl.textContent = total.toLocaleString();
+
         const autoLabel = isStipulated ? 'Automático (Con Riesgo Bajo):' : 'Automático Real:';
         const manLabel = isStipulated ? 'Manual (Otros Niveles):' : 'Aprobación Manual:';
         
@@ -511889,16 +511944,23 @@ const data = {
         });
     }
 
-    // Toggle listener for sim-toggle
-    document.addEventListener("DOMContentLoaded", () => {
-        const simToggle = document.getElementById('sim-toggle');
-        if (simToggle) {
-            simToggle.addEventListener('change', () => {
-                renderAllPieCharts();
-            });
+    // Call renderAllPieCharts when switching to 'pies' tab or when date/sim inputs change
+    const origSwitchTab = window.switchTab;
+    window.switchTab = function(tabId) {
+        if (typeof origSwitchTab === 'function') origSwitchTab(tabId);
+        if (tabId === 'pies') {
+            setTimeout(renderAllPieCharts, 100);
         }
-        setTimeout(renderAllPieCharts, 400);
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const dateStart = document.getElementById('date-start');
+        const dateEnd = document.getElementById('date-end');
+        if (dateStart) dateStart.addEventListener('change', renderAllPieCharts);
+        if (dateEnd) dateEnd.addEventListener('change', renderAllPieCharts);
+        setTimeout(renderAllPieCharts, 500);
     });
+    
     
         
 
