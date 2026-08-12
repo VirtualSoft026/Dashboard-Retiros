@@ -2430,13 +2430,26 @@
 
     <!-- TAB 4: RECOMENDACIONES (Hallazgos y Acciones Sugeridas) -->
     
+    
     <div style="margin-top: 2rem; background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-        <h3 style="color: #38bdf8; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem;">
-            🔍 Diagnóstico Operativo de Variación Mes a Mes (Julio vs Junio)
-        </h3>
-        <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1.2rem;">
-            Análisis detallado de las causas de incremento o disminución en la tasa de automatización por marca frente al mes anterior.
-        </p>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+                <h3 style="color: #38bdf8; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;">
+                    🔍 Diagnóstico Comparativo de Variación Mes a Mes (Julio vs Junio)
+                </h3>
+                <p style="color: #94a3b8; font-size: 0.88rem; margin: 0;">
+                    Medición simultánea de la variación con <b>Switch Encendido (Reglas Estipuladas con Riesgo Bajo Incluido)</b> frente al <b>Switch Apagado (Ejecutado Real Estricto)</b>.
+                </p>
+            </div>
+            <div style="display: flex; gap: 0.6rem;">
+                <span style="background: rgba(45, 212, 191, 0.12); color: #2dd4bf; border: 1px solid rgba(45, 212, 191, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600;">
+                    🧪 Switch Encendido (Riesgo Bajo Incluido)
+                </span>
+                <span style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600;">
+                    📊 Switch Apagado (Ejecutado Real)
+                </span>
+            </div>
+        </div>
 
         <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.88rem;">
@@ -2446,142 +2459,158 @@
                         <th style="padding: 10px;">Junio 2026</th>
                         <th style="padding: 10px;">Julio 2026</th>
                         <th style="padding: 10px;">Crec. Volumen</th>
-                        <th style="padding: 10px;">Var. Auto (%)</th>
-                        <th style="padding: 10px; text-align: left;">Causa de la Variación (Por qué Aumentó o Disminuyó)</th>
+                        <th style="padding: 10px; color: #2dd4bf; background: rgba(45, 212, 191, 0.08);">⚡ Var. Estipulada<br><span style="font-size:0.75rem; font-weight:normal;">(Switch Encendido)</span></th>
+                        <th style="padding: 10px; color: #38bdf8; background: rgba(56, 189, 248, 0.08);">📊 Var. Real<br><span style="font-size:0.75rem; font-weight:normal;">(Switch Apagado)</span></th>
+                        <th style="padding: 10px; text-align: left;">Diagnóstico Operativo (Comportamiento de Automatización)</th>
                     </tr>
                 </thead>
                 <tbody>
                     
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Ecuabet Ecuador</td>
-            <td style="padding: 10px; color: #cbd5e1;">277,719 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 62.0%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">320,263 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 56.9%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">277,719 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>75.2%</b> | Real: 62.0%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">320,263 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>74.9%</b> | Real: 56.9%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+15.3%</td>
-            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-5.1% 📉</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Subida de volumen (+15.3%) y endurecimiento de reglas anti-fraude aplicado el 10-Jun 17:00 (restricción en límites de monto y verificación estricta de riesgo medio/alto), derivando mayor proporción a cola manual.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#38bdf8; font-weight:bold;'>-0.3% = (ESTABLE)</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#fb7185;'>-5.1% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Con el switch encendido (Riesgo Bajo incluido), la automatización se mantuvo ESTABLE en 75% (-0.3%). En el ejecutado real varió -5.1% por mayor volumen de bajo riesgo en cola manual.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Perú</td>
-            <td style="padding: 10px; color: #cbd5e1;">88,899 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 71.8%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">87,792 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 67.4%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">88,899 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>74.4%</b> | Real: 71.8%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">87,792 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>73.4%</b> | Real: 67.4%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #94a3b8;">-1.2%</td>
-            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-4.4% 📉</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Mayor concentración de retiros superiores al umbral de 1,999 PEN (riesgo medio), requiriendo validación manual obligatoria por política anti-fraude.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#f43f5e; font-weight:bold;'>-1.0% 📉</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#fb7185;'>-4.4% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Estable en 73-74% con switch encendido (-1.0%). Variación real de -4.4% por retiros sobre 1,999 PEN derivados a auditoría manual.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">GanaPlay El Salvador</td>
-            <td style="padding: 10px; color: #cbd5e1;">50,844 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 27.2%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">57,743 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 27.4%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">50,844 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>60.7%</b> | Real: 27.2%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">57,743 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>60.7%</b> | Real: 27.4%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+13.6%</td>
-            <td style="padding: 10px;"><span style='color:#22c55e; font-weight:bold;'>+0.2% 📈</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Operación estable con ligero aumento (+0.2%) gracias al procesamiento continuo de solicitudes de bajo riesgo en USD.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#38bdf8; font-weight:bold;'>+0.0% = (ESTABLE)</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#94a3b8;'>+0.2% =</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Operación perfectamente ESTABLE en 60.7% con switch encendido (0.0%) y ligera mejora real (+0.2%) con crecimiento de volumen USD.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Ecuador</td>
-            <td style="padding: 10px; color: #cbd5e1;">28,344 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 46.3%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">29,436 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 35.8%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">28,344 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>61.7%</b> | Real: 46.3%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">29,436 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>61.8%</b> | Real: 35.8%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+3.9%</td>
-            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-10.5% 📉</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Caída (-10.5%) por restricción en aprobaciones de riesgo medio (máx 250 USD y rollover 1.50), incrementando revisión manual.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#38bdf8; font-weight:bold;'>+0.1% = (ESTABLE)</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#fb7185;'>-10.5% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Con switch encendido se mantiene ESTABLE en 62% (+0.1%). Caída real (-10.5%) por restricciones post 10-Jun en riesgo medio.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Costa Rica</td>
-            <td style="padding: 10px; color: #cbd5e1;">28,752 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 57.8%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">27,349 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 59.6%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">28,752 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>60.8%</b> | Real: 57.8%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">27,349 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>64.2%</b> | Real: 59.6%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #94a3b8;">-4.9%</td>
-            <td style="padding: 10px;"><span style='color:#22c55e; font-weight:bold;'>+1.8% 📈</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Crecimiento de automatización (+1.8%) motivado por alta efectividad en retiros de bajo riesgo hasta 249,999 CRC con rollover 1.01.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#22c55e; font-weight:bold;'>+3.4% 📈</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#4ade80;'>+1.8% 📈</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">AUMENTÓ en ambos escenarios: +3.4% con switch encendido (alcanzando 64.2% / 17,569 retiros) y +1.8% en el ejecutado real.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Paniplay Honduras</td>
-            <td style="padding: 10px; color: #cbd5e1;">16,085 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 70.7%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">15,929 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 59.0%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">16,085 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>81.0%</b> | Real: 70.7%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">15,929 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>74.0%</b> | Real: 59.0%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #94a3b8;">-1.0%</td>
-            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-11.7% 📉</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Disminución (-11.7%) por aumento de revisiones manuales en riesgo alto y auditoría preventiva de cuentas recurrentes.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#f43f5e; font-weight:bold;'>-7.0% 📉</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#fb7185;'>-11.7% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Disminución en ambos escenarios (-7.0% estipulado / -11.7% real) por incremento en auditorías preventivas de riesgo alto.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Camanbet Venezuela</td>
-            <td style="padding: 10px; color: #cbd5e1;">12,255 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 20.8%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">12,811 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 13.4%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">12,255 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>62.2%</b> | Real: 20.8%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">12,811 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>65.3%</b> | Real: 13.4%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+4.5%</td>
-            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-7.4% 📉</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Parámetro de Rejuego (Rollover = 3.00) muy elevado en VES, enviando el 86.6% de transacciones a aprobación manual.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#22c55e; font-weight:bold;'>+3.1% 📈</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#fb7185;'>-7.4% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">AUMENTÓ +3.1% con switch encendido (alcanzando 65.3%). Caída real (-7.4%) por parámetro de rollover 3.0 en VES.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet El Salvador</td>
-            <td style="padding: 10px; color: #cbd5e1;">11,901 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 35.7%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">12,032 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 36.4%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">11,901 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>45.2%</b> | Real: 35.7%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">12,032 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>53.7%</b> | Real: 36.4%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+1.1%</td>
-            <td style="padding: 10px;"><span style='color:#22c55e; font-weight:bold;'>+0.7% 📈</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Aumento constante (+0.7%) sustentado en retiros de bajo riesgo hasta 499 USD con validación de IP y cuenta bancaria.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#22c55e; font-weight:bold;'>+8.5% 📈</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#4ade80;'>+0.7% 📈</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">AUMENTÓ fuertemente +8.5% con switch encendido (pasando de 45.2% a 53.7%) y +0.7% en ejecutado real.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">GanaPlay Guatemala</td>
-            <td style="padding: 10px; color: #cbd5e1;">5,107 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 37.1%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">6,134 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 33.4%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">5,107 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>62.8%</b> | Real: 37.1%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">6,134 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>60.2%</b> | Real: 33.4%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+20.1%</td>
-            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-3.7% 📉</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Incremento de volumen (+20.1%) impulsado por usuarios nuevos que requieren verificación de identidad en su primer retiro.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#f43f5e; font-weight:bold;'>-2.6% 📉</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#fb7185;'>-3.7% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Disminución leve (-2.6% estipulado / -3.7% real) impulsada por usuarios nuevos que requieren verificación de identidad.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Guatemala</td>
-            <td style="padding: 10px; color: #cbd5e1;">4,039 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 58.3%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">4,191 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 60.0%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">4,039 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>69.8%</b> | Real: 58.3%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">4,191 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>68.1%</b> | Real: 60.0%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+3.8%</td>
-            <td style="padding: 10px;"><span style='color:#22c55e; font-weight:bold;'>+1.7% 📈</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Subida de automatización (+1.7%) alcanzando el 60% por óptima efectividad del parámetro de bajo riesgo hasta 5,000 GTQ.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#f43f5e; font-weight:bold;'>-1.7% 📉</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#4ade80;'>+1.7% 📈</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Operación estable en 68% con switch encendido (-1.7%) y mejora en el ejecutado real (+1.7%).</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Chile</td>
-            <td style="padding: 10px; color: #cbd5e1;">2,510 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 45.9%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">2,327 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 38.3%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">2,510 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>56.9%</b> | Real: 45.9%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">2,327 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>52.3%</b> | Real: 38.3%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #94a3b8;">-7.3%</td>
-            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-7.6% 📉</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Ausencia de reglas parametrizadas para riesgo Medio/Sin Nivel, obligando a procesar manualmente montos sobre 999,999 CLP.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#f43f5e; font-weight:bold;'>-4.6% 📉</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#fb7185;'>-7.6% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Disminución (-4.6% estipulado / -7.6% real) por falta de reglas para riesgo medio en CLP.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Honduras</td>
-            <td style="padding: 10px; color: #cbd5e1;">1,030 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 11.3%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">2,027 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 2.7%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">1,030 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>33.6%</b> | Real: 11.3%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">2,027 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>36.9%</b> | Real: 2.7%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+96.8%</td>
-            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-8.6% 📉</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Crecimiento exponencial de volumen (+96.8%) sin reglas de riesgo medio activadas, derivando casi todo a revisión manual.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#22c55e; font-weight:bold;'>+3.3% 📈</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#fb7185;'>-8.6% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">AUMENTÓ +3.3% con switch encendido (llegando a 36.9%) pese a duplicación de volumen transaccional.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Doradobet Bolivia</td>
-            <td style="padding: 10px; color: #cbd5e1;">1,130 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 23.6%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">1,027 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 0.2%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">1,130 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>39.7%</b> | Real: 23.6%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">1,027 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>34.9%</b> | Real: 0.2%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #94a3b8;">-9.1%</td>
-            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-23.4% 📉</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Reclasificación masiva de riesgo en la pasarela de pagos local enviando el 99.8% de operaciones a revisión manual.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#f43f5e; font-weight:bold;'>-4.8% 📉</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#fb7185;'>-23.4% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Variación de -4.8% estipulado / -23.4% real por reclasificación de riesgo en pasarela de pago.</td>
         </tr>
         
         <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
             <td style="padding: 10px; font-weight: bold; color: #f8fafc; text-align: left;">Camanbet Venezuela 2</td>
-            <td style="padding: 10px; color: #cbd5e1;">681 <br><span style="font-size:0.8rem; color:#94a3b8;">Auto: 44.2%</span></td>
-            <td style="padding: 10px; color: #cbd5e1;">748 <br><span style="font-size:0.8rem; color:#38bdf8;">Auto: 27.0%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">681 <br><span style="font-size:0.78rem; color:#94a3b8;">Estip: <b>78.0%</b> | Real: 44.2%</span></td>
+            <td style="padding: 10px; color: #cbd5e1;">748 <br><span style="font-size:0.78rem; color:#2dd4bf;">Estip: <b>77.7%</b> | Real: 27.0%</span></td>
             <td style="padding: 10px; font-weight: bold; color: #38bdf8;">+9.8%</td>
-            <td style="padding: 10px;"><span style='color:#ef4444; font-weight:bold;'>-17.2% 📉</span></td>
-            <td style="padding: 10px; font-size: 0.85rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Sensibilidad alta en filtros de prevención anti-fraude para VES enviando retiros medianos a revisión manual.</td>
+            <td style="padding: 10px; background: rgba(45, 212, 191, 0.05);"><span style='color:#38bdf8; font-weight:bold;'>-0.3% = (ESTABLE)</span></td>
+            <td style="padding: 10px; background: rgba(56, 189, 248, 0.05);"><span style='color:#fb7185;'>-17.2% 📉</span></td>
+            <td style="padding: 10px; font-size: 0.83rem; color: #cbd5e1; text-align: left; line-height: 1.35;">Estable en 78% (-0.3%) con switch encendido. Caída real por sensibilidad en filtros VES.</td>
         </tr>
         
                 </tbody>
             </table>
         </div>
     </div>
+    
     
 
     <div id="tab-pane-recs" class="tab-pane">
@@ -3815,7 +3844,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn("Chart.register deferred:", e);
         }
         const metadata = {
-  "lastUpdate": "12/08/2026 10:47:00 AM",
+  "lastUpdate": "12/08/2026 11:32:00 AM",
   "lastWithdrawal": "10/08/2026 12:00:12 PM"
 };
         
