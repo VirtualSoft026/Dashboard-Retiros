@@ -1968,9 +1968,11 @@
     <!-- TAB 6: DISTRIBUCIÓN POR TORTAS (PIE CHARTS) -->
     
     <!-- TAB 6: DISTRIBUCIÓN POR TORTAS (PIE CHARTS) -->
+    
+    <!-- TAB 6: DISTRIBUCIÓN POR TORTAS (PIE CHARTS) -->
     <div id="tab-pane-pies" class="tab-pane">
         <div class="controls-card" style="margin-bottom: 1.25rem;">
-            <!-- FILTRO DE FECHA -->
+            <!-- FILTRO DE FECHA PRESET -->
             <div class="filter-group">
                 <label for="date-preset-pies">Fecha</label>
                 <select id="date-preset-pies" onchange="syncDateFilters(this.value)">
@@ -1983,6 +1985,18 @@
                     <option value="last-month" selected>Mes anterior (Julio)</option>
                     <option value="custom">Personalizado (Calendario)</option>
                 </select>
+            </div>
+
+            <!-- FECHA DESDE / HASTA (CALENDARIO PERSONALIZADO) -->
+            <div class="filter-group date-inputs" id="date-inputs-container-pies" style="display: flex;">
+                <div class="filter-group">
+                    <label for="date-start-pies">Desde</label>
+                    <input type="date" id="date-start-pies" onchange="syncCustomDateInputs(this.value, 'start')">
+                </div>
+                <div class="filter-group">
+                    <label for="date-end-pies">Hasta</label>
+                    <input type="date" id="date-end-pies" onchange="syncCustomDateInputs(this.value, 'end')">
+                </div>
             </div>
 
             <!-- SIMULADOR DE REGLAS TOGGLE CARD -->
@@ -3801,7 +3815,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn("Chart.register deferred:", e);
         }
         const metadata = {
-  "lastUpdate": "12/08/2026 10:28:00 AM",
+  "lastUpdate": "12/08/2026 10:42:00 AM",
   "lastWithdrawal": "31/07/2026 11:59:59 PM"
 };
         
@@ -459771,7 +459785,9 @@ const data = {
 
             if (startInput) startInput.value = startStr;
             if (endInput) endInput.value = endStr;
+            syncDateInputValues();
             updateDashboard();
+            if (typeof renderAllPieCharts === 'function') renderAllPieCharts();
         }
 
         // Formateadores
@@ -460914,6 +460930,7 @@ const data = {
     // ============================================================
     const pieInstances = {};
 
+    
     function syncDateFilters(val) {
         const dMain = document.getElementById('date-preset');
         const dPies = document.getElementById('date-preset-pies');
@@ -460923,29 +460940,34 @@ const data = {
         if (typeof handlePresetChange === 'function') {
             handlePresetChange();
         }
+
+        // Sync inputs from date-start/end to date-start-pies/end-pies
+        syncDateInputValues();
         renderAllPieCharts();
     }
 
-    function syncSimulatorToggles(isChecked) {
-        const tMain = document.getElementById('sim-toggle');
-        const tPies = document.getElementById('sim-toggle-pies');
-        
-        if (tMain) tMain.checked = isChecked;
-        if (tPies) tPies.checked = isChecked;
+    function syncDateInputValues() {
+        const dStart = document.getElementById('date-start');
+        const dEnd = document.getElementById('date-end');
+        const dStartPies = document.getElementById('date-start-pies');
+        const dEndPies = document.getElementById('date-end-pies');
 
-        const bMain = document.getElementById('sim-badge');
-        const bPies = document.getElementById('sim-badge-pies');
+        if (dStart && dStartPies && dStart.value) dStartPies.value = dStart.value;
+        if (dEnd && dEndPies && dEnd.value) dEndPies.value = dEnd.value;
+    }
 
-        const badgeText = isChecked ? 'Ver impacto proyectado (Encendido)' : 'Ver impacto proyectado (Apagado)';
-        const badgeColor = isChecked ? '#38bdf8' : 'var(--text-secondary)';
+    function syncCustomDateInputs(val, type) {
+        const dPreset = document.getElementById('date-preset');
+        const dPresetPies = document.getElementById('date-preset-pies');
+        if (dPreset) dPreset.value = 'custom';
+        if (dPresetPies) dPresetPies.value = 'custom';
 
-        if (bMain) {
-            bMain.textContent = badgeText;
-            bMain.style.color = badgeColor;
-        }
-        if (bPies) {
-            bPies.textContent = badgeText;
-            bPies.style.color = badgeColor;
+        if (type === 'start') {
+            const dStart = document.getElementById('date-start');
+            if (dStart) dStart.value = val;
+        } else if (type === 'end') {
+            const dEnd = document.getElementById('date-end');
+            if (dEnd) dEnd.value = val;
         }
 
         if (typeof updateDashboard === 'function') {
@@ -460953,13 +460975,16 @@ const data = {
         }
         renderAllPieCharts();
     }
+    
 
     function renderAllPieCharts() {
         const startInput = document.getElementById('date-start');
         const endInput = document.getElementById('date-end');
         
-        let startStr = startInput && startInput.value ? startInput.value : "2026-07-01";
-        let endStr = endInput && endInput.value ? endInput.value : "2026-07-31";
+        const sPies = document.getElementById('date-start-pies');
+        const ePies = document.getElementById('date-end-pies');
+        let startStr = sPies && sPies.value ? sPies.value : (startInput && startInput.value ? startInput.value : '2026-07-01');
+        let endStr = ePies && ePies.value ? ePies.value : (endInput && endInput.value ? endInput.value : '2026-07-31');
 
         const tMain = document.getElementById('sim-toggle');
         const tPies = document.getElementById('sim-toggle-pies');
@@ -461146,7 +461171,7 @@ const data = {
         const dateEnd = document.getElementById('date-end');
         if (dateStart) dateStart.addEventListener('change', renderAllPieCharts);
         if (dateEnd) dateEnd.addEventListener('change', renderAllPieCharts);
-        setTimeout(renderAllPieCharts, 500);
+        setTimeout(() => { syncDateInputValues(); renderAllPieCharts(); }, 500);
     });
     
     
