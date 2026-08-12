@@ -1982,7 +1982,7 @@
                     <option value="last-7">Últimos 7 días</option>
                     <option value="last-30">Últimos 30 días</option>
                     <option value="this-month">Mes actual</option>
-                    <option value="last-month" selected>Mes anterior (Julio)</option>
+                    <option value="last-month" selected>Mes anterior</option>
                     <option value="custom">Personalizado (Calendario)</option>
                 </select>
             </div>
@@ -3815,7 +3815,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn("Chart.register deferred:", e);
         }
         const metadata = {
-  "lastUpdate": "12/08/2026 10:42:00 AM",
+  "lastUpdate": "12/08/2026 10:47:00 AM",
   "lastWithdrawal": "10/08/2026 12:00:12 PM"
 };
         
@@ -509949,7 +509949,7 @@ const data = {
                 const lastDay = new Date(y, m, 0);
                 const fStr = `${firstDay.getFullYear()}-${String(firstDay.getMonth() + 1).padStart(2, '0')}-${String(firstDay.getDate()).padStart(2, '0')}`;
                 const lStr = `${lastDay.getFullYear()}-${String(lastDay.getMonth() + 1).padStart(2, '0')}-${String(lastDay.getDate()).padStart(2, '0')}`;
-                optLastMonth.textContent = `Mes anterior (${formatDateDMY(fStr)} - ${formatDateDMY(lStr)})`;
+                optLastMonth.textContent = 'Mes anterior';
             }
         }
 
