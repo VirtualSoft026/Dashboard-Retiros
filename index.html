@@ -3852,8 +3852,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn("Chart.register deferred:", e);
         }
         const metadata = {
-  "lastUpdate": "01/09/2026 10:06:34 AM",
-  "lastWithdrawal": "01/09/2026 09:01:04 AM"
+  "lastUpdate": "01/09/2026 03:25:00 PM",
+  "lastWithdrawal": "31/08/2026 11:59:59 PM (Cierre Oficial Agosto)"
 };
         
         // Actualizar metadatos en el header
@@ -479753,8 +479753,8 @@ const data = {
                 }
 
                 const presetSelect = document.getElementById('date-preset');
-                if (presetSelect && (!presetSelect.value || presetSelect.value === 'last-month')) {
-                    presetSelect.value = 'all';
+                if (presetSelect && !presetSelect.value) {
+                    presetSelect.value = 'last-month';
                 }
 
                 if (presetSelect) presetSelect.addEventListener('change', handlePresetChange);
@@ -480327,15 +480327,19 @@ const data = {
                 startStr = past30.toISOString().split('T')[0];
                 endStr = maxDateStr;
             } else if (preset === 'this-month') {
-                const y = maxDate.getFullYear();
-                const m = maxDate.getMonth();
+                const now = new Date();
+                const refDate = (now.getFullYear() >= 2026) ? now : maxDate;
+                const y = refDate.getFullYear();
+                const m = refDate.getMonth();
                 const firstDay = new Date(y, m, 1);
                 const lastDay = new Date(y, m + 1, 0);
                 startStr = `${firstDay.getFullYear()}-${String(firstDay.getMonth() + 1).padStart(2, '0')}-${String(firstDay.getDate()).padStart(2, '0')}`;
                 endStr = `${lastDay.getFullYear()}-${String(lastDay.getMonth() + 1).padStart(2, '0')}-${String(lastDay.getDate()).padStart(2, '0')}`;
             } else if (preset === 'last-month') {
-                const y = maxDate.getFullYear();
-                const m = maxDate.getMonth();
+                const now = new Date();
+                const refDate = (now.getFullYear() >= 2026) ? now : maxDate;
+                const y = refDate.getFullYear();
+                const m = refDate.getMonth();
                 const firstDay = new Date(y, m - 1, 1);
                 const lastDay = new Date(y, m, 0);
                 startStr = `${firstDay.getFullYear()}-${String(firstDay.getMonth() + 1).padStart(2, '0')}-${String(firstDay.getDate()).padStart(2, '0')}`;
