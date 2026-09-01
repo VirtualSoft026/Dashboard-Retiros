@@ -1418,7 +1418,7 @@
                 <option value="yesterday">Ayer</option>
                 <option value="last-7">Últimos 7 días</option>
                 <option value="last-30">Últimos 30 días</option>
-                <option value="this-month">Mes actual</option>
+                <option value="this-month" selected>Mes actual</option>
                 <option value="last-month">Mes anterior</option>
                 <option value="custom">Personalizado (Calendario)</option>
             </select>
@@ -1981,8 +1981,8 @@
                     <option value="yesterday">Ayer</option>
                     <option value="last-7">Últimos 7 días</option>
                     <option value="last-30">Últimos 30 días</option>
-                    <option value="this-month">Mes actual</option>
-                    <option value="last-month" selected>Mes anterior</option>
+                    <option value="this-month" selected>Mes actual</option>
+                    <option value="last-month">Mes anterior</option>
                     <option value="custom">Personalizado (Calendario)</option>
                 </select>
             </div>
@@ -479754,7 +479754,7 @@ const data = {
 
                 const presetSelect = document.getElementById('date-preset');
                 if (presetSelect && !presetSelect.value) {
-                    presetSelect.value = 'last-month';
+                    presetSelect.value = 'this-month';
                 }
 
                 if (presetSelect) presetSelect.addEventListener('change', handlePresetChange);
@@ -480326,24 +480326,21 @@ const data = {
                 past30.setDate(past30.getDate() - 29);
                 startStr = past30.toISOString().split('T')[0];
                 endStr = maxDateStr;
-            } else if (preset === 'this-month') {
-                const now = new Date();
-                const refDate = (now.getFullYear() >= 2026) ? now : maxDate;
-                const y = refDate.getFullYear();
-                const m = refDate.getMonth();
+                        } else if (preset === 'this-month') {
+                const y = maxDate.getFullYear();
+                const m = maxDate.getMonth();
                 const firstDay = new Date(y, m, 1);
                 const lastDay = new Date(y, m + 1, 0);
                 startStr = `${firstDay.getFullYear()}-${String(firstDay.getMonth() + 1).padStart(2, '0')}-${String(firstDay.getDate()).padStart(2, '0')}`;
                 endStr = `${lastDay.getFullYear()}-${String(lastDay.getMonth() + 1).padStart(2, '0')}-${String(lastDay.getDate()).padStart(2, '0')}`;
             } else if (preset === 'last-month') {
-                const now = new Date();
-                const refDate = (now.getFullYear() >= 2026) ? now : maxDate;
-                const y = refDate.getFullYear();
-                const m = refDate.getMonth();
+                const y = maxDate.getFullYear();
+                const m = maxDate.getMonth();
                 const firstDay = new Date(y, m - 1, 1);
                 const lastDay = new Date(y, m, 0);
                 startStr = `${firstDay.getFullYear()}-${String(firstDay.getMonth() + 1).padStart(2, '0')}-${String(firstDay.getDate()).padStart(2, '0')}`;
                 endStr = `${lastDay.getFullYear()}-${String(lastDay.getMonth() + 1).padStart(2, '0')}-${String(lastDay.getDate()).padStart(2, '0')}`;
+            }
             } else if (preset === 'all') {
                 startStr = minDateStr;
                 endStr = maxDateStr;
@@ -481737,7 +481734,7 @@ const data = {
         const dateEnd = document.getElementById('date-end');
         if (dateStart) dateStart.addEventListener('change', renderAllPieCharts);
         if (dateEnd) dateEnd.addEventListener('change', renderAllPieCharts);
-        setTimeout(() => { syncDateInputValues(); renderAllPieCharts(); }, 500);
+        setTimeout(() => { if (typeof handlePresetChange === 'function') handlePresetChange(); else { syncDateInputValues(); renderAllPieCharts(); } }, 500);
     });
     
     
