@@ -3852,7 +3852,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn("Chart.register deferred:", e);
         }
         const metadata = {
-  "lastUpdate": "01/09/2026 03:25:00 PM",
+  "lastUpdate": "01/09/2026 03:29:00 PM",
   "lastWithdrawal": "31/08/2026 11:59:59 PM (Cierre Oficial Agosto)"
 };
         
@@ -480340,7 +480340,6 @@ const data = {
                 const lastDay = new Date(y, m, 0);
                 startStr = `${firstDay.getFullYear()}-${String(firstDay.getMonth() + 1).padStart(2, '0')}-${String(firstDay.getDate()).padStart(2, '0')}`;
                 endStr = `${lastDay.getFullYear()}-${String(lastDay.getMonth() + 1).padStart(2, '0')}-${String(lastDay.getDate()).padStart(2, '0')}`;
-            }
             } else if (preset === 'all') {
                 startStr = minDateStr;
                 endStr = maxDateStr;
