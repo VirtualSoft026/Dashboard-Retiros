@@ -610646,6 +610646,7 @@ const data = {
             if (cBr && cBr.value !== brand) cBr.value = brand;
 
             renderOperationalDiagnosis(mA, mB, brand);
+            if (typeof updateComparison === 'function') updateComparison();
         }
 
         function setDiagPreset(type) {
@@ -610677,6 +610678,7 @@ const data = {
             if (cB) cB.value = mB;
 
             renderOperationalDiagnosis(mA, mB, brand);
+            if (typeof updateComparison === 'function') updateComparison();
         }
 
         function renderOperationalDiagnosis(mA, mB, selectedBrand) {
