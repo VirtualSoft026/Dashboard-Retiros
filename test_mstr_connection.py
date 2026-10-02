@@ -1009,7 +1009,7 @@ def run_reporting_pipeline():
                 else:
                     realBadge = f"<span style='color:#fb7185;'>{realDiff:.1f}% 📉</span>"
                     
-                # Diagnostic text
+                # Diagnostic text & root cause analysis
                 rA = _get_risk_summary(prev_m_dict["json_data"], brand)
                 rB = _get_risk_summary(curr_m_dict["json_data"], brand)
                 bajoB = rB["by_level"].get("Bajo", {})
@@ -1019,51 +1019,117 @@ def run_reporting_pipeline():
                 
                 man_bajo_pct = (bajoB.get("manual", 0) / volB * 100) if volB > 0 else 0
                 share_medio_diff = medioB.get("share", 0) - medioA.get("share", 0)
+                share_bajo_diff = bajoB.get("share", 0) - bajoA.get("share", 0)
                 
                 if volA == 0 and volB > 0:
-                    diagText = f"<b>Diagnóstico Global:</b> Marca incorporada en {mB_disp} con un volumen de <b>{volB:,} retiros</b> ({estipB:.1f}% estipulado / {realB:.1f}% real)."
+                    tag = "🆕 Nueva Marca"
+                    tag_color = "#38bdf8"
+                    tag_bg = "rgba(56, 189, 248, 0.15)"
+                    estip_analysis = f"<b>⚡ Switch Encendido:</b> Marca incorporada en {mB_disp} con un volumen inicial de <b>{volB:,} retiros</b> ({estipB:.1f}% potencial estipulado)."
+                    real_analysis = f"<b>📊 Switch Apagado (Real):</b> Automatización real inicial de <b>{realB:.1f}%</b>."
                 elif volB == 0 and volA > 0:
-                    diagText = f"<b>Diagnóstico Global:</b> Sin retiros registrados en {mB_disp} (en {mA_disp} procesó {volA:,} retiros)."
+                    tag = "⏸️ Sin Operación"
+                    tag_color = "#94a3b8"
+                    tag_bg = "rgba(148, 163, 184, 0.15)"
+                    estip_analysis = f"<b>⚡ Switch Encendido:</b> Sin retiros registrados en {mB_disp} (en {mA_disp} procesó {volA:,} retiros)."
+                    real_analysis = "<b>📊 Switch Apagado (Real):</b> La operación se encuentra pausada o sin transacciones registradas."
+                elif volA == 0 and volB == 0:
+                    tag = "⚪ Sin Datos"
+                    tag_color = "#94a3b8"
+                    tag_bg = "rgba(148, 163, 184, 0.1)"
+                    estip_analysis = "Sin transacciones registradas en el período comparado."
+                    real_analysis = ""
                 else:
-                    if estipDiff >= 0.5 and realDiff >= 0.5:
-                        pA = f"<b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+{estipDiff:.1f}% con switch encendido (alcanzando {estipB:.1f}%)</b> y +{realDiff:.1f}% en ejecutado real."
+                    vDiffNum = volB - volA
+                    # Cause tag
+                    if realDiff >= 5.0:
+                        tag = f"🚀 Fuerte Subida en Real (+{realDiff:.1f}%)"
+                        tag_color = "#22c55e"
+                        tag_bg = "rgba(34, 197, 94, 0.15)"
+                    elif realDiff >= 0.5:
+                        tag = f"📈 Mejora en Real (+{realDiff:.1f}%)"
+                        tag_color = "#4ade80"
+                        tag_bg = "rgba(74, 222, 128, 0.15)"
+                    elif realDiff <= -5.0:
+                        if man_bajo_pct >= 8.0:
+                            tag = f"⚠️ Caída: Topes de Monto / Rollover ({realDiff:.1f}%)"
+                            tag_color = "#fb7185"
+                            tag_bg = "rgba(251, 113, 133, 0.15)"
+                        elif share_medio_diff >= 3.0:
+                            tag = f"⚠️ Caída: Migración a Riesgo Medio ({realDiff:.1f}%)"
+                            tag_color = "#f97316"
+                            tag_bg = "rgba(249, 115, 22, 0.15)"
+                        else:
+                            tag = f"📉 Fuerte Caída en Real ({realDiff:.1f}%)"
+                            tag_color = "#f43f5e"
+                            tag_bg = "rgba(244, 63, 94, 0.15)"
+                    elif realDiff <= -0.5:
+                        if man_bajo_pct >= 3.0:
+                            tag = f"📉 Desvío Manual en Riesgo Bajo ({realDiff:.1f}%)"
+                            tag_color = "#fca5a5"
+                            tag_bg = "rgba(252, 165, 165, 0.15)"
+                        elif share_medio_diff >= 1.0:
+                            tag = f"📉 Aumento de Riesgo Medio ({realDiff:.1f}%)"
+                            tag_color = "#fdba74"
+                            tag_bg = "rgba(253, 186, 116, 0.15)"
+                        else:
+                            tag = f"📉 Leve Reducción en Real ({realDiff:.1f}%)"
+                            tag_color = "#fca5a5"
+                            tag_bg = "rgba(252, 165, 165, 0.15)"
+                    else:
+                        sign_r = "+" if realDiff >= 0 else ""
+                        tag = f"⚖️ Operación Estable ({sign_r}{realDiff:.1f}%)"
+                        tag_color = "#38bdf8"
+                        tag_bg = "rgba(56, 189, 248, 0.15)"
+
+                    # Part A: Estipulado
+                    if estipDiff >= 0.5:
+                        estip_analysis = f"<b>⚡ Switch Encendido (+{estipDiff:.1f}%):</b> Aumentó el potencial estipulado a <b>{estipB:.1f}%</b>, debido a una mayor concentración de solicitudes clasificadas en reglas de bajo riesgo."
                     elif abs(estipDiff) < 0.5:
                         sign_e = "+" if estipDiff >= 0 else ""
-                        vDiffNum = volB - volA
                         k_vol = f"{vDiffNum/1000:+.1f}k" if abs(vDiffNum) >= 1000 else f"{vDiffNum:+d}"
-                        volTxt = f" absorbiendo {k_vol} retiros ({'+' if volGrowth >= 0 else ''}{volGrowth:.1f}% volumen)" if abs(volGrowth) >= 1.0 else " con volumen constante"
-                        pA = f"<b>Diagnóstico Global:</b> La automatización estipulada permaneció <b>ESTABLE en {round(estipB)}% ({sign_e}{estipDiff:.1f}%)</b>{volTxt}."
-                    elif estipDiff >= 0.5:
-                        pA = f"<b>Diagnóstico Global:</b> Crecimiento de <b>+{estipDiff:.1f}% en automatización estipulada (al {estipB:.1f}%)</b>."
+                        volTxt = f" absorbiendo {k_vol} retiros ({'+' if volGrowth >= 0 else ''}{volGrowth:.1f}% vol)" if abs(volGrowth) >= 1.0 else " con volumen constante"
+                        estip_analysis = f"<b>⚡ Switch Encendido ({sign_e}{estipDiff:.1f}% = ESTABLE):</b> La cobertura teórica de reglas permaneció en <b>{estipB:.1f}%</b>{volTxt}."
                     else:
-                        pA = f"<b>Diagnóstico Global:</b> Variación de <b>{estipDiff:.1f}% en automatización estipulada (quedando en {estipB:.1f}%)</b>."
-                        
+                        estip_analysis = f"<b>⚡ Switch Encendido ({estipDiff:.1f}%):</b> Reducción en la cobertura estipulada a <b>{estipB:.1f}%</b> por migración de transacciones hacia categorías con reglas de aprobación manual."
+
+                    # Part B: Real cause
                     if realDiff <= -0.5:
                         causes = []
                         if man_bajo_pct >= 2.5:
-                            causes.append(f"un <b>{man_bajo_pct:.1f}% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover")
+                            causes.append(f"un <b>{man_bajo_pct:.1f}% de los retiros de bajo riesgo superaron el tope máximo autorizado o requirieron verificación de rollover</b>, enviándolos a mesa manual")
                         if share_medio_diff >= 0.8:
-                            causes.append(f"un <b>{share_medio_diff:.1f}% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h")
+                            causes.append(f"un <b>{share_medio_diff:.1f}% del volumen subió a Nivel Medio</b> (por mayor frecuencia de retiros en 24h), requiriendo autorización manual obligatoria")
                         if not causes:
-                            causes.append("se aplicaron verificaciones preventivas que derivaron solicitudes a revisión manual")
-                        pB = f"En el ejecutado real ({realDiff:.1f}%), {' y '.join(causes)}."
+                            causes.append("se aplicaron verificaciones preventivas que derivaron transacciones al flujo manual")
+                        real_analysis = f"<b>📊 ¿Por qué bajó el real ({realDiff:.1f}%)?:</b> La caída ocurrió porque {' y además '.join(causes)}."
                     elif realDiff >= 0.5:
-                        if not (estipDiff >= 0.5 and realDiff >= 0.5):
-                            causes = []
-                            if share_medio_diff <= -0.8:
-                                causes.append(f"un <b>{abs(share_medio_diff):.1f}% más de usuarios se mantuvieron en Nivel Bajo</b>")
-                            if bajoB.get("pct_auto", 0) > bajoA.get("pct_auto", 0):
-                                causes.append("las solicitudes se mantuvieron dentro de los parámetros y topes autorizados")
-                            if not causes:
-                                causes.append("mayor proporción de transacciones cumplieron con las reglas automáticas")
-                            pB = f"En el ejecutado real mejoró <b>+{realDiff:.1f}%</b> al lograr que {causes[0]}."
-                        else:
-                            pB = "Las transacciones de bajo monto y rollover cumplieron los criterios de aprobación sin desvíos a mesa manual."
+                        reasons = []
+                        if share_bajo_diff >= 1.0:
+                            reasons.append(f"un <b>{share_bajo_diff:.1f}% más de los retiros se concentraron en Nivel Bajo</b>")
+                        if bajoB.get("pct_auto", 0) > bajoA.get("pct_auto", 0):
+                            reasons.append("las solicitudes de bajo riesgo se mantuvieron dentro de los montos y parámetros autorizados sin activar revisiones manuales")
+                        if not reasons:
+                            reasons.append("mayor porcentaje de transacciones cumplieron con todas las reglas de aprobación inmediata")
+                        real_analysis = f"<b>📊 ¿Por qué subió el real (+{realDiff:.1f}%)?:</b> La mejora se logró porque {reasons[0]}."
                     else:
-                        pB = f"En el ejecutado real se mantuvo <b>ESTABLE ({'+' if realDiff >= 0 else ''}{realDiff:.1f}%)</b> dentro de los rangos autorizados."
-                        
-                    diagText = f"{pA} {pB}"
-                    
+                        sign_r = "+" if realDiff >= 0 else ""
+                        real_analysis = f"<b>📊 Ejecutado Real ({sign_r}{realDiff:.1f}% = ESTABLE):</b> El porcentaje real se mantuvo alineado al mes previo dentro de los rangos tolerados de monto y riesgo."
+
+                diag_cell_html = f'''<div style="margin-bottom: 6px;">
+                            <span style="display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: 0.74rem; font-weight: 700; background: {tag_bg}; color: {tag_color}; border: 1px solid {tag_color}40;">
+                                {tag}
+                            </span>
+                        </div>
+                        <div style="margin-bottom: 5px; color: #cbd5e1; font-size: 0.82rem; line-height: 1.45;">
+                            {estip_analysis}
+                        </div>'''
+                if real_analysis:
+                    diag_cell_html += f'''
+                        <div style="color: #f1f5f9; font-size: 0.82rem; line-height: 1.45;">
+                            {real_analysis}
+                        </div>'''
+
                 row_html = f'''                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
                         <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">{brand}</td>
                         <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">{volA:,} <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>{estipA:.1f}%</b><br>Real: {realA:.1f}%</span></td>
@@ -1071,7 +1137,7 @@ def run_reporting_pipeline():
                         <td style="padding: 12px 10px; font-weight: bold; color: {growthColor}; vertical-align: top;">{growthStr}</td>
                         <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;">{estipBadge}</td>
                         <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;">{realBadge}</td>
-                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;">{diagText}</td>
+                        <td style="padding: 12px 10px; text-align: left; vertical-align: top;">{diag_cell_html}</td>
                     </tr>'''
                 diag_rows_html.append(row_html)
                 
