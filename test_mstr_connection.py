@@ -23,7 +23,7 @@ DOSSIER_ID = "06C17B674C66C15648D532B59505E1E3"  # ID de la conexión de Reporte
 # POR FAVOR INGRESA TUS CREDENCIALES DE MICROSTRATEGY AQUÍ:
 # ==============================================================================
 USERNAME = "maria.sanchez"
-PASSWORD = "Marzo0393*"
+PASSWORD = "Octubre2015*"
 # ==============================================================================
 
 # Resolver directorios locales
@@ -516,21 +516,73 @@ def run_reporting_pipeline():
     
     processed_months = []
     seen_ids = set()
+    cols_details = [
+        'Marca', 'Tipo Aprobacion', 'Total Retiros',
+        'Promedio Creado a Aprobado (Min)', 'Mediana Creado a Aprobado (Min)',
+        'Promedio Creado a Aprobado (Hrs)', 'Mediana Creado a Aprobado (Hrs)',
+        'Promedio Creado a Pagado (Min)', 'Mediana Creado a Pagado (Min)',
+        'Promedio Creado a Pagado (Hrs)', 'Mediana Creado a Pagado (Hrs)',
+        'Promedio Aprobado a Pagado (Min)', 'Mediana Aprobado a Pagado (Min)',
+        'Promedio Aprobado a Pagado (Hrs)', 'Mediana Aprobado a Pagado (Hrs)'
+    ]
+    
     for m in month_files:
         excel_path = m['file_path']
         csv_path = excel_path.replace(".xlsx", "_cache.csv")
+        summary_path = excel_path.replace(".xlsx", "_summary.json")
         
-        # Intentar cargar desde el archivo CSV cacheado si existe y es más reciente que el archivo de Excel
+        # 1. Comprobar si existe un resumen precalculado vigente
+        use_summary = False
+        if os.path.exists(summary_path) and os.path.getsize(summary_path) > 0:
+            sum_mtime = os.path.getmtime(summary_path)
+            excel_mtime = os.path.getmtime(excel_path)
+            csv_mtime = os.path.getmtime(csv_path) if os.path.exists(csv_path) else 0
+            base_mtime = max(excel_mtime, csv_mtime)
+            if sum_mtime >= (base_mtime - 2):
+                use_summary = True
+                
+        if use_summary:
+            print(f"[+] {m['display_name']}: Cargando métricas consolidadas desde resumen precalculado '{os.path.basename(summary_path)}'...")
+            try:
+                with open(summary_path, "r", encoding="utf-8") as sf:
+                    m_json = json.load(sf)
+                
+                df_det = pd.DataFrame(m_json.get("details", []))
+                if not df_det.empty:
+                    for c in cols_details:
+                        if c not in df_det.columns:
+                            df_det[c] = None
+                    df_det = df_det[cols_details]
+                else:
+                    df_det = pd.DataFrame(columns=cols_details)
+                    
+                m_dfs = {
+                    "brands_summary": pd.DataFrame(m_json.get("brands_summary", [])),
+                    "details": df_det,
+                    "global_risk": pd.DataFrame(m_json.get("global_risk", []))
+                }
+                
+                processed_months.append({
+                    "month_name": m["month_name"],
+                    "display_name": m["display_name"],
+                    "json_data": m_json,
+                    "dfs": m_dfs
+                })
+                continue
+            except Exception as e_sum:
+                print(f"        [-] Error al leer resumen precalculado ({e_sum}). Se recalculará desde la data base...")
+
+        # 2. Si no hay resumen o está desactualizado, procesar la data completa
         use_cache = False
-        if os.path.exists(csv_path):
+        if os.path.exists(csv_path) and os.path.getsize(csv_path) > 0:
             excel_mtime = os.path.getmtime(excel_path)
             csv_mtime = os.path.getmtime(csv_path)
-            if csv_mtime > excel_mtime:
+            if csv_mtime >= (excel_mtime - 2):
                 use_cache = True
                 
         if use_cache:
-            print(f"\n=== Procesando data de {m['display_name']} desde caché rápido '{os.path.basename(csv_path)}' ===")
-            df_raw = pd.read_csv(csv_path)
+            print(f"\n=== Procesando data de {m['display_name']} desde caché CSV '{os.path.basename(csv_path)}' ===")
+            df_raw = pd.read_csv(csv_path, low_memory=False)
         else:
             print(f"\n=== Procesando data de {m['display_name']} desde Excel '{os.path.basename(excel_path)}' ===")
             xl = pd.ExcelFile(excel_path)
@@ -548,12 +600,22 @@ def run_reporting_pipeline():
             if len(seen_ids) > 0:
                 rows_before = len(df_raw)
                 df_raw = df_raw[~df_raw['Id Retiro_str'].isin(seen_ids)].copy()
-                print(f"        - Excluidos {rows_before - len(df_raw)} registros repetidos en meses históricos anteriores.")
+                if rows_before != len(df_raw):
+                    print(f"        - Excluidos {rows_before - len(df_raw)} registros repetidos en meses históricos anteriores.")
             seen_ids.update(df_raw['Id Retiro_str'].dropna())
             df_raw = df_raw.drop(columns=['Id Retiro_str'])
             
         df = prepare_dataframe(df_raw)
         m_json, m_dfs = analyze_month(df)
+        
+        # Guardar en resumen precalculado para futuras ejecuciones ultra-rápidas
+        try:
+            with open(summary_path, "w", encoding="utf-8") as sf:
+                json.dump(clean_nan(m_json), sf, ensure_ascii=False)
+            print(f"        [+] Resumen precalculado guardado en '{os.path.basename(summary_path)}'.")
+        except Exception as e_wsum:
+            print(f"        [-] Advertencia al guardar resumen precalculado: {e_wsum}")
+            
         processed_months.append({
             "month_name": m["month_name"],
             "display_name": m["display_name"],
@@ -687,14 +749,14 @@ def run_reporting_pipeline():
         try:
             # Intentar cargar desde el archivo CSV cacheado si existe y es más reciente que el archivo de Excel
             use_cache = False
-            if os.path.exists(latest_csv):
+            if os.path.exists(latest_csv) and os.path.getsize(latest_csv) > 0:
                 excel_mtime = os.path.getmtime(latest_file)
                 csv_mtime = os.path.getmtime(latest_csv)
-                if csv_mtime > excel_mtime:
+                if csv_mtime >= (excel_mtime - 2):
                     use_cache = True
             
             if use_cache:
-                df_latest = pd.read_csv(latest_csv, usecols=['Fecha Cambio Time'])
+                df_latest = pd.read_csv(latest_csv, usecols=['Fecha Cambio Time'], low_memory=False)
             else:
                 xl_latest = pd.ExcelFile(latest_file)
                 sheet_latest = 'Retiros BD Conexion' if 'Retiros BD Conexion' in xl_latest.sheet_names else xl_latest.sheet_names[0]
@@ -867,6 +929,158 @@ def run_reporting_pipeline():
     except Exception as e_prerender:
         print(f"[-] Warning: Pre-rendering table failed: {e_prerender}")
 
+    # Pre-render Diagnóstico Operativo Global table for latest month vs previous month
+    try:
+        if len(processed_months) >= 2:
+            prev_m_dict = processed_months[-2]
+            curr_m_dict = processed_months[-1]
+            mA_name = prev_m_dict["month_name"]
+            mB_name = curr_m_dict["month_name"]
+            mA_disp = prev_m_dict["display_name"]
+            mB_disp = curr_m_dict["display_name"]
+            
+            # Update title
+            diag_title_str = f"🔍 Diagnóstico Operativo Global: Causas de Variación Mes a Mes ({mB_disp} vs {mA_disp})"
+            title_pat = r'(<h3 id="diag-title"[\s\S]*?>)([\s\S]*?)(<\/h3>)'
+            new_html = re.sub(title_pat, r"\1\n                        " + diag_title_str + r"\n                    \3", new_html)
+            
+            # Update column headers
+            th_a_str = f"{mA_disp.upper()} 2026<br><span style=\"font-size:0.72rem; font-weight:normal;\">(Estip / Real)</span>"
+            th_b_str = f"{mB_disp.upper()} 2026<br><span style=\"font-size:0.72rem; font-weight:normal;\">(Estip / Real)</span>"
+            tha_pat = r'(<th id="diag-th-a"[\s\S]*?>)([\s\S]*?)(<\/th>)'
+            thb_pat = r'(<th id="diag-th-b"[\s\S]*?>)([\s\S]*?)(<\/th>)'
+            new_html = re.sub(tha_pat, r"\1" + th_a_str + r"\3", new_html)
+            new_html = re.sub(thb_pat, r"\1" + th_b_str + r"\3", new_html)
+            
+            # Build brand lookup
+            bMapA = {b["Marca"]: b for b in prev_m_dict["json_data"]["brands_summary"]}
+            bMapB = {b["Marca"]: b for b in curr_m_dict["json_data"]["brands_summary"]}
+            all_b_names = set(bMapA.keys()) | set(bMapB.keys())
+            
+            # Sort by volume in month B descending
+            sorted_b_names = sorted(all_b_names, key=lambda b: (bMapB.get(b, {}).get("Total Retiros", 0) or bMapA.get(b, {}).get("Total Retiros", 0)), reverse=True)
+            
+            def _get_risk_summary(m_json, brand):
+                risks = [r for r in m_json.get("brand_risk", []) if r.get("Marca") == brand]
+                total = sum(r.get("Total Retiros", 0) for r in risks)
+                by_level = {}
+                for r in risks:
+                    lvl = r.get("Nivel De Riesgo", "Sin Nivel")
+                    r_tot = r.get("Total Retiros", 0)
+                    r_auto = r.get("Retiros Automaticos", 0)
+                    by_level[lvl] = {
+                        "total": r_tot, "auto": r_auto, "manual": r_tot - r_auto,
+                        "share": (r_tot / total * 100) if total > 0 else 0,
+                        "pct_auto": r.get("% Automatizacion", 0)
+                    }
+                return {"total": total, "by_level": by_level}
+            
+            diag_rows_html = []
+            for brand in sorted_b_names:
+                bA = bMapA.get(brand, {"Total Retiros": 0, "% Automatizacion": 0.0, "% Automatizacion Proyectado": 0.0})
+                bB = bMapB.get(brand, {"Total Retiros": 0, "% Automatizacion": 0.0, "% Automatizacion Proyectado": 0.0})
+                
+                volA = bA.get("Total Retiros", 0)
+                volB = bB.get("Total Retiros", 0)
+                volGrowth = ((volB - volA) / volA * 100) if volA > 0 else (100.0 if volB > 0 else 0.0)
+                
+                estipA = bA.get("% Automatizacion Proyectado", 0.0)
+                estipB = bB.get("% Automatizacion Proyectado", 0.0)
+                estipDiff = estipB - estipA
+                
+                realA = bA.get("% Automatizacion", 0.0)
+                realB = bB.get("% Automatizacion", 0.0)
+                realDiff = realB - realA
+                
+                growthColor = "#38bdf8" if volGrowth > 0.05 else ("#94a3b8" if volGrowth < -0.05 else "#94a3b8")
+                growthStr = f"{'+' if volGrowth >= 0 else ''}{volGrowth:.1f}%"
+                
+                if abs(estipDiff) < 0.5:
+                    estipBadge = f"<span style='color:#38bdf8; font-weight:bold;'>{'+' if estipDiff >= 0 else ''}{estipDiff:.1f}% = (ESTABLE)</span>"
+                elif estipDiff >= 0.5:
+                    estipBadge = f"<span style='color:#22c55e; font-weight:bold;'>+{estipDiff:.1f}% 📈</span>"
+                else:
+                    estipBadge = f"<span style='color:#f43f5e; font-weight:bold;'>{estipDiff:.1f}% 📉</span>"
+                    
+                if abs(realDiff) < 0.5:
+                    realBadge = f"<span style='color:#94a3b8;'>{'+' if realDiff >= 0 else ''}{realDiff:.1f}% =</span>"
+                elif realDiff >= 0.5:
+                    realBadge = f"<span style='color:#4ade80;'>+{realDiff:.1f}% 📈</span>"
+                else:
+                    realBadge = f"<span style='color:#fb7185;'>{realDiff:.1f}% 📉</span>"
+                    
+                # Diagnostic text
+                rA = _get_risk_summary(prev_m_dict["json_data"], brand)
+                rB = _get_risk_summary(curr_m_dict["json_data"], brand)
+                bajoB = rB["by_level"].get("Bajo", {})
+                bajoA = rA["by_level"].get("Bajo", {})
+                medioB = rB["by_level"].get("Medio", {})
+                medioA = rA["by_level"].get("Medio", {})
+                
+                man_bajo_pct = (bajoB.get("manual", 0) / volB * 100) if volB > 0 else 0
+                share_medio_diff = medioB.get("share", 0) - medioA.get("share", 0)
+                
+                if volA == 0 and volB > 0:
+                    diagText = f"<b>Diagnóstico Global:</b> Marca incorporada en {mB_disp} con un volumen de <b>{volB:,} retiros</b> ({estipB:.1f}% estipulado / {realB:.1f}% real)."
+                elif volB == 0 and volA > 0:
+                    diagText = f"<b>Diagnóstico Global:</b> Sin retiros registrados en {mB_disp} (en {mA_disp} procesó {volA:,} retiros)."
+                else:
+                    if estipDiff >= 0.5 and realDiff >= 0.5:
+                        pA = f"<b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+{estipDiff:.1f}% con switch encendido (alcanzando {estipB:.1f}%)</b> y +{realDiff:.1f}% en ejecutado real."
+                    elif abs(estipDiff) < 0.5:
+                        sign_e = "+" if estipDiff >= 0 else ""
+                        vDiffNum = volB - volA
+                        k_vol = f"{vDiffNum/1000:+.1f}k" if abs(vDiffNum) >= 1000 else f"{vDiffNum:+d}"
+                        volTxt = f" absorbiendo {k_vol} retiros ({'+' if volGrowth >= 0 else ''}{volGrowth:.1f}% volumen)" if abs(volGrowth) >= 1.0 else " con volumen constante"
+                        pA = f"<b>Diagnóstico Global:</b> La automatización estipulada permaneció <b>ESTABLE en {round(estipB)}% ({sign_e}{estipDiff:.1f}%)</b>{volTxt}."
+                    elif estipDiff >= 0.5:
+                        pA = f"<b>Diagnóstico Global:</b> Crecimiento de <b>+{estipDiff:.1f}% en automatización estipulada (al {estipB:.1f}%)</b>."
+                    else:
+                        pA = f"<b>Diagnóstico Global:</b> Variación de <b>{estipDiff:.1f}% en automatización estipulada (quedando en {estipB:.1f}%)</b>."
+                        
+                    if realDiff <= -0.5:
+                        causes = []
+                        if man_bajo_pct >= 2.5:
+                            causes.append(f"un <b>{man_bajo_pct:.1f}% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover")
+                        if share_medio_diff >= 0.8:
+                            causes.append(f"un <b>{share_medio_diff:.1f}% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h")
+                        if not causes:
+                            causes.append("se aplicaron verificaciones preventivas que derivaron solicitudes a revisión manual")
+                        pB = f"En el ejecutado real ({realDiff:.1f}%), {' y '.join(causes)}."
+                    elif realDiff >= 0.5:
+                        if not (estipDiff >= 0.5 and realDiff >= 0.5):
+                            causes = []
+                            if share_medio_diff <= -0.8:
+                                causes.append(f"un <b>{abs(share_medio_diff):.1f}% más de usuarios se mantuvieron en Nivel Bajo</b>")
+                            if bajoB.get("pct_auto", 0) > bajoA.get("pct_auto", 0):
+                                causes.append("las solicitudes se mantuvieron dentro de los parámetros y topes autorizados")
+                            if not causes:
+                                causes.append("mayor proporción de transacciones cumplieron con las reglas automáticas")
+                            pB = f"En el ejecutado real mejoró <b>+{realDiff:.1f}%</b> al lograr que {causes[0]}."
+                        else:
+                            pB = "Las transacciones de bajo monto y rollover cumplieron los criterios de aprobación sin desvíos a mesa manual."
+                    else:
+                        pB = f"En el ejecutado real se mantuvo <b>ESTABLE ({'+' if realDiff >= 0 else ''}{realDiff:.1f}%)</b> dentro de los rangos autorizados."
+                        
+                    diagText = f"{pA} {pB}"
+                    
+                row_html = f'''                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">{brand}</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">{volA:,} <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>{estipA:.1f}%</b><br>Real: {realA:.1f}%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">{volB:,} <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>{estipB:.1f}%</b><br>Real: {realB:.1f}%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: {growthColor}; vertical-align: top;">{growthStr}</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;">{estipBadge}</td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;">{realBadge}</td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;">{diagText}</td>
+                    </tr>'''
+                diag_rows_html.append(row_html)
+                
+            diag_body_content = "\n" + "\n".join(diag_rows_html) + "\n                    "
+            diag_tbody_pat = r'(<tbody id="diag-tbody"[\s\S]*?>)([\s\S]*?)(<\/tbody>)'
+            new_html = re.sub(diag_tbody_pat, r"\1" + diag_body_content + r"\3", new_html)
+    except Exception as e_diag_prerender:
+        print(f"[-] Warning: Pre-rendering diagnosis table failed: {e_diag_prerender}")
+
     with open(html_out, "w", encoding="utf-8") as f:
         f.write(new_html)
         
@@ -902,12 +1116,14 @@ def run_pipeline():
         if response.status_code not in [200, 204]:
             print(f"[-] Error de autenticación. Código: {response.status_code}")
             print(response.text)
-            return
+            print("\n[-] ERROR CRÍTICO: Las credenciales de MicroStrategy fueron rechazadas por el servidor (Login failure).")
+            print("[-] Por favor verifica o actualiza tu usuario y contraseña en 'test_mstr_connection.py' (líneas 25 y 26).")
+            sys.exit(1)
 
         auth_token = response.headers.get("X-MSTR-AuthToken")
         if not auth_token:
             print("[-] No se recibió el token de autenticación (X-MSTR-AuthToken).")
-            return
+            sys.exit(1)
 
         print("[+] Autenticación exitosa! Token obtenido.")
         session.headers.update({
@@ -921,7 +1137,7 @@ def run_pipeline():
         
         if proj_resp.status_code != 200:
             print(f"[-] No se pudo obtener la lista de proyectos. Código: {proj_resp.status_code}")
-            return
+            sys.exit(1)
 
         projects = proj_resp.json()
         project_id = None
@@ -939,68 +1155,88 @@ def run_pipeline():
 
         if not project_id:
             print("[-] No se pudo determinar ningún ID de proyecto.")
-            return
+            sys.exit(1)
 
         session.headers.update({"X-MSTR-ProjectID": project_id})
 
-        print(f"\n[*] 3. Creando instancia del Reporte de MicroStrategy para ID {DOSSIER_ID} con filtro de fecha...")
-        # Filtro incremental: descargar solo los últimos 7 días para rapidez extrema
+        print(f"\n[*] 3. Creando instancia del Reporte de MicroStrategy para ID {DOSSIER_ID} con filtro adaptativo...")
         import datetime
         now = datetime.datetime.now()
-        start_date = now - datetime.timedelta(days=7)
-        filter_date_str = start_date.strftime("%Y-%m-%d 00:00:00")
-        print(f"    [+] [Modo Incremental] Aplicando filtro de fecha (últimos 7 días): Fecha Cambio Time >= {filter_date_str}")
         
-        payload = {
-            "viewFilter": {
-                "operator": "Between",
-                "operands": [
-                    {
-                        "type": "form",
-                        "attribute": {
-                            "id": "A632D4914460225A909A94A4A411506C" # Fecha Cambio Time
+        # Estrategia adaptativa: ventanas de 2 a 1 día para prevenir sobrecarga de memoria en Intelligence Server
+        candidate_windows = [2, 1]
+        instance_data = None
+        instance_id = None
+        total_rows = 0
+        attribute_names = []
+        
+        for days in candidate_windows:
+            start_date = now - datetime.timedelta(days=days)
+            filter_date_str = start_date.strftime("%Y-%m-%d 00:00:00")
+            print(f"    [+] [Modo Incremental] Probando ventana de {days} día(s): Fecha Cambio Time >= {filter_date_str}")
+            
+            payload = {
+                "viewFilter": {
+                    "operator": "Between",
+                    "operands": [
+                        {
+                            "type": "form",
+                            "attribute": {
+                                "id": "A632D4914460225A909A94A4A411506C" # Fecha Cambio Time
+                            },
+                            "form": {
+                                "id": "CCFBE2A5EADB4F50941FB879CCF1721C" # DESC Form
+                            }
                         },
-                        "form": {
-                            "id": "CCFBE2A5EADB4F50941FB879CCF1721C" # DESC Form
+                        {
+                            "type": "constant",
+                            "dataType": "TimeStamp",
+                            "value": filter_date_str
+                        },
+                        {
+                            "type": "constant",
+                            "dataType": "TimeStamp",
+                            "value": "2030-12-31 23:59:59" # Fecha límite lejana
                         }
-                    },
-                    {
-                        "type": "constant",
-                        "dataType": "TimeStamp",
-                        "value": filter_date_str
-                    },
-                    {
-                        "type": "constant",
-                        "dataType": "TimeStamp",
-                        "value": "2030-12-31 23:59:59" # Fecha límite lejana
-                    }
-                ]
+                    ]
+                }
             }
-        }
-
-        report_url = f"{API_URL}/reports/{DOSSIER_ID}/instances"
-        resp = session.post(report_url, json=payload)
-        if resp.status_code not in [200, 201]:
-            print(f"[-] Error al crear la instancia del reporte: {resp.status_code}")
-            print(resp.text[:500])
-            return
-
-        instance_data = resp.json()
-        instance_id = instance_data.get("instanceId")
-        result_obj = instance_data.get("result", {})
-        definition = result_obj.get("definition", {})
-        paging = result_obj.get("data", {}).get("paging", {})
-        total_rows = paging.get("total", 0)
-
-        print(f"[+] Instancia creada con éxito. ID: {instance_id}")
-        print(f"[+] Total de filas reportadas por el servidor: {total_rows}")
-
-        # Extraer nombres de atributos
-        attributes_def = definition.get("grid", {}).get("rows", [])
-        if not attributes_def:
-            attributes_def = definition.get("attributes", [])
-        attribute_names = [attr.get("name") for attr in attributes_def]
-        print(f"[+] Atributos del Reporte: {attribute_names}")
+            
+            report_url = f"{API_URL}/reports/{DOSSIER_ID}/instances"
+            try:
+                resp = session.post(report_url, json=payload, timeout=120)
+                if resp.status_code in [200, 201]:
+                    instance_data = resp.json()
+                    instance_id = instance_data.get("instanceId")
+                    result_obj = instance_data.get("result", {})
+                    definition = result_obj.get("definition", {})
+                    paging = result_obj.get("data", {}).get("paging", {})
+                    total_rows = paging.get("total", 0)
+                    
+                    attributes_def = definition.get("grid", {}).get("rows", [])
+                    if not attributes_def:
+                        attributes_def = definition.get("attributes", [])
+                    attribute_names = [attr.get("name") for attr in attributes_def]
+                    
+                    print(f"    [+] Instancia creada con éxito para ventana de {days} día(s). ID: {instance_id}")
+                    print(f"    [+] Total de filas reportadas por el servidor: {total_rows}")
+                    print(f"[+] Atributos del Reporte: {attribute_names}")
+                    break
+                else:
+                    print(f"    [!] Advertencia: Ventana de {days} día(s) devolvió código {resp.status_code}: {resp.text[:200]}")
+            except Exception as e_inst:
+                print(f"    [!] Excepción al solicitar instancia con {days} día(s): {e_inst}")
+                
+        if not instance_id:
+            print("[-] No fue posible crear una instancia en MicroStrategy debido a límites de memoria del servidor o conectividad.")
+            print("[*] Ejecutando tubería de consolidación y generación de reportes sobre datos locales existentes...")
+            success = run_reporting_pipeline()
+            if success:
+                print("\n[+] Tablero y reportes actualizados con éxito sobre la información local.")
+                sys.exit(0)
+            else:
+                print("\n[-] Error al generar los reportes locales.")
+                sys.exit(1)
 
         # Descarga paginada
         all_parsed_rows = []
@@ -1106,7 +1342,7 @@ def run_pipeline():
                 try:
                     target_csv_path = target_excel_path.replace(".xlsx", "_cache.csv")
                     if os.path.exists(target_csv_path):
-                        df_old = pd.read_csv(target_csv_path)
+                        df_old = pd.read_csv(target_csv_path, low_memory=False)
                     else:
                         df_old = pd.read_excel(target_excel_path)
                     
@@ -1131,27 +1367,29 @@ def run_pipeline():
                 print(f"        [!] No existe archivo local previo. Guardando lote de descarga como base.")
                 df_clean = df_new_clean
             
-            # Encontrar y mover actualizaciones de meses anteriores
+            # Encontrar y mover actualizaciones de retiros en transición desde el mes inmediatamente anterior
             df_clean['Id Retiro_str'] = df_clean['Id Retiro'].astype(str).str.strip().str.replace(r'\.0$', '', regex=True)
             
-            for prev_m_num in range(1, int(m_num)):
+            prev_m_num = int(m_num) - 1
+            if prev_m_num >= 1:
                 prev_m_name = month_num_to_name.get(prev_m_num)
                 if prev_m_name:
                     hist_path = os.path.join(dir_path, f"Retiros {prev_m_name.capitalize()}.xlsx")
                     hist_csv_path = hist_path.replace(".xlsx", "_cache.csv")
+                    hist_summary_path = hist_path.replace(".xlsx", "_summary.json")
                     if os.path.exists(hist_path):
-                        print(f"        - Cargando IDs históricos de '{os.path.basename(hist_path)}' (usando caché)...")
+                        print(f"        - Verificando posibles retiros en transición desde '{os.path.basename(hist_path)}'...")
                         try:
                             # Intentar cargar desde caché si existe y es más reciente
                             use_hist_cache = False
-                            if os.path.exists(hist_csv_path):
+                            if os.path.exists(hist_csv_path) and os.path.getsize(hist_csv_path) > 0:
                                 excel_mtime = os.path.getmtime(hist_path)
                                 csv_mtime = os.path.getmtime(hist_csv_path)
-                                if csv_mtime > excel_mtime:
+                                if csv_mtime >= (excel_mtime - 2):
                                     use_hist_cache = True
                                     
                             if use_hist_cache:
-                                df_hist = pd.read_csv(hist_csv_path)
+                                df_hist = pd.read_csv(hist_csv_path, low_memory=False)
                             else:
                                 df_hist = pd.read_excel(hist_path)
                                 df_hist.to_csv(hist_csv_path, index=False)
@@ -1172,10 +1410,15 @@ def run_pipeline():
                                     # Guardar archivo histórico actualizado
                                     df_hist_new.to_excel(hist_path, sheet_name="Retiros BD Conexion", index=False)
                                     df_hist_new.to_csv(hist_csv_path, index=False)
+                                    if os.path.exists(hist_summary_path):
+                                        try:
+                                            os.remove(hist_summary_path)
+                                        except Exception:
+                                            pass
                                     print(f"            [+] Archivo histórico '{os.path.basename(hist_path)}' y su caché actualizados con éxito.")
                                 
                         except Exception as ex_hist:
-                            print(f"        - Error al actualizar histórico: {ex_hist}")
+                            print(f"        - Error al verificar histórico: {ex_hist}")
             
             df_clean = df_clean.drop(columns=['Id Retiro_str'], errors='ignore')
             if os.path.exists(target_excel_path):
@@ -1205,13 +1448,16 @@ def run_pipeline():
             print("- El consolidado 'Reporte_Efectividad_Automatizacion.xlsx' fue actualizado.")
             print("- El tablero 'Dashboard_Efectividad.html' fue inyectado y dinamizado.")
             print("======================================================================")
+            sys.exit(0)
         else:
             print("\n[-] Ocurrió un error en la tubería de reportes.")
+            sys.exit(1)
 
     except Exception as e:
         print(f"\n[-] Error durante la conexión y procesamiento: {e}")
         import traceback
         traceback.print_exc()
+        sys.exit(1)
 
 if __name__ == "__main__":
     run_pipeline()

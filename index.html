@@ -1695,25 +1695,174 @@
             </div>
         </div>
     </div>
+    <!-- DIAGNÓSTICO OPERATIVO GLOBAL: CAUSAS DE VARIACIÓN MES A MES (EN VISTA GENERAL) -->
+    <!-- DIAGNÓSTICO OPERATIVO GLOBAL: CAUSAS DE VARIACIÓN MES A MES -->
+        <div style="margin-top: 2rem; background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                <div>
+                    <h3 id="diag-title" class="diag-title-el" style="color: #38bdf8; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;">
+                        🔍 Diagnóstico Operativo Global: Causas de Variación Mes a Mes (Octubre vs Septiembre)
+                    </h3>
+                    <p style="color: #94a3b8; font-size: 0.88rem; margin: 0;">
+                        Resumen ejecutivo global de variación por montos transaccionales y migración de nivel de riesgo en <b>Switch Encendido vs Apagado</b>.
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.6rem;">
+                    <span style="background: rgba(45, 212, 191, 0.12); color: #2dd4bf; border: 1px solid rgba(45, 212, 191, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600;">
+                        🧪 Switch Encendido (Riesgo Bajo Incluido)
+                    </span>
+                    <span style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600;">
+                        📊 Switch Apagado (Ejecutado Real)
+                    </span>
+                </div>
+            </div>
 
-    <!-- Data Table -->
-    
-    </div> 
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.88rem;">
+                    <thead>
+                        <tr style="background: #0f172a; color: #94a3b8; border-bottom: 2px solid #334155;">
+                            <th style="padding: 12px 10px; text-align: left;">Marca</th>
+                            <th id="diag-th-a" class="diag-th-a-el" style="padding: 12px 10px;">SEPTIEMBRE 2026<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span></th>
+                            <th id="diag-th-b" class="diag-th-b-el" style="padding: 12px 10px;">OCTUBRE 2026<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span></th>
+                            <th style="padding: 12px 10px;">Crec. Vol.</th>
+                            <th style="padding: 12px 10px; color: #2dd4bf; background: rgba(45, 212, 191, 0.08);">⚡ Var. Switch Encendido<br><span style="font-size:0.75rem; font-weight:normal;">(Estipulado)</span></th>
+                            <th style="padding: 12px 10px; color: #38bdf8; background: rgba(56, 189, 248, 0.08);">📊 Var. Switch Apagado<br><span style="font-size:0.75rem; font-weight:normal;">(Real)</span></th>
+                            <th style="padding: 12px 10px; text-align: left;">Diagnóstico Operativo Global (Al Grano)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="diag-tbody" class="diag-tbody-el">
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Ecuabet Ecuador</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">119,778 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>77.1%</b><br>Real: 61.7%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">5,803 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>77.5%</b><br>Real: 61.9%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-95.2%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#38bdf8; font-weight:bold;'>+0.5% = (ESTABLE)</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#94a3b8;'>+0.2% =</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> La automatización estipulada permaneció <b>ESTABLE en 78% (+0.5%)</b> absorbiendo -114.0k retiros (-95.2% volumen). En el ejecutado real se mantuvo <b>ESTABLE (+0.2%)</b> dentro de los rangos autorizados.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Paniplay Honduras</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">5,586 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>75.5%</b><br>Real: 69.9%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">0 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>0.0%</b><br>Real: 0.0%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-100.0%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-75.5% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-69.9% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Sin retiros registrados en Octubre (en Septiembre procesó 5,586 retiros).</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Perú</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">43,916 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>79.5%</b><br>Real: 76.0%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">2,777 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>81.6%</b><br>Real: 75.2%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-93.7%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+2.1% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-0.8% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Crecimiento de <b>+2.1% en automatización estipulada (al 81.6%)</b>. En el ejecutado real (-0.8%), un <b>6.4% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Costa Rica</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">11,593 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>72.9%</b><br>Real: 68.0%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">771 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>58.8%</b><br>Real: 53.4%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-93.3%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-14.1% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-14.6% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-14.1% en automatización estipulada (quedando en 58.8%)</b>. En el ejecutado real (-14.6%), un <b>5.3% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>11.4% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Ecuador</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">15,233 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>64.4%</b><br>Real: 52.6%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">740 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>63.4%</b><br>Real: 46.5%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-95.1%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-1.1% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-6.1% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-1.1% en automatización estipulada (quedando en 63.4%)</b>. En el ejecutado real (-6.1%), un <b>16.9% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>1.1% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet El Salvador</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">6,088 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>60.1%</b><br>Real: 51.9%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">641 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>54.0%</b><br>Real: 46.0%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-89.5%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-6.1% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-5.8% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-6.1% en automatización estipulada (quedando en 54.0%)</b>. En el ejecutado real (-5.8%), un <b>8.0% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>6.3% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">GanaPlay El Salvador</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">21,184 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>66.0%</b><br>Real: 47.0%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">617 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>56.6%</b><br>Real: 37.4%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-97.1%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-9.4% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-9.6% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-9.4% en automatización estipulada (quedando en 56.6%)</b>. En el ejecutado real (-9.6%), un <b>19.1% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>14.2% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Camanbet Venezuela</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">5,487 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>69.7%</b><br>Real: 37.4%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">315 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>68.6%</b><br>Real: 33.3%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-94.3%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-1.1% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-4.1% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-1.1% en automatización estipulada (quedando en 68.6%)</b>. En el ejecutado real (-4.1%), un <b>35.2% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>1.2% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Honduras</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">2,065 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>55.5%</b><br>Real: 48.5%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">130 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>52.3%</b><br>Real: 47.7%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-93.7%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-3.2% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-0.8% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-3.2% en automatización estipulada (quedando en 52.3%)</b>. En el ejecutado real (-0.8%), un <b>4.6% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>3.0% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Camanbet Venezuela 2</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">386 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>79.5%</b><br>Real: 38.9%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">31 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>83.9%</b><br>Real: 38.7%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-92.0%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+4.3% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#94a3b8;'>-0.2% =</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Crecimiento de <b>+4.3% en automatización estipulada (al 83.9%)</b>. En el ejecutado real se mantuvo <b>ESTABLE (-0.2%)</b> dentro de los rangos autorizados.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Guatemala</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">1,279 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>55.0%</b><br>Real: 47.3%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">28 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>89.3%</b><br>Real: 78.6%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-97.8%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+34.3% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#4ade80;'>+31.3% 📈</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+34.3% con switch encendido (alcanzando 89.3%)</b> y +31.3% en ejecutado real. Las transacciones de bajo monto y rollover cumplieron los criterios de aprobación sin desvíos a mesa manual.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">GanaPlay Guatemala</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">967 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>74.5%</b><br>Real: 58.1%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">25 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>84.0%</b><br>Real: 72.0%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-97.4%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+9.5% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#4ade80;'>+13.9% 📈</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+9.5% con switch encendido (alcanzando 84.0%)</b> y +13.9% en ejecutado real. Las transacciones de bajo monto y rollover cumplieron los criterios de aprobación sin desvíos a mesa manual.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Chile</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">935 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>61.1%</b><br>Real: 57.2%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">16 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>62.5%</b><br>Real: 56.2%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-98.3%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+1.4% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-1.0% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Crecimiento de <b>+1.4% en automatización estipulada (al 62.5%)</b>. En el ejecutado real (-1.0%), un <b>6.2% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Bolivia</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">137 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>75.2%</b><br>Real: 70.8%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">1 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>100.0%</b><br>Real: 100.0%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-99.3%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+24.8% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#4ade80;'>+29.2% 📈</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+24.8% con switch encendido (alcanzando 100.0%)</b> y +29.2% en ejecutado real. Las transacciones de bajo monto y rollover cumplieron los criterios de aprobación sin desvíos a mesa manual.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    
-    </div>
-
-    
-    
-    </div>
-
-    
-    
-    </div>
-
-    
-    
-    </div>
+    </div> <!-- Closes tab-pane-overview cleanly -->
 
     <!-- TAB 2: DESGLOSE POR MARCA (Tabla Completa de Métricas) -->
     <div id="tab-pane-table" class="tab-pane">
@@ -2423,204 +2572,177 @@
                     </tbody>
                 </table>
             </div>
-            <p class="comp-nota" id="comp-nota">* Selecciona los dos meses y la marca en los controles de arriba. Los íconos ▲ (verde) indican mejora y ▼ (rojo) indican caída.</p>
+                        <p class="comp-nota" id="comp-nota">* Selecciona los dos meses y la marca en los controles de arriba. Los íconos ▲ (verde) indican mejora y ▼ (rojo) indican caída.</p>
         </div>
-    </div>
+
+        <!-- DIAGNÓSTICO OPERATIVO GLOBAL: CAUSAS DE VARIACIÓN MES A MES -->
+        <div style="margin-top: 2rem; background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                <div>
+                    <h3 id="diag-title" class="diag-title-el" style="color: #38bdf8; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;">
+                        🔍 Diagnóstico Operativo Global: Causas de Variación Mes a Mes (Octubre vs Septiembre)
+                    </h3>
+                    <p style="color: #94a3b8; font-size: 0.88rem; margin: 0;">
+                        Resumen ejecutivo global de variación por montos transaccionales y migración de nivel de riesgo en <b>Switch Encendido vs Apagado</b>.
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.6rem;">
+                    <span style="background: rgba(45, 212, 191, 0.12); color: #2dd4bf; border: 1px solid rgba(45, 212, 191, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600;">
+                        🧪 Switch Encendido (Riesgo Bajo Incluido)
+                    </span>
+                    <span style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600;">
+                        📊 Switch Apagado (Ejecutado Real)
+                    </span>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.88rem;">
+                    <thead>
+                        <tr style="background: #0f172a; color: #94a3b8; border-bottom: 2px solid #334155;">
+                            <th style="padding: 12px 10px; text-align: left;">Marca</th>
+                            <th id="diag-th-a" class="diag-th-a-el" style="padding: 12px 10px;">SEPTIEMBRE 2026<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span></th>
+                            <th id="diag-th-b" class="diag-th-b-el" style="padding: 12px 10px;">OCTUBRE 2026<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span></th>
+                            <th style="padding: 12px 10px;">Crec. Vol.</th>
+                            <th style="padding: 12px 10px; color: #2dd4bf; background: rgba(45, 212, 191, 0.08);">⚡ Var. Switch Encendido<br><span style="font-size:0.75rem; font-weight:normal;">(Estipulado)</span></th>
+                            <th style="padding: 12px 10px; color: #38bdf8; background: rgba(56, 189, 248, 0.08);">📊 Var. Switch Apagado<br><span style="font-size:0.75rem; font-weight:normal;">(Real)</span></th>
+                            <th style="padding: 12px 10px; text-align: left;">Diagnóstico Operativo Global (Al Grano)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="diag-tbody" class="diag-tbody-el">
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Ecuabet Ecuador</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">119,778 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>77.1%</b><br>Real: 61.7%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">5,803 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>77.5%</b><br>Real: 61.9%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-95.2%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#38bdf8; font-weight:bold;'>+0.5% = (ESTABLE)</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#94a3b8;'>+0.2% =</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> La automatización estipulada permaneció <b>ESTABLE en 78% (+0.5%)</b> absorbiendo -114.0k retiros (-95.2% volumen). En el ejecutado real se mantuvo <b>ESTABLE (+0.2%)</b> dentro de los rangos autorizados.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Paniplay Honduras</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">5,586 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>75.5%</b><br>Real: 69.9%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">0 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>0.0%</b><br>Real: 0.0%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-100.0%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-75.5% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-69.9% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Sin retiros registrados en Octubre (en Septiembre procesó 5,586 retiros).</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Perú</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">43,916 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>79.5%</b><br>Real: 76.0%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">2,777 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>81.6%</b><br>Real: 75.2%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-93.7%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+2.1% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-0.8% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Crecimiento de <b>+2.1% en automatización estipulada (al 81.6%)</b>. En el ejecutado real (-0.8%), un <b>6.4% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Costa Rica</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">11,593 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>72.9%</b><br>Real: 68.0%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">771 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>58.8%</b><br>Real: 53.4%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-93.3%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-14.1% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-14.6% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-14.1% en automatización estipulada (quedando en 58.8%)</b>. En el ejecutado real (-14.6%), un <b>5.3% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>11.4% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Ecuador</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">15,233 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>64.4%</b><br>Real: 52.6%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">740 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>63.4%</b><br>Real: 46.5%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-95.1%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-1.1% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-6.1% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-1.1% en automatización estipulada (quedando en 63.4%)</b>. En el ejecutado real (-6.1%), un <b>16.9% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>1.1% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet El Salvador</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">6,088 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>60.1%</b><br>Real: 51.9%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">641 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>54.0%</b><br>Real: 46.0%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-89.5%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-6.1% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-5.8% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-6.1% en automatización estipulada (quedando en 54.0%)</b>. En el ejecutado real (-5.8%), un <b>8.0% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>6.3% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">GanaPlay El Salvador</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">21,184 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>66.0%</b><br>Real: 47.0%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">617 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>56.6%</b><br>Real: 37.4%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-97.1%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-9.4% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-9.6% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-9.4% en automatización estipulada (quedando en 56.6%)</b>. En el ejecutado real (-9.6%), un <b>19.1% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>14.2% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Camanbet Venezuela</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">5,487 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>69.7%</b><br>Real: 37.4%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">315 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>68.6%</b><br>Real: 33.3%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-94.3%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-1.1% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-4.1% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-1.1% en automatización estipulada (quedando en 68.6%)</b>. En el ejecutado real (-4.1%), un <b>35.2% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>1.2% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Honduras</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">2,065 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>55.5%</b><br>Real: 48.5%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">130 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>52.3%</b><br>Real: 47.7%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-93.7%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-3.2% 📉</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-0.8% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Variación de <b>-3.2% en automatización estipulada (quedando en 52.3%)</b>. En el ejecutado real (-0.8%), un <b>4.6% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover y un <b>3.0% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Camanbet Venezuela 2</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">386 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>79.5%</b><br>Real: 38.9%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">31 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>83.9%</b><br>Real: 38.7%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-92.0%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+4.3% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#94a3b8;'>-0.2% =</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Crecimiento de <b>+4.3% en automatización estipulada (al 83.9%)</b>. En el ejecutado real se mantuvo <b>ESTABLE (-0.2%)</b> dentro de los rangos autorizados.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Guatemala</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">1,279 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>55.0%</b><br>Real: 47.3%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">28 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>89.3%</b><br>Real: 78.6%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-97.8%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+34.3% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#4ade80;'>+31.3% 📈</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+34.3% con switch encendido (alcanzando 89.3%)</b> y +31.3% en ejecutado real. Las transacciones de bajo monto y rollover cumplieron los criterios de aprobación sin desvíos a mesa manual.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">GanaPlay Guatemala</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">967 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>74.5%</b><br>Real: 58.1%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">25 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>84.0%</b><br>Real: 72.0%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-97.4%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+9.5% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#4ade80;'>+13.9% 📈</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+9.5% con switch encendido (alcanzando 84.0%)</b> y +13.9% en ejecutado real. Las transacciones de bajo monto y rollover cumplieron los criterios de aprobación sin desvíos a mesa manual.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Chile</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">935 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>61.1%</b><br>Real: 57.2%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">16 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>62.5%</b><br>Real: 56.2%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-98.3%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+1.4% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-1.0% 📉</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Crecimiento de <b>+1.4% en automatización estipulada (al 62.5%)</b>. En el ejecutado real (-1.0%), un <b>6.2% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Bolivia</td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">137 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>75.2%</b><br>Real: 70.8%</span></td>
+                        <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">1 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>100.0%</b><br>Real: 100.0%</span></td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-99.3%</td>
+                        <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+24.8% 📈</span></td>
+                        <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#4ade80;'>+29.2% 📈</span></td>
+                        <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+24.8% con switch encendido (alcanzando 100.0%)</b> y +29.2% en ejecutado real. Las transacciones de bajo monto y rollover cumplieron los criterios de aprobación sin desvíos a mesa manual.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- TAB 4: RECOMENDACIONES (Hallazgos y Acciones Sugeridas) -->
-    
-    
-    
-    
-    
-    
-    <div style="margin-top: 2rem; background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
-            <div>
-                <h3 style="color: #38bdf8; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;">
-                    🔍 Diagnóstico Operativo Global: Causas de Variación Mes a Mes (Julio vs Junio)
-                </h3>
-                <p style="color: #94a3b8; font-size: 0.88rem; margin: 0;">
-                    Resumen ejecutivo global de variación por montos transaccionales y migración de nivel de riesgo en <b>Switch Encendido vs Apagado</b>.
-                </p>
-            </div>
-            <div style="display: flex; gap: 0.6rem;">
-                <span style="background: rgba(45, 212, 191, 0.12); color: #2dd4bf; border: 1px solid rgba(45, 212, 191, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600;">
-                    🧪 Switch Encendido (Riesgo Bajo Incluido)
-                </span>
-                <span style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600;">
-                    📊 Switch Apagado (Ejecutado Real)
-                </span>
-            </div>
-        </div>
-
-        <div style="overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.88rem;">
-                <thead>
-                    <tr style="background: #0f172a; color: #94a3b8; border-bottom: 2px solid #334155;">
-                        <th style="padding: 12px 10px; text-align: left;">Marca</th>
-                        <th style="padding: 12px 10px;">Junio 2026<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span></th>
-                        <th style="padding: 12px 10px;">Julio 2026<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span></th>
-                        <th style="padding: 12px 10px;">Crec. Vol.</th>
-                        <th style="padding: 12px 10px; color: #2dd4bf; background: rgba(45, 212, 191, 0.08);">⚡ Var. Switch Encendido<br><span style="font-size:0.75rem; font-weight:normal;">(Estipulado)</span></th>
-                        <th style="padding: 12px 10px; color: #38bdf8; background: rgba(56, 189, 248, 0.08);">📊 Var. Switch Apagado<br><span style="font-size:0.75rem; font-weight:normal;">(Real)</span></th>
-                        <th style="padding: 12px 10px; text-align: left;">Diagnóstico Operativo Global (Al Grano)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Ecuabet Ecuador</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">277,719 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>75.2%</b><br>Real: 62.0%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">320,263 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>74.9%</b><br>Real: 56.9%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #38bdf8; vertical-align: top;">+15.3%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#38bdf8; font-weight:bold;'>-0.3% = (ESTABLE)</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-5.1% 📉</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> La automatización estipulada permaneció <b>ESTABLE en 75% (-0.3%)</b> absorbiendo +42.5k retiros (+15.3% volumen). En el ejecutado real, un <b>4.8% de las solicitudes superaron el tope de 250 USD</b> o rollover 1.50, requiriendo autorización manual.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Perú</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">88,899 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>74.4%</b><br>Real: 71.8%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">87,792 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>73.4%</b><br>Real: 67.4%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-1.2%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-1.0% 📉</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-4.4% 📉</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Operación <b>ESTABLE en 73-74%</b> con el switch encendido. En ejecutado real (-4.4%), un <b>3.4% de las solicitudes superaron el parámetro de 1,999 PEN</b> y un <b>1.0% de los usuarios subió a Nivel Medio</b> por repetición de retiros en 24h.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">GanaPlay El Salvador</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">50,844 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>60.7%</b><br>Real: 27.2%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">57,743 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>60.7%</b><br>Real: 27.4%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #38bdf8; vertical-align: top;">+13.6%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#38bdf8; font-weight:bold;'>+0.0% = (ESTABLE)</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#94a3b8;'>+0.2% =</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Operación <b>PERFECTAMENTE ESTABLE (0.0% variación estipulada)</b> en 60.7%. Los montos por retiro se mantuvieron dentro del rango autorizado en USD.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Ecuador</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">28,344 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>61.7%</b><br>Real: 46.3%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">29,436 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>61.8%</b><br>Real: 35.8%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #38bdf8; vertical-align: top;">+3.9%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#38bdf8; font-weight:bold;'>+0.1% = (ESTABLE)</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-10.5% 📉</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Automatización estipulada <b>ESTABLE en 62% (+0.1%)</b>. La variación real (-10.5%) ocurrió porque un <b>10.6% de las solicitudes de bajo riesgo superaron el tope de 250 USD</b> o requirieron verificación de rollover.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Costa Rica</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">28,752 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>60.8%</b><br>Real: 57.8%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">27,349 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>64.2%</b><br>Real: 59.6%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-4.9%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+3.4% 📈</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#4ade80;'>+1.8% 📈</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+3.4% con switch encendido (alcanzando 64.2%)</b> y +1.8% en ejecutado real. Un <b>3.4% de los usuarios ajustaron sus montos por debajo de 249,999 CRC</b>, logrando aprobación automática.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Paniplay Honduras</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">16,085 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>81.0%</b><br>Real: 70.7%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">15,929 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>74.0%</b><br>Real: 59.0%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-1.0%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-7.0% 📉</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-11.7% 📉</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Las reglas no se apagaron. La variación ocurrió porque un <b>7.0% del volumen de usuarios subió de Nivel Bajo a Nivel Medio</b> por mayor frecuencia de retiro y un <b>4.7% de los montos superaron el parámetro máximo permitido</b> en Lempiras, derivando a revisión manual obligatoria.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Camanbet Venezuela</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">12,255 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>62.2%</b><br>Real: 20.8%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">12,811 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>65.3%</b><br>Real: 13.4%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #38bdf8; vertical-align: top;">+4.5%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+3.1% 📈</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-7.4% 📉</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Crecimiento estipulado del <b>+3.1% (al 65.3%)</b>. En el ejecutado real (-7.4%), un <b>10.5% de los retiros superaron el parámetro en VES o el rollover 3.00</b>, siendo derivados a revisión manual.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet El Salvador</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">11,901 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>45.2%</b><br>Real: 35.7%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">12,032 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>53.7%</b><br>Real: 36.4%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #38bdf8; vertical-align: top;">+1.1%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+8.5% 📈</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#4ade80;'>+0.7% 📈</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global POSITIVO:</b> Aumento de <b>+8.5% en automatización estipulada (llegando al 53.7%)</b>. Un <b>8.5% de los usuarios pasaron a Nivel Bajo</b> por enroque de cuentas bancarias y montos <499 USD.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">GanaPlay Guatemala</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">5,107 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>62.8%</b><br>Real: 37.1%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">6,134 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>60.2%</b><br>Real: 33.4%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #38bdf8; vertical-align: top;">+20.1%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-2.6% 📉</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-3.7% 📉</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Crecimiento de volumen (+20.1%). Un <b>2.6% correspondió a usuarios nuevos que ingresaron en Nivel Medio</b>, requiriendo validación KYC obligatoria en su primer retiro.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Guatemala</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">4,039 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>69.8%</b><br>Real: 58.3%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">4,191 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>68.1%</b><br>Real: 60.0%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #38bdf8; vertical-align: top;">+3.8%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-1.7% 📉</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#4ade80;'>+1.7% 📈</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global POSITIVO:</b> Mejora del <b>+1.7% en ejecutado real (alcanzando 60.0%)</b> al mantenerse las solicitudes dentro del parámetro de 5,000 GTQ.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Chile</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">2,510 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>56.9%</b><br>Real: 45.9%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">2,327 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>52.3%</b><br>Real: 38.3%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-7.3%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-4.6% 📉</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-7.6% 📉</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Un <b>4.6% de los usuarios subieron a Nivel Medio</b> y un <b>7.6% de los retiros superaron el parámetro de 999,999 CLP</b>, derivando a mesa manual.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Honduras</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">1,030 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>33.6%</b><br>Real: 11.3%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">2,027 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>36.9%</b><br>Real: 2.7%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #38bdf8; vertical-align: top;">+96.8%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#22c55e; font-weight:bold;'>+3.3% 📈</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-8.6% 📉</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Aumento estipulado de <b>+3.3% (al 36.9%)</b> pese a duplicarse el volumen (+96.8%). Los retiros manuales respondieron al sobrepaso de topes de monto.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Doradobet Bolivia</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">1,130 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>39.7%</b><br>Real: 23.6%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">1,027 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>34.9%</b><br>Real: 0.2%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #94a3b8; vertical-align: top;">-9.1%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#f43f5e; font-weight:bold;'>-4.8% 📉</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-23.4% 📉</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Un <b>4.8% de los usuarios subieron a Nivel Medio</b> y la pasarela bancaria local requirió autorización manual para operaciones directas.</td>
-        </tr>
-        
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">Camanbet Venezuela 2</td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">681 <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>78.0%</b><br>Real: 44.2%</span></td>
-            <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">748 <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>77.7%</b><br>Real: 27.0%</span></td>
-            <td style="padding: 12px 10px; font-weight: bold; color: #38bdf8; vertical-align: top;">+9.8%</td>
-            <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;"><span style='color:#38bdf8; font-weight:bold;'>-0.3% = (ESTABLE)</span></td>
-            <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;"><span style='color:#fb7185;'>-17.2% 📉</span></td>
-            <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;"><b>Diagnóstico Global:</b> Automatización estipulada <b>ESTABLE en 78% (-0.3%)</b>. En ejecutado real, un <b>16.9% de los retiros superaron el límite parametrizado en VES</b>.</td>
-        </tr>
-        
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
-    
-    
-    
-    
-    
-
     <div id="tab-pane-recs" class="tab-pane">
         <div class="recs-card">
         <h2>💡 Recomendaciones: ¿Cómo incrementar y auditar la automatización de retiros?</h2>
@@ -609825,11 +609947,265 @@ const data = {
         // ============================================================
         // COMPARISON SECTION - Logic
         // ============================================================
-        const MONTH_ORDER = ['enero','febrero','marzo','abril','mayo','junio','julio'];
+        const MONTH_ORDER = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
         const MONTH_LABEL = {
             'enero': 'Enero', 'febrero': 'Febrero', 'marzo': 'Marzo',
-            'abril': 'Abril', 'mayo': 'Mayo', 'junio': 'Junio', 'julio': 'Julio'
+            'abril': 'Abril', 'mayo': 'Mayo', 'junio': 'Junio', 'julio': 'Julio',
+            'agosto': 'Agosto', 'septiembre': 'Septiembre', 'octubre': 'Octubre',
+            'noviembre': 'Noviembre', 'diciembre': 'Diciembre'
         };
+
+        // Curated historical notes for junio vs julio
+        const HISTORICAL_MOM_DIAGNOSES = {
+            'Ecuabet Ecuador': '<b>Diagnóstico Global:</b> La automatización estipulada permaneció <b>ESTABLE en 75% (-0.3%)</b> absorbiendo +42.5k retiros (+15.3% volumen). En el ejecutado real, un <b>4.8% de las solicitudes superaron el tope de 250 USD</b> o rollover 1.50, requiriendo autorización manual.',
+            'Doradobet Perú': '<b>Diagnóstico Global:</b> Operación <b>ESTABLE en 73-74%</b> con el switch encendido. En ejecutado real (-4.4%), un <b>3.4% de las solicitudes superaron el parámetro de 1,999 PEN</b> y un <b>1.0% de los usuarios subió a Nivel Medio</b> por repetición de retiros en 24h.',
+            'GanaPlay El Salvador': '<b>Diagnóstico Global:</b> Operación <b>PERFECTAMENTE ESTABLE (0.0% variación estipulada)</b> en 60.7%. Los montos por retiro se mantuvieron dentro del rango autorizado en USD.',
+            'Doradobet Ecuador': '<b>Diagnóstico Global:</b> Automatización estipulada <b>ESTABLE en 62% (+0.1%)</b>. La variación real (-10.5%) ocurrió porque un <b>10.6% de las solicitudes de bajo riesgo superaron el tope de 250 USD</b> o requirieron verificación de rollover.',
+            'Doradobet Costa Rica': '<b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+3.4% con switch encendido (alcanzando 64.2%)</b> y +1.8% en ejecutado real. Un <b>3.4% de los usuarios ajustaron sus montos por debajo de 249,999 CRC</b>, logrando aprobación automática.',
+            'Paniplay Honduras': '<b>Diagnóstico Global:</b> Las reglas no se apagaron. La variación ocurrió porque un <b>7.0% del volumen de usuarios subió de Nivel Bajo a Nivel Medio</b> por mayor frecuencia de retiro y un <b>4.7% de los montos superaron el parámetro máximo permitido</b> en Lempiras, derivando a revisión manual obligatoria.',
+            'Camanbet Venezuela': '<b>Diagnóstico Global:</b> Crecimiento estipulado del <b>+3.1% (al 65.3%)</b>. En el ejecutado real (-7.4%), un <b>10.5% de los retiros superaron el parámetro en VES o el rollover 3.00</b>, siendo derivados a revisión manual.',
+            'Doradobet El Salvador': '<b>Diagnóstico Global POSITIVO:</b> Aumento de <b>+8.5% en automatización estipulada (llegando al 53.7%)</b>. Un <b>8.5% de los usuarios pasaron a Nivel Bajo</b> por enroque de cuentas bancarias y montos <499 USD.',
+            'GanaPlay Guatemala': '<b>Diagnóstico Global:</b> Crecimiento de volumen (+20.1%). Un <b>2.6% correspondió a usuarios nuevos que ingresaron en Nivel Medio</b>, requiriendo validación KYC obligatoria en su primer retiro.',
+            'Doradobet Guatemala': '<b>Diagnóstico Global POSITIVO:</b> Mejora del <b>+1.7% en ejecutado real (alcanzando 60.0%)</b> al mantenerse las solicitudes dentro del parámetro de 5,000 GTQ.',
+            'Doradobet Chile': '<b>Diagnóstico Global:</b> Un <b>4.6% de los usuarios subieron a Nivel Medio</b> y un <b>7.6% de los retiros superaron el parámetro de 999,999 CLP</b>, derivando a mesa manual.',
+            'Doradobet Honduras': '<b>Diagnóstico Global:</b> Aumento estipulado de <b>+3.3% (al 36.9%)</b> pese a duplicarse el volumen (+96.8%). Los retiros manuales respondieron al sobrepaso de topes de monto.',
+            'Doradobet Bolivia': '<b>Diagnóstico Global:</b> Un <b>4.8% de los usuarios subieron a Nivel Medio</b> y la pasarela bancaria local requirió autorización manual para operaciones directas.',
+            'Camanbet Venezuela 2': '<b>Diagnóstico Global:</b> Automatización estipulada <b>ESTABLE en 78% (-0.3%)</b>. En ejecutado real, un <b>16.9% de los retiros superaron el límite parametrizado en VES</b>.'
+        };
+
+        function getYearForMonth(mKey) {
+            if (data && data[mKey] && data[mKey].daily_data && data[mKey].daily_data.length > 0) {
+                const d = data[mKey].daily_data[0].date_str || data[mKey].daily_data[0].date || '';
+                const m = d.match(/(\d{4})/);
+                if (m) return m[1];
+            }
+            return '2026';
+        }
+
+        function formatVolDiff(diff) {
+            if (Math.abs(diff) >= 1000) {
+                return (diff > 0 ? '+' : '') + (diff / 1000).toFixed(1) + 'k';
+            }
+            return (diff > 0 ? '+' : '') + diff.toLocaleString('es-CO');
+        }
+
+        function getRiskSummary(monthKey, brand) {
+            const mData = data && data[monthKey];
+            if (!mData || !mData.brand_risk) return { total: 0, byLevel: {} };
+            const risks = mData.brand_risk.filter(r => r.Marca === brand);
+            const total = risks.reduce((acc, r) => acc + (r['Total Retiros'] || 0), 0);
+            const byLevel = {};
+            risks.forEach(r => {
+                const lvl = r['Nivel De Riesgo'] || 'Sin Nivel';
+                const rTot = r['Total Retiros'] || 0;
+                const rAuto = r['Retiros Automaticos'] || 0;
+                byLevel[lvl] = {
+                    total: rTot,
+                    auto: rAuto,
+                    manual: rTot - rAuto,
+                    share: total > 0 ? (rTot / total * 100) : 0,
+                    pctAuto: r['% Automatizacion'] || 0
+                };
+            });
+            return { total, byLevel };
+        }
+
+        function generateOperationalDiagnosisText(brand, mA, mB, bA, bB, volGrowth, estipDiff, realDiff) {
+            if (mA === 'junio' && mB === 'julio' && HISTORICAL_MOM_DIAGNOSES[brand]) {
+                return HISTORICAL_MOM_DIAGNOSES[brand];
+            }
+
+            const volA = (bA && bA['Total Retiros']) || 0;
+            const volB = (bB && bB['Total Retiros']) || 0;
+            const estipB = (bB && bB['% Automatizacion Proyectado']) || 0;
+            const realB = (bB && bB['% Automatizacion']) || 0;
+            const labelA = MONTH_LABEL[mA] || mA;
+            const labelB = MONTH_LABEL[mB] || mB;
+
+            if (volA === 0 && volB > 0) {
+                return `<b>Diagnóstico Global:</b> Marca incorporada en ${labelB} con un volumen de <b>${volB.toLocaleString('es-CO')} retiros</b> (${estipB.toFixed(1)}% estipulado / ${realB.toFixed(1)}% real).`;
+            }
+            if (volB === 0 && volA > 0) {
+                return `<b>Diagnóstico Global:</b> Sin retiros registrados en ${labelB} (en ${labelA} procesó ${volA.toLocaleString('es-CO')} retiros).`;
+            }
+            if (volA === 0 && volB === 0) {
+                return `<b>Diagnóstico Global:</b> Sin transacciones registradas en el período comparado.`;
+            }
+
+            const volDiffNum = volB - volA;
+            const rA = getRiskSummary(mA, brand);
+            const rB = getRiskSummary(mB, brand);
+
+            const bajoB = rB.byLevel['Bajo'] || {};
+            const bajoA = rA.byLevel['Bajo'] || {};
+            const medioB = rB.byLevel['Medio'] || {};
+            const medioA = rA.byLevel['Medio'] || {};
+
+            const manBajoPct = volB > 0 ? ((bajoB.manual || 0) / volB * 100) : 0;
+            const shareMedioDiff = (medioB.share || 0) - (medioA.share || 0);
+
+            // 1. Part A: Stipulated Automation & Volume
+            let partA = '';
+            if (estipDiff >= 0.5 && realDiff >= 0.5) {
+                partA = `<b>Diagnóstico Global POSITIVO:</b> Aumentó <b>+${estipDiff.toFixed(1)}% con switch encendido (alcanzando ${estipB.toFixed(1)}%)</b> y +${realDiff.toFixed(1)}% en ejecutado real.`;
+            } else if (Math.abs(estipDiff) < 0.5) {
+                const sign = estipDiff >= 0 ? '+' : '';
+                const volTxt = Math.abs(volGrowth) >= 1.0 ?
+                    ` absorbiendo ${formatVolDiff(volDiffNum)} retiros (${volGrowth >= 0 ? '+' : ''}${volGrowth.toFixed(1)}% volumen)` :
+                    ` con volumen constante`;
+                partA = `<b>Diagnóstico Global:</b> La automatización estipulada permaneció <b>ESTABLE en ${Math.round(estipB)}% (${sign}${estipDiff.toFixed(1)}%)</b>${volTxt}.`;
+            } else if (estipDiff >= 0.5) {
+                partA = `<b>Diagnóstico Global:</b> Crecimiento de <b>+${estipDiff.toFixed(1)}% en automatización estipulada (al ${estipB.toFixed(1)}%)</b>.`;
+            } else {
+                partA = `<b>Diagnóstico Global:</b> Variación de <b>${estipDiff.toFixed(1)}% en automatización estipulada (quedando en ${estipB.toFixed(1)}%)</b>.`;
+            }
+
+            // 2. Part B: Executed Real Cause
+            let partB = '';
+            if (realDiff <= -0.5) {
+                const causes = [];
+                if (manBajoPct >= 2.5) {
+                    causes.push(`un <b>${manBajoPct.toFixed(1)}% de las solicitudes de bajo riesgo requirieron autorización manual</b> por superar topes o verificación de rollover`);
+                }
+                if (shareMedioDiff >= 0.8) {
+                    causes.push(`un <b>${shareMedioDiff.toFixed(1)}% del volumen subió a Nivel Medio</b> por repetición de retiros en 24h`);
+                }
+                if (causes.length === 0) {
+                    causes.push(`se aplicaron verificaciones preventivas que derivaron solicitudes a revisión manual`);
+                }
+                partB = `En el ejecutado real (${realDiff.toFixed(1)}%), ${causes.join(' y ')}.`;
+            } else if (realDiff >= 0.5) {
+                if (!(estipDiff >= 0.5 && realDiff >= 0.5)) {
+                    const causes = [];
+                    if (shareMedioDiff <= -0.8) {
+                        causes.push(`un <b>${Math.abs(shareMedioDiff).toFixed(1)}% más de usuarios se mantuvieron en Nivel Bajo</b>`);
+                    }
+                    if ((bajoB.pctAuto || 0) > (bajoA.pctAuto || 0)) {
+                        causes.push(`las solicitudes se mantuvieron dentro de los parámetros y topes autorizados`);
+                    }
+                    if (causes.length === 0) {
+                        causes.push(`mayor proporción de transacciones cumplieron con las reglas automáticas`);
+                    }
+                    partB = `En el ejecutado real mejoró <b>+${realDiff.toFixed(1)}%</b> al lograr que ${causes[0]}.`;
+                } else {
+                    partB = `Las transacciones de bajo monto y rollover cumplieron los criterios de aprobación sin desvíos a mesa manual.`;
+                }
+            } else {
+                partB = `En el ejecutado real se mantuvo <b>ESTABLE (${realDiff >= 0 ? '+' : ''}${realDiff.toFixed(1)}%)</b> dentro de los rangos autorizados.`;
+            }
+
+            return `${partA} ${partB}`;
+        }
+
+        function renderOperationalDiagnosis(mA, mB, selectedBrand) {
+            const diagTitles = document.querySelectorAll('.diag-title-el, #diag-title');
+            const diagThAs = document.querySelectorAll('.diag-th-a-el, #diag-th-a');
+            const diagThBs = document.querySelectorAll('.diag-th-b-el, #diag-th-b');
+            const diagTbodies = document.querySelectorAll('.diag-tbody-el, #diag-tbody');
+
+            if (diagTbodies.length === 0) return;
+
+            const labelA = MONTH_LABEL[mA] || mA;
+            const labelB = MONTH_LABEL[mB] || mB;
+            const yearA = getYearForMonth(mA);
+            const yearB = getYearForMonth(mB);
+
+            diagTitles.forEach(el => {
+                el.innerHTML = `🔍 Diagnóstico Operativo Global: Causas de Variación Mes a Mes (${labelB} vs ${labelA})`;
+            });
+            diagThAs.forEach(el => {
+                el.innerHTML = `${labelA.toUpperCase()} ${yearA}<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span>`;
+            });
+            diagThBs.forEach(el => {
+                el.innerHTML = `${labelB.toUpperCase()} ${yearB}<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span>`;
+            });
+
+            diagTbodies.forEach(tb => { tb.innerHTML = ''; });
+
+            const bMapA = {};
+            ((data[mA] && data[mA].brands_summary) || []).forEach(b => { bMapA[b.Marca] = b; });
+            const bMapB = {};
+            ((data[mB] && data[mB].brands_summary) || []).forEach(b => { bMapB[b.Marca] = b; });
+
+            let allBrands = new Set([...Object.keys(bMapA), ...Object.keys(bMapB)]);
+            if (selectedBrand && selectedBrand !== 'all') {
+                allBrands = new Set([selectedBrand]);
+            }
+
+            // Sort brands by volume in B descending (or A if 0)
+            const sortedBrands = Array.from(allBrands).sort((a, b) => {
+                const volB_a = (bMapB[b] && bMapB[b]['Total Retiros']) || (bMapA[b] && bMapA[b]['Total Retiros']) || 0;
+                const volB_b = (bMapB[a] && bMapB[a]['Total Retiros']) || (bMapA[a] && bMapA[a]['Total Retiros']) || 0;
+                return volB_a - volB_b;
+            });
+
+            if (sortedBrands.length === 0) {
+                diagTbodies.forEach(tb => {
+                    tb.innerHTML = '<tr><td colspan="7" style="padding:1.5rem; text-align:center; color:#94a3b8;">Sin datos disponibles para el filtro seleccionado.</td></tr>';
+                });
+                return;
+            }
+
+            sortedBrands.forEach(brand => {
+                const bA = bMapA[brand] || { 'Total Retiros': 0, '% Automatizacion': 0, '% Automatizacion Proyectado': 0 };
+                const bB = bMapB[brand] || { 'Total Retiros': 0, '% Automatizacion': 0, '% Automatizacion Proyectado': 0 };
+
+                const volA = bA['Total Retiros'] || 0;
+                const volB = bB['Total Retiros'] || 0;
+                const volGrowth = volA > 0 ? ((volB - volA) / volA * 100) : (volB > 0 ? 100 : 0);
+
+                const estipA = bA['% Automatizacion Proyectado'] || 0;
+                const estipB = bB['% Automatizacion Proyectado'] || 0;
+                const estipDiff = estipB - estipA;
+
+                const realA = bA['% Automatizacion'] || 0;
+                const realB = bB['% Automatizacion'] || 0;
+                const realDiff = realB - realA;
+
+                // Growth badge
+                let growthColor = '#94a3b8';
+                if (volGrowth > 0.05) growthColor = '#38bdf8';
+                else if (volGrowth < -0.05) growthColor = '#94a3b8';
+                const growthStr = `${volGrowth >= 0 ? '+' : ''}${volGrowth.toFixed(1)}%`;
+
+                // Estipulado badge
+                let estipBadge = '';
+                if (Math.abs(estipDiff) < 0.5) {
+                    estipBadge = `<span style='color:#38bdf8; font-weight:bold;'>${estipDiff >= 0 ? '+' : ''}${estipDiff.toFixed(1)}% = (ESTABLE)</span>`;
+                } else if (estipDiff >= 0.5) {
+                    estipBadge = `<span style='color:#22c55e; font-weight:bold;'>+${estipDiff.toFixed(1)}% 📈</span>`;
+                } else {
+                    estipBadge = `<span style='color:#f43f5e; font-weight:bold;'>${estipDiff.toFixed(1)}% 📉</span>`;
+                }
+
+                // Real badge
+                let realBadge = '';
+                if (Math.abs(realDiff) < 0.5) {
+                    realBadge = `<span style='color:#94a3b8;'>${realDiff >= 0 ? '+' : ''}${realDiff.toFixed(1)}% =</span>`;
+                } else if (realDiff >= 0.5) {
+                    realBadge = `<span style='color:#4ade80;'>+${realDiff.toFixed(1)}% 📈</span>`;
+                } else {
+                    realBadge = `<span style='color:#fb7185;'>${realDiff.toFixed(1)}% 📉</span>`;
+                }
+
+                const diagText = generateOperationalDiagnosisText(brand, mA, mB, bA, bB, volGrowth, estipDiff, realDiff);
+
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+                tr.innerHTML = `
+                    <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">${brand}</td>
+                    <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">${volA.toLocaleString('es-CO')} <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>${estipA.toFixed(1)}%</b><br>Real: ${realA.toFixed(1)}%</span></td>
+                    <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">${volB.toLocaleString('es-CO')} <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>${estipB.toFixed(1)}%</b><br>Real: ${realB.toFixed(1)}%</span></td>
+                    <td style="padding: 12px 10px; font-weight: bold; color: ${growthColor}; vertical-align: top;">${growthStr}</td>
+                    <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;">${estipBadge}</td>
+                    <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;">${realBadge}</td>
+                    <td style="padding: 12px 10px; font-size: 0.84rem; color: #e2e8f0; text-align: left; line-height: 1.45; vertical-align: top;">${diagText}</td>
+                `;
+                diagTbodies.forEach(tb => {
+                    tb.appendChild(tr.cloneNode(true));
+                });
+            });
+        }
 
         function initComparisonControls() {
             const monthA = document.getElementById('comp-month-a');
@@ -610059,6 +610435,9 @@ const data = {
                 notaEl.textContent = 
                     `* Comparando ${labelA} (A) vs ${labelB} (B). ▲ verde indica mejora, ▼ rojo indica caída en el paso de A a B.`;
             }
+
+            // Render operational diagnosis table for selected months and brand
+            renderOperationalDiagnosis(mA, mB, selectedBrand);
         }
 
 
