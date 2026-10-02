@@ -1082,16 +1082,58 @@ def run_reporting_pipeline():
                         tag_color = "#38bdf8"
                         tag_bg = "rgba(56, 189, 248, 0.15)"
 
-                    # Part A: Estipulado
-                    if estipDiff >= 0.5:
-                        estip_analysis = f"<b>⚡ Switch Encendido (+{estipDiff:.1f}%):</b> Aumentó el potencial estipulado a <b>{estipB:.1f}%</b>, debido a una mayor concentración de solicitudes clasificadas en reglas de bajo riesgo."
-                    elif abs(estipDiff) < 0.5:
+                    # Part A: DETAILED SWITCH ENCENDIDO (POR QUÉ BAJÓ O SUBIÓ EL POTENCIAL)
+                    bajoA = rA["by_level"].get("Bajo", {"share": 0, "total": 0})
+                    bajoB = rB["by_level"].get("Bajo", {"share": 0, "total": 0})
+                    medioA = rA["by_level"].get("Medio", {"share": 0, "total": 0})
+                    medioB = rB["by_level"].get("Medio", {"share": 0, "total": 0})
+                    altoA = rA["by_level"].get("Alto", {"share": 0, "total": 0})
+                    altoB = rB["by_level"].get("Alto", {"share": 0, "total": 0})
+                    snA = rA["by_level"].get("Sin Nivel", {"share": 0, "total": 0})
+                    snB = rB["by_level"].get("Sin Nivel", {"share": 0, "total": 0})
+
+                    shareBajoDiff = bajoB["share"] - bajoA["share"]
+                    shareMedioDiff = medioB["share"] - medioA["share"]
+                    shareAltoDiff = altoB["share"] - altoA["share"]
+                    shareSnDiff = snB["share"] - snA["share"]
+
+                    if estipDiff <= -0.5:
+                        shifts = []
+                        if shareMedioDiff >= 0.5:
+                            shifts.append(f"un <b>+{shareMedioDiff:.1f} pp subió a Nivel Medio</b> (llegando a {medioB['share']:.1f}% por acumulación de retiros en 24h)")
+                        if shareAltoDiff >= 0.4:
+                            shifts.append(f"un <b>+{shareAltoDiff:.1f} pp escaló a Nivel Alto</b> ({altoB['share']:.1f}%)")
+                        if shareSnDiff >= 0.5:
+                            shifts.append(f"un <b>+{shareSnDiff:.1f} pp ingresó como Sin Nivel</b> ({snB['share']:.1f}%)")
+
+                        shift_detail = f", desplazándose hacia niveles no automatizables: {'; '.join(shifts)}" if shifts else ""
+
+                        if shareBajoDiff <= -0.5:
+                            motivo = f"la concentración de retiros en <b>Nivel Bajo se redujo en {abs(shareBajoDiff):.1f} pp</b> (pasó de {bajoA['share']:.1f}% a {bajoB['share']:.1f}%){shift_detail}"
+                        elif shifts:
+                            motivo = f"aumentó la proporción de retiros con restricciones manuales: {'; '.join(shifts)}"
+                        else:
+                            motivo = f"se redujo la proporción de transacciones de bajo riesgo elegibles para aprobación directa"
+
+                        estip_analysis = f"<b>⚡ ¿Por qué bajó Switch Encendido ({estipDiff:.1f}%)?:</b> El techo teórico cayó de {estipA:.1f}% a <b>{estipB:.1f}%</b> porque {motivo}."
+
+                    elif estipDiff >= 0.5:
+                        reasons = []
+                        if shareBajoDiff >= 0.5:
+                            reasons.append(f"la participación de <b>Nivel Bajo aumentó en +{shareBajoDiff:.1f} pp</b> (pasó de {bajoA['share']:.1f}% a <b>{bajoB['share']:.1f}%</b>)")
+                        if shareMedioDiff <= -0.5:
+                            reasons.append(f"se contrajo la cuota de Nivel Medio en {abs(shareMedioDiff):.1f} pp ({medioA['share']:.1f}% a {medioB['share']:.1f}%)")
+                        if shareAltoDiff <= -0.4:
+                            reasons.append(f"se redujo el Nivel Alto a {altoB['share']:.1f}%")
+
+                        reas_str = " y además ".join(reasons) if reasons else f"mayor porcentaje de transacciones cumplió las reglas para inclusión teórica ({estipB:.1f}%)"
+                        estip_analysis = f"<b>⚡ ¿Por qué subió Switch Encendido (+{estipDiff:.1f}%)?:</b> El potencial aumentó a <b>{estipB:.1f}%</b> (+{estipDiff:.1f}%) porque {reas_str}, ampliando la base de solicitudes pre-aprobables."
+
+                    else:
                         sign_e = "+" if estipDiff >= 0 else ""
                         k_vol = f"{vDiffNum/1000:+.1f}k" if abs(vDiffNum) >= 1000 else f"{vDiffNum:+d}"
                         volTxt = f" absorbiendo {k_vol} retiros ({'+' if volGrowth >= 0 else ''}{volGrowth:.1f}% vol)" if abs(volGrowth) >= 1.0 else " con volumen constante"
-                        estip_analysis = f"<b>⚡ Switch Encendido ({sign_e}{estipDiff:.1f}% = ESTABLE):</b> La cobertura teórica de reglas permaneció en <b>{estipB:.1f}%</b>{volTxt}."
-                    else:
-                        estip_analysis = f"<b>⚡ Switch Encendido ({estipDiff:.1f}%):</b> Reducción en la cobertura estipulada a <b>{estipB:.1f}%</b> por migración de transacciones hacia categorías con reglas de aprobación manual."
+                        estip_analysis = f"<b>⚡ Switch Encendido ({sign_e}{estipDiff:.1f}% = ESTABLE):</b> La cobertura teórica se mantuvo firme en <b>{estipB:.1f}%</b>{volTxt} (Nivel Bajo concentró {bajoB['share']:.1f}% y Medio {medioB['share']:.1f}%)."
 
                     # Part B: Real cause
                     if realDiff <= -0.5:
