@@ -610383,6 +610383,166 @@ const data = {
                 return buildDiagCell(tag, tagBg, tagColor, estipAnalysis, realAnalysis);
             }
 
+            if (volB === 0 && volA > 0) {
+                const tag = '⏸️ Sin Operación';
+                const tagBg = 'rgba(148, 163, 184, 0.15)';
+                const tagColor = '#94a3b8';
+                const estipAnalysis = `<b>⚡ Switch Encendido:</b> Sin retiros registrados en ${labelB} (en ${labelA} procesó ${volA.toLocaleString('es-CO')} retiros).`;
+                const realAnalysis = `<b>📊 Switch Apagado (Real):</b> La operación se encuentra pausada o sin transacciones registradas.`;
+                return buildDiagCell(tag, tagBg, tagColor, estipAnalysis, realAnalysis);
+            }
+
+            if (volA === 0 && volB === 0) {
+                const tag = '⚪ Sin Datos';
+                const tagBg = 'rgba(148, 163, 184, 0.1)';
+                const tagColor = '#94a3b8';
+                return buildDiagCell(tag, tagBg, tagColor, 'Sin datos registrados en el período seleccionado.', '');
+            }
+
+            const volDiffNum = volB - volA;
+            const rA = getRiskSummary(mA, brand);
+            const rB = getRiskSummary(mB, brand);
+
+            const bajoB = (rB.byLevel && rB.byLevel['Bajo']) || { share: 0, total: 0, manual: 0, auto: 0, pctAuto: 0 };
+            const bajoA = (rA.byLevel && rA.byLevel['Bajo']) || { share: 0, total: 0, manual: 0, auto: 0, pctAuto: 0 };
+            const medioB = (rB.byLevel && rB.byLevel['Medio']) || { share: 0, total: 0 };
+            const medioA = (rA.byLevel && rA.byLevel['Medio']) || { share: 0, total: 0 };
+            const altoB = (rB.byLevel && rB.byLevel['Alto']) || { share: 0, total: 0 };
+            const altoA = (rA.byLevel && rA.byLevel['Alto']) || { share: 0, total: 0 };
+            const snB = (rB.byLevel && rB.byLevel['Sin Nivel']) || { share: 0, total: 0 };
+            const snA = (rA.byLevel && rA.byLevel['Sin Nivel']) || { share: 0, total: 0 };
+
+            const shareBajoDiff = (bajoB.share || 0) - (bajoA.share || 0);
+            const shareMedioDiff = (medioB.share || 0) - (medioA.share || 0);
+            const shareAltoDiff = (altoB.share || 0) - (altoA.share || 0);
+            const shareSnDiff = (snB.share || 0) - (snA.share || 0);
+
+            const manBajoPct = volB > 0 ? ((bajoB.manual || 0) / volB * 100) : 0;
+
+            // Determine Tag and Color
+            let tag = '', tagBg = '', tagColor = '';
+            if (realDiff >= 5.0) {
+                tag = `🚀 Fuerte Subida en Real (+${realDiff.toFixed(1)}%)`;
+                tagColor = '#22c55e';
+                tagBg = 'rgba(34, 197, 94, 0.15)';
+            } else if (realDiff >= 0.5) {
+                tag = `📈 Mejora en Real (+${realDiff.toFixed(1)}%)`;
+                tagColor = '#4ade80';
+                tagBg = 'rgba(74, 222, 128, 0.15)';
+            } else if (realDiff <= -5.0) {
+                if (manBajoPct >= 8.0) {
+                    tag = `⚠️ Caída: Topes de Monto / Rollover (${realDiff.toFixed(1)}%)`;
+                    tagColor = '#fb7185';
+                    tagBg = 'rgba(251, 113, 133, 0.15)';
+                } else if (shareMedioDiff >= 3.0) {
+                    tag = `⚠️ Caída: Migración a Riesgo Medio (${realDiff.toFixed(1)}%)`;
+                    tagColor = '#f97316';
+                    tagBg = 'rgba(249, 115, 22, 0.15)';
+                } else {
+                    tag = `📉 Fuerte Caída en Real (${realDiff.toFixed(1)}%)`;
+                    tagColor = '#f43f5e';
+                    tagBg = 'rgba(244, 63, 94, 0.15)';
+                }
+            } else if (realDiff <= -0.5) {
+                if (manBajoPct >= 3.0) {
+                    tag = `📉 Desvío Manual en Riesgo Bajo (${realDiff.toFixed(1)}%)`;
+                    tagColor = '#fca5a5';
+                    tagBg = 'rgba(252, 165, 165, 0.15)';
+                } else if (shareMedioDiff >= 1.0) {
+                    tag = `📉 Aumento de Riesgo Medio (${realDiff.toFixed(1)}%)`;
+                    tagColor = '#fdba74';
+                    tagBg = 'rgba(253, 186, 116, 0.15)';
+                } else {
+                    tag = `📉 Leve Reducción en Real (${realDiff.toFixed(1)}%)`;
+                    tagColor = '#fca5a5';
+                    tagBg = 'rgba(252, 165, 165, 0.15)';
+                }
+            } else {
+                tag = `⚖️ Operación Estable (${realDiff >= 0 ? '+' : ''}${realDiff.toFixed(1)}%)`;
+                tagColor = '#38bdf8';
+                tagBg = 'rgba(56, 189, 248, 0.15)';
+            }
+
+            // 1. DETAILED SWITCH ENCENDIDO (POR QUÉ BAJÓ O SUBIÓ EL POTENCIAL ESTIPULADO)
+            let estipAnalysis = '';
+            if (estipDiff <= -0.5) {
+                const shifts = [];
+                if (shareMedioDiff >= 0.5) {
+                    shifts.push(`un <b>+${shareMedioDiff.toFixed(1)} pp subió a Nivel Medio</b> (llegando a ${medioB.share.toFixed(1)}% por acumulación de retiros en 24h)`);
+                }
+                if (shareAltoDiff >= 0.4) {
+                    shifts.push(`un <b>+${shareAltoDiff.toFixed(1)} pp escaló a Nivel Alto</b> (${altoB.share.toFixed(1)}%)`);
+                }
+                if (shareSnDiff >= 0.5) {
+                    shifts.push(`un <b>+${shareSnDiff.toFixed(1)} pp ingresó como Sin Nivel</b> (${snB.share.toFixed(1)}%)`);
+                }
+
+                const shiftDetail = shifts.length > 0 ? `, desplazándose hacia niveles no automatizables: ${shifts.join('; ')}` : '';
+
+                let motivo = '';
+                if (shareBajoDiff <= -0.5) {
+                    motivo = `la concentración de retiros en <b>Nivel Bajo se redujo en ${Math.abs(shareBajoDiff).toFixed(1)} pp</b> (pasó de ${bajoA.share.toFixed(1)}% a ${bajoB.share.toFixed(1)}%)${shiftDetail}`;
+                } else if (shifts.length > 0) {
+                    motivo = `aumentó la proporción de retiros con restricciones manuales: ${shifts.join('; ')}`;
+                } else {
+                    motivo = `se redujo la proporción de transacciones de bajo riesgo elegibles para aprobación directa`;
+                }
+
+                estipAnalysis = `<b>⚡ ¿Por qué bajó Switch Encendido (${estipDiff.toFixed(1)}%)?:</b> El techo teórico cayó de ${estipA.toFixed(1)}% a <b>${estipB.toFixed(1)}%</b> porque ${motivo}.`;
+            } else if (estipDiff >= 0.5) {
+                const reasons = [];
+                if (shareBajoDiff >= 0.5) {
+                    reasons.push(`la participación de <b>Nivel Bajo aumentó en +${shareBajoDiff.toFixed(1)} pp</b> (pasó de ${bajoA.share.toFixed(1)}% a <b>${bajoB.share.toFixed(1)}%</b>)`);
+                }
+                if (shareMedioDiff <= -0.5) {
+                    reasons.push(`se contrajo la cuota de Nivel Medio en ${Math.abs(shareMedioDiff).toFixed(1)} pp (${medioA.share.toFixed(1)}% a ${medioB.share.toFixed(1)}%)`);
+                }
+                if (shareAltoDiff <= -0.4) {
+                    reasons.push(`se redujo el Nivel Alto a ${altoB.share.toFixed(1)}%`);
+                }
+
+                const reasStr = reasons.length > 0 ? reasons.join(' y además ') : `mayor porcentaje de transacciones cumplió las reglas para inclusión teórica (${estipB.toFixed(1)}%)`;
+                estipAnalysis = `<b>⚡ ¿Por qué subió Switch Encendido (+${estipDiff.toFixed(1)}%)?:</b> El potencial aumentó a <b>${estipB.toFixed(1)}%</b> (+${estipDiff.toFixed(1)}%) porque ${reasStr}, ampliando la base de solicitudes pre-aprobables.`;
+            } else {
+                const sign = estipDiff >= 0 ? '+' : '';
+                const volTxt = Math.abs(volGrowth) >= 1.0 ?
+                    ` absorbiendo ${formatVolDiff(volDiffNum)} retiros (${volGrowth >= 0 ? '+' : ''}${volGrowth.toFixed(1)}% vol)` :
+                    ` con volumen constante`;
+                estipAnalysis = `<b>⚡ Switch Encendido (${sign}${estipDiff.toFixed(1)}% = ESTABLE):</b> La cobertura teórica se mantuvo firme en <b>${estipB.toFixed(1)}%</b>${volTxt} (Nivel Bajo concentró ${bajoB.share.toFixed(1)}% y Medio ${medioB.share.toFixed(1)}%).`;
+            }
+
+            // 2. DETAILED SWITCH APAGADO (POR QUÉ SUBIÓ O BAJÓ EL REAL)
+            let realAnalysis = '';
+            if (realDiff <= -0.5) {
+                const causes = [];
+                if (manBajoPct >= 2.5) {
+                    causes.push(`un <b>${manBajoPct.toFixed(1)}% de los retiros de bajo riesgo superaron el tope máximo autorizado o requirieron verificación de rollover</b>, enviándolos a mesa manual`);
+                }
+                if (shareMedioDiff >= 0.8) {
+                    causes.push(`un <b>${shareMedioDiff.toFixed(1)}% del volumen subió a Nivel Medio</b> (por mayor frecuencia de retiros en 24h), requiriendo autorización manual obligatoria`);
+                }
+                if (causes.length === 0) {
+                    causes.push(`se aplicaron verificaciones preventivas que derivaron transacciones al flujo manual`);
+                }
+                realAnalysis = `<b>📊 ¿Por qué bajó el real (${realDiff.toFixed(1)}%)?:</b> La caída ocurrió porque ${causes.join(' y además ')}.`;
+            } else if (realDiff >= 0.5) {
+                const reasons = [];
+                if (shareBajoDiff >= 1.0) {
+                    reasons.push(`un <b>${shareBajoDiff.toFixed(1)}% más de los retiros se concentraron en Nivel Bajo</b>`);
+                }
+                if ((bajoB.pctAuto || 0) > (bajoA.pctAuto || 0)) {
+                    reasons.push(`las solicitudes de bajo riesgo se mantuvieron dentro de los montos y parámetros autorizados sin activar revisiones manuales`);
+                }
+                if (reasons.length === 0) {
+                    reasons.push(`mayor porcentaje de transacciones cumplieron con todas las reglas de aprobación inmediata`);
+                }
+                realAnalysis = `<b>📊 ¿Por qué subió el real (+${realDiff.toFixed(1)}%)?:</b> La mejora se logró porque ${reasons.join(' y ')}.`;
+            } else {
+                realAnalysis = `<b>📊 Ejecutado Real (${realDiff >= 0 ? '+' : ''}${realDiff.toFixed(1)}% = ESTABLE):</b> El porcentaje real se mantuvo alineado al mes previo dentro de los rangos tolerados de monto y riesgo.`;
+            }
+
+            return buildDiagCell(tag, tagBg, tagColor, estipAnalysis, realAnalysis);
+        }
 
         function buildDiagCell(tag, tagBg, tagColor, estipAnalysis, realAnalysis) {
             return `
