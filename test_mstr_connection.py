@@ -161,6 +161,21 @@ RULES = {
         'Bajo': {'min': 10, 'max': 10000},
         'Medio': {'min': 10, 'max': 10000}
     },
+    'Paniplay Honduras': {
+        'Sin Nivel': {'min': 0, 'max': 5000},
+        'Bajo': {'min': 10, 'max': 10000},
+        'Medio': {'min': 10, 'max': 10000}
+    },
+    'Catraplay Honduras': {
+        'Sin Nivel': {'min': 0, 'max': 5000},
+        'Bajo': {'min': 10, 'max': 10000},
+        'Medio': {'min': 10, 'max': 10000}
+    },
+    'Catraplay': {
+        'Sin Nivel': {'min': 0, 'max': 5000},
+        'Bajo': {'min': 10, 'max': 10000},
+        'Medio': {'min': 10, 'max': 10000}
+    },
     'Ganaplay Salvador': {
         'Bajo': {'min': 10, 'max': 300},
         'Medio': {'min': 10, 'max': 150}
@@ -205,6 +220,7 @@ def prepare_dataframe(df):
     
     # Normalizar Marca
     df['Marca'] = df['Marca'].astype(str).str.strip()
+    df['Marca'] = df['Marca'].replace({'Paniplay Honduras': 'Catraplay Honduras', 'Paniplay': 'Catraplay Honduras'})
     
     # Calculate simulated auto based on user spreadsheet (Automate all Bajo Risk manual)
     def is_sim_auto_row(row):
@@ -594,15 +610,10 @@ def run_reporting_pipeline():
             except Exception as e:
                 print(f"        [-] Advertencia al crear caché CSV: {e}")
         
-        # Deduplicación cronológica entre meses
+        # Deduplicación de registros dentro del mismo mes
         if 'Id Retiro' in df_raw.columns:
             df_raw['Id Retiro_str'] = df_raw['Id Retiro'].astype(str).str.strip().str.replace(r'\.0$', '', regex=True)
-            if len(seen_ids) > 0:
-                rows_before = len(df_raw)
-                df_raw = df_raw[~df_raw['Id Retiro_str'].isin(seen_ids)].copy()
-                if rows_before != len(df_raw):
-                    print(f"        - Excluidos {rows_before - len(df_raw)} registros repetidos en meses históricos anteriores.")
-            seen_ids.update(df_raw['Id Retiro_str'].dropna())
+            df_raw = df_raw.drop_duplicates(subset=['Id Retiro_str'], keep='last')
             df_raw = df_raw.drop(columns=['Id Retiro_str'])
             
         df = prepare_dataframe(df_raw)

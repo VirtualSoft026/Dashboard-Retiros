@@ -1,0 +1,26 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+scratch/
+temp/
+*.log
+*.tmp
+null
+
+# Archivos de respaldo y temporales
+*_Prev.xlsx
+*_Raw_Backup.xlsx
+
+# Bases de datos pesadas locales y cachés (no se suben al repositorio web)
+Retiros *.xlsx
+Retiros *_cache.csv
+Retiros *_summary.json
+Analisis automatizaci*.xlsx
+retiros analisis manual.xlsx
+mstr_report_sample.json
+
+# Manuales y documentación local
+Manual_Usuario_Backtest*
+imagenes_manual/
