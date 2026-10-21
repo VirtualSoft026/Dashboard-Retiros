@@ -547,21 +547,24 @@ def run_reporting_pipeline():
         csv_path = excel_path.replace(".xlsx", "_cache.csv")
         summary_path = excel_path.replace(".xlsx", "_summary.json")
         
-        # 1. Comprobar si existe un resumen precalculado vigente
+        # 1. Comprobar si existe un resumen precalculado vigente respecto al Excel base
         use_summary = False
         if os.path.exists(summary_path) and os.path.getsize(summary_path) > 0:
             sum_mtime = os.path.getmtime(summary_path)
             excel_mtime = os.path.getmtime(excel_path)
-            csv_mtime = os.path.getmtime(csv_path) if os.path.exists(csv_path) else 0
-            base_mtime = max(excel_mtime, csv_mtime)
-            if sum_mtime >= (base_mtime - 2):
+            if sum_mtime >= (excel_mtime - 2):
                 use_summary = True
                 
         if use_summary:
             print(f"[+] {m['display_name']}: Cargando métricas consolidadas desde resumen precalculado '{os.path.basename(summary_path)}'...")
             try:
                 with open(summary_path, "r", encoding="utf-8") as sf:
-                    m_json = json.load(sf)
+                    raw_sum_text = sf.read()
+                if "Paniplay" in raw_sum_text:
+                    raw_sum_text = raw_sum_text.replace('"Paniplay Honduras"', '"Catraplay Honduras"').replace('"Paniplay"', '"Catraplay Honduras"')
+                    with open(summary_path, "w", encoding="utf-8") as sfw:
+                        sfw.write(raw_sum_text)
+                m_json = json.loads(raw_sum_text)
                 
                 df_det = pd.DataFrame(m_json.get("details", []))
                 if not df_det.empty:
@@ -599,7 +602,10 @@ def run_reporting_pipeline():
         if use_cache:
             print(f"\n=== Procesando data de {m['display_name']} desde caché CSV '{os.path.basename(csv_path)}' ===")
             df_raw = pd.read_csv(csv_path, low_memory=False)
-        else:
+            if 'Fecha Cambio Time' not in df_raw.columns:
+                print(f"        [!] Caché CSV incompleto. Cargando desde Excel '{os.path.basename(excel_path)}'...")
+                use_cache = False
+        if not use_cache:
             print(f"\n=== Procesando data de {m['display_name']} desde Excel '{os.path.basename(excel_path)}' ===")
             xl = pd.ExcelFile(excel_path)
             sheet = 'Retiros BD Conexion' if 'Retiros BD Conexion' in xl.sheet_names else xl.sheet_names[0]
