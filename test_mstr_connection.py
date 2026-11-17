@@ -210,15 +210,32 @@ def prepare_dataframe(df):
     df['Horas Aprobado a Pagado'] = df['Minutos Aprobado a Pagado'] / 60.0
     
     # Normalizar Tipo Aprobación
+    if 'Tipo Aprobacion' not in df.columns:
+        for col in df.columns:
+            if 'aprobacion' in str(col).lower() or 'aprobación' in str(col).lower():
+                df = df.rename(columns={col: 'Tipo Aprobacion'})
+                break
+    if 'Tipo Aprobacion' not in df.columns:
+        df['Tipo Aprobacion'] = 'Manual'
     is_auto = df['Tipo Aprobacion'].astype(str).str.strip().str.lower().isin(['automatico', 'automático'])
     df['Tipo Aprobacion_Norm'] = np.where(is_auto, 'Automatico', 'Manual')
     
     # Normalizar Nivel De Riesgo
+    if 'Nivel De Riesgo' not in df.columns:
+        for col in df.columns:
+            if str(col).strip().lower() in ['unnamed: 11', 'unnamed:11'] or 'riesgo' in str(col).lower():
+                df = df.rename(columns={col: 'Nivel De Riesgo'})
+                break
+    if 'Nivel De Riesgo' not in df.columns:
+        df['Nivel De Riesgo'] = 'Sin Nivel'
+        
     df['Nivel De Riesgo_Norm'] = df['Nivel De Riesgo'].fillna('Sin Nivel')
     df['Nivel De Riesgo_Norm'] = df['Nivel De Riesgo_Norm'].replace({'nan': 'Sin Nivel', 'None': 'Sin Nivel', '': 'Sin Nivel'})
     df['Nivel De Riesgo_Norm'] = df['Nivel De Riesgo_Norm'].astype(str).str.strip()
     
     # Normalizar Marca
+    if 'Marca' not in df.columns:
+        df['Marca'] = 'Sin Marca'
     df['Marca'] = df['Marca'].astype(str).str.strip()
     df['Marca'] = df['Marca'].replace({'Paniplay Honduras': 'Catraplay Honduras', 'Paniplay': 'Catraplay Honduras'})
     
@@ -610,6 +627,8 @@ def run_reporting_pipeline():
             xl = pd.ExcelFile(excel_path)
             sheet = 'Retiros BD Conexion' if 'Retiros BD Conexion' in xl.sheet_names else xl.sheet_names[0]
             df_raw = xl.parse(sheet)
+            if 'Unnamed: 11' in df_raw.columns and 'Nivel De Riesgo' not in df_raw.columns:
+                df_raw = df_raw.rename(columns={'Unnamed: 11': 'Nivel De Riesgo'})
             try:
                 df_raw.to_csv(csv_path, index=False)
                 print(f"        [+] Caché rápido '{os.path.basename(csv_path)}' creado con éxito.")
