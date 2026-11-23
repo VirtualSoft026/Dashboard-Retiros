@@ -1712,6 +1712,91 @@
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
     
+        
+        /* Operational Diagnosis Card & Table Styles */
+        .diag-card {
+            margin-top: 2rem;
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .diag-filter-bar {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 0.85rem 1rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.85rem;
+        }
+
+        .diag-table-header {
+            background: #0f172a;
+            color: #94a3b8;
+            border-bottom: 2px solid #334155;
+        }
+
+        body.light-theme .diag-card {
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06) !important;
+        }
+
+        body.light-theme .diag-card h3 {
+            color: #0284c7 !important;
+        }
+
+        body.light-theme .diag-card p {
+            color: #475569 !important;
+        }
+
+        body.light-theme .diag-filter-bar {
+            background: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        body.light-theme .diag-filter-bar label {
+            color: #475569 !important;
+        }
+
+        body.light-theme .diag-filter-bar select {
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+
+        body.light-theme .diag-filter-bar button {
+            background: #eef2ff !important;
+            color: #4f46e5 !important;
+            border: 1px solid #c7d2fe !important;
+        }
+
+        body.light-theme .diag-table-header {
+            background: #f8fafc !important;
+            border-bottom: 2px solid #cbd5e1 !important;
+        }
+
+        body.light-theme .diag-table-header th {
+            background: #f8fafc !important;
+            color: #475569 !important;
+            border-bottom: 2px solid #cbd5e1 !important;
+        }
+
+        body.light-theme .diag-tbody-el tr {
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+
+        body.light-theme .diag-tbody-el tr:hover td {
+            background-color: #f8fafc !important;
+        }
+
         </style>
 </head>
 <body>
@@ -2044,8 +2129,7 @@
         </div>
     </div>
     <!-- DIAGNÓSTICO OPERATIVO GLOBAL: CAUSAS DE VARIACIÓN MES A MES (EN VISTA GENERAL) -->
-    <!-- DIAGNÓSTICO OPERATIVO GLOBAL: CAUSAS DE VARIACIÓN MES A MES -->
-        <div style="margin-top: 2rem; background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+        <div class="diag-card">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
                 <div>
                     <h3 id="diag-title" class="diag-title-el" style="color: #38bdf8; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;">
@@ -2105,7 +2189,7 @@
 <div style="overflow-x: auto;">
                 <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.88rem;">
                     <thead>
-                        <tr style="background: #0f172a; color: #94a3b8; border-bottom: 2px solid #334155;">
+                        <tr class="diag-table-header">
                             <th style="padding: 12px 10px; text-align: left;">Marca</th>
                             <th id="diag-th-a" class="diag-th-a-el" style="padding: 12px 10px;">OCTUBRE 2026<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span></th>
                             <th id="diag-th-b" class="diag-th-b-el" style="padding: 12px 10px;">NOVIEMBRE 2026<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span></th>
@@ -3101,7 +3185,7 @@
         </div>
 
         <!-- DIAGNÓSTICO OPERATIVO GLOBAL: CAUSAS DE VARIACIÓN MES A MES -->
-        <div style="margin-top: 2rem; background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+        <div class="diag-card">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
                 <div>
                     <h3 id="diag-title" class="diag-title-el" style="color: #38bdf8; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;">
@@ -3161,7 +3245,7 @@
 <div style="overflow-x: auto;">
                 <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.88rem;">
                     <thead>
-                        <tr style="background: #0f172a; color: #94a3b8; border-bottom: 2px solid #334155;">
+                        <tr class="diag-table-header">
                             <th style="padding: 12px 10px; text-align: left;">Marca</th>
                             <th id="diag-th-a" class="diag-th-a-el" style="padding: 12px 10px;">OCTUBRE 2026<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span></th>
                             <th id="diag-th-b" class="diag-th-b-el" style="padding: 12px 10px;">NOVIEMBRE 2026<br><span style="font-size:0.72rem; font-weight:normal;">(Estip / Real)</span></th>
@@ -689305,7 +689389,7 @@ const data = {
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        y: { max: 110, grid: { color: getChartGridColor() } }, ticks: { color: getChartTextColor() },
+                        y: { max: 110, grid: { color: getChartGridColor() }, ticks: { color: getChartTextColor() } },
                         x: { grid: { display: false } }
                     },
                     plugins: {
@@ -689468,7 +689552,7 @@ const data = {
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        yVol: { position: 'left', grid: { color: getChartGridColor() } }, ticks: { color: getChartTextColor() },
+                        yVol: { position: 'left', grid: { color: getChartGridColor() }, ticks: { color: getChartTextColor() } },
                         x: { grid: { display: false } }
                     },
                     plugins: {
@@ -689659,7 +689743,7 @@ const data = {
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: { y: { max: 110, grid: { color: getChartGridColor() } }, ticks: { color: getChartTextColor() }, x: { grid: { display: false } } },
+                    scales: { y: { max: 110, grid: { color: getChartGridColor() }, ticks: { color: getChartTextColor() } }, x: { grid: { display: false }, ticks: { color: getChartTextColor() } } },
                     plugins: {
                         legend: {
                             display: true,
@@ -690181,16 +690265,19 @@ const data = {
         }
 
         function buildDiagCell(tag, tagBg, tagColor, estipAnalysis, realAnalysis) {
+            const isLight = isLightThemeActive();
+            const estipColor = isLight ? '#334155' : '#cbd5e1';
+            const realColor = isLight ? '#0f172a' : '#f1f5f9';
             return `
                 <div style="margin-bottom: 6px;">
                     <span style="display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: 0.74rem; font-weight: 700; background: ${tagBg}; color: ${tagColor}; border: 1px solid ${tagColor}40;">
                         ${tag}
                     </span>
                 </div>
-                <div style="margin-bottom: 5px; color: #cbd5e1; font-size: 0.82rem; line-height: 1.45;">
+                <div style="margin-bottom: 5px; color: ${estipColor}; font-size: 0.82rem; line-height: 1.45;">
                     ${estipAnalysis}
                 </div>
-                ${realAnalysis ? `<div style="color: #f1f5f9; font-size: 0.82rem; line-height: 1.45;">${realAnalysis}</div>` : ''}
+                ${realAnalysis ? `<div style="color: ${realColor}; font-size: 0.82rem; line-height: 1.45;">${realAnalysis}</div>` : ''}
             `;
         }
 
@@ -690418,11 +690505,18 @@ const data = {
                 const diagHTML = generateOperationalDiagnosisHTML(brand, mA, mB, bA, bB, volGrowth, estipDiff, realDiff);
 
                 const tr = document.createElement('tr');
-                tr.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+                const isLight = isLightThemeActive();
+                const brandColor = isLight ? '#0f172a' : '#f8fafc';
+                const cellColor = isLight ? '#334155' : '#cbd5e1';
+                const subColor = isLight ? '#64748b' : '#94a3b8';
+                const estipSubColor = isLight ? '#0d9488' : '#2dd4bf';
+                const trBorder = isLight ? '1px solid #e2e8f0' : '1px solid rgba(255,255,255,0.06)';
+
+                tr.style.borderBottom = trBorder;
                 tr.innerHTML = `
-                    <td style="padding: 12px 10px; font-weight: bold; color: #f8fafc; text-align: left; vertical-align: top;">${brand}</td>
-                    <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">${volA.toLocaleString('es-CO')} <br><span style="font-size:0.75rem; color:#94a3b8;">Estip: <b>${estipA.toFixed(1)}%</b><br>Real: ${realA.toFixed(1)}%</span></td>
-                    <td style="padding: 12px 10px; color: #cbd5e1; vertical-align: top;">${volB.toLocaleString('es-CO')} <br><span style="font-size:0.75rem; color:#2dd4bf;">Estip: <b>${estipB.toFixed(1)}%</b><br>Real: ${realB.toFixed(1)}%</span></td>
+                    <td style="padding: 12px 10px; font-weight: bold; color: ${brandColor}; text-align: left; vertical-align: top;">${brand}</td>
+                    <td style="padding: 12px 10px; color: ${cellColor}; vertical-align: top;">${volA.toLocaleString('es-CO')} <br><span style="font-size:0.75rem; color:${subColor};">Estip: <b>${estipA.toFixed(1)}%</b><br>Real: ${realA.toFixed(1)}%</span></td>
+                    <td style="padding: 12px 10px; color: ${cellColor}; vertical-align: top;">${volB.toLocaleString('es-CO')} <br><span style="font-size:0.75rem; color:${estipSubColor};">Estip: <b>${estipB.toFixed(1)}%</b><br>Real: ${realB.toFixed(1)}%</span></td>
                     <td style="padding: 12px 10px; font-weight: bold; color: ${growthColor}; vertical-align: top;">${growthStr}</td>
                     <td style="padding: 12px 10px; background: rgba(45, 212, 191, 0.05); vertical-align: top;">${estipBadge}</td>
                     <td style="padding: 12px 10px; background: rgba(56, 189, 248, 0.05); vertical-align: top;">${realBadge}</td>
@@ -691028,6 +691122,17 @@ const data = {
         if (typeof renderAllPieCharts === 'function') {
             try { renderAllPieCharts(); } catch(e) {}
         }
+        try {
+            const selA = document.querySelector('.diag-sel-month-a');
+            const selB = document.querySelector('.diag-sel-month-b');
+            const selBrand = document.querySelector('.diag-sel-brand');
+            if (selA && selB && typeof renderOperationalDiagnosis === 'function') {
+                const mA = selA.value;
+                const mB = selB.value;
+                const b = selBrand ? selBrand.value : 'all';
+                renderOperationalDiagnosis(mA, mB, b);
+            }
+        } catch(e) {}
     }
 
     function toggleTheme() {
